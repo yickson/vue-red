@@ -4,5 +4,5 @@
 // provide this object to Webpack in vue.config.js.
 module.exports = {
   title: 'New RedCapital',
-  description: 'Opinionated boilerplate project for an enterprise Vue frontend',
+  description: '',
 }

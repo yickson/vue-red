@@ -17,6 +17,41 @@ export default [
     component: () => lazyLoadView(import('@views/register')),
   },
   {
+    path: '/about',
+    name: 'about',
+    component: () => lazyLoadView(import('@views/about')),
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: () => lazyLoadView(import('@views/faq')),
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => lazyLoadView(import('@views/contact')),
+  },
+  {
+    path: '/credit',
+    name: 'credit',
+    component: () => lazyLoadView(import('@views/credit')),
+  },
+  {
+    path: '/howitworks',
+    name: 'howitworks',
+    component: () => lazyLoadView(import('@views/howitworks')),
+  },
+  {
+    path: '/guaranty-risk',
+    name: 'guaranty-risk',
+    component: () => lazyLoadView(import('@views/guaranty-risk')),
+  },
+  {
+    path: '/press',
+    name: 'press',
+    component: () => lazyLoadView(import('@views/press')),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => lazyLoadView(import('@views/login')),

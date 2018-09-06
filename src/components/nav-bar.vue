@@ -8,30 +8,30 @@ export default {
     return {
       navsfirst: [
         {
-          name: 'Sobre Nosotros',
+          name: 'about',
           title: 'Sobre Nosotros',
         },
         {
-          name: 'En prensa',
+          name: 'press',
           title: 'En prensa',
         },
         {
-          name: 'Contacto',
-          title: 'Contacto',
+          name: 'contact',
+          title: 'contacto',
         },
         {
-          name: 'Preguntas Frecuentes',
+          name: 'faq',
           title: 'Preguntas Frecuentes ',
         },
         {
-          name: 'Garantías y riesgos',
+          name: 'guaranty-risk',
           title: 'Garantías y riesgos',
         },
       ],
 
       persistentNavRoutes: [
         {
-          name: 'como funciona',
+          name: 'howitworks',
           title: 'Cómo funciona',
         },
         {
@@ -39,7 +39,7 @@ export default {
           title: 'Invertir',
         },
         {
-          name: 'solicitar credito',
+          name: 'credit',
           title: 'Solicitar crédito',
         },
         {
@@ -60,7 +60,7 @@ export default {
       loggedOutNavRoutes: [
         {
           name: 'login',
-          title: 'Log in',
+          title: 'INGRESAR',
         },
       ],
     }
@@ -79,26 +79,43 @@ export default {
       href="/">
       <img src="../../src/assets/images/logomain.svg">
     </a>
-    <ul>
-      <NavBarRoutes
-        v-if="loggedIn"
-        :routes="loggedInNavRoutes"
-      />
-      <NavBarRoutes
-        v-else
-        :routes="loggedOutNavRoutes"
-      />
-    </ul>
-    <ul class="first-nav">
-      <NavBarRoutes :routes="navsfirst"/>
-    </ul>
-    <ul class="second-nav">
-      <NavBarRoutes :routes="persistentNavRoutes"/>
-    </ul>
+    <template slot="collapse">
+      <navbar-nav right>
+        <NavBarRoutes
+          v-if="loggedIn"
+          :routes="loggedInNavRoutes"
+        />
+        <NavBarRoutes
+          v-else
+          :routes="loggedOutNavRoutes"
+        />
+      </navbar-nav>
+      <navbar-nav
+        right
+        class="first-nav">
+        <NavBarRoutes :routes="navsfirst"/>
+      </navbar-nav>
+      <navbar-nav
+        right
+        class="second-nav">
+        <NavBarRoutes :routes="persistentNavRoutes"/>
+      </navbar-nav>
+    </template>
   </navbar>
 </template>
 
 <style>
+.navbar-default .navbar-toggle {
+  border: none;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background: #f90;
+  height: 4px;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border: none;
+}
 .navbar {
   margin-bottom: 0;
   border: none;
@@ -113,7 +130,6 @@ export default {
   min-height: 100px;
   color: #fff;
   background-color: rgba(234, 91, 43, 0.9);
-  text-align: right;
 }
 
 .main-navbar ul li {
@@ -127,13 +143,13 @@ export default {
   display: block;
   text-transform: uppercase;
 }
-.main-navbar ul li a {
+.main-navbar .nav > li > a {
   color: #fff !important;
+  padding: 10px 10px;
 }
 .first-nav {
   display: block;
   font-size: 12px;
   text-transform: capitalize;
-  margin-top: 10px;
 }
 </style>

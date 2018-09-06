@@ -8,23 +8,23 @@ export default {
     return {
       firstrow: [
         {
-          name: 'Sobre Nosotros',
+          name: 'about',
           title: 'Sobre Nosotros',
         },
         {
-          name: 'En prensa',
+          name: 'press',
           title: 'En prensa',
         },
         {
-          name: 'Contacto',
+          name: 'contact',
           title: 'Contacto',
         },
         {
-          name: 'Preguntas Frecuentes',
+          name: 'faq',
           title: 'Preguntas Frecuentes ',
         },
         {
-          name: 'Garantías y riesgos',
+          name: 'guaranty-risk',
           title: 'Garantías y riesgos',
         },
         {
@@ -35,7 +35,7 @@ export default {
 
       secondrow: [
         {
-          name: 'solicitar Credito',
+          name: 'credit',
           title: 'Solicitar Credito',
         },
         {
@@ -43,7 +43,7 @@ export default {
           title: 'Invertir',
         },
         {
-          name: 'cómo funciona',
+          name: 'howitworks',
           title: 'Cómo funciona',
         },
         {
@@ -51,7 +51,7 @@ export default {
           title: 'Crear Cuenta',
         },
         {
-          name: 'ingresar',
+          name: 'login',
           title: 'Ingresar',
         },
       ],
@@ -79,19 +79,19 @@ export default {
       id="footer"
       class="row">
       <div class="container">
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-6 col-sm-3 col-md-3">
           <p class="list-title">RedCapital</p>
           <ul>
             <FooterRoutes :routes="firstrow"/>
           </ul>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-6 col-sm-3 col-md-3">
           <p class="list-title">Empieza ahora</p>
           <ul>
             <FooterRoutes :routes="secondrow"/>
           </ul>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2">
           <p class="list-title">Soporte</p>
           <ul>
             <FooterRoutes :routes="support"/>
@@ -104,25 +104,25 @@ export default {
         </div>
       </div>
     </div>
-    <div 
-      id="postfooter" 
+    <div
+      id="postfooter"
       class="row">
       <div class="container text-center">
         <div class="col-xs-12 col-sm-12 col-md-3">
-          <img 
-            src="../../src/assets/images/logo-redcapital-footer.svg" 
-            alt="" 
+          <img
+            src="../../src/assets/images/logo-redcapital-footer.svg"
+            alt=""
             class="logo-footer">
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-12 col-sm-12 col-md-3 icon-container">
           <span class="glyphicon glyphicon-phone"/>
           +562 2233 3346
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-12 col-sm-12 col-md-3 icon-container">
           <span class="glyphicon glyphicon-phone"/>
           +562 3224 9361
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-12 col-sm-12 col-md-3 icon-container">
           <span class="glyphicon glyphicon-envelope"/>
           contacto@redcapital.cl
         </div>
@@ -177,5 +177,10 @@ export default {
 }
 .direccion {
   margin-top: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .icon-container {
+    margin-top: 15px;
+  }
 }
 </style>

@@ -40,7 +40,7 @@ export default {
 @import '@design';
 
 .active a {
-  color: $color-link-text-active;
+  background-color: #ff9302;
   text-decoration: none;
   cursor: default;
 }

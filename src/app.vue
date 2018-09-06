@@ -64,9 +64,9 @@ a:visited {
   @extend %typography-xxlarge;
 }*/
 
-h2 {
+/*h2 {
   @extend %typography-xlarge;
-}
+}*/
 
 h3 {
   @extend %typography-large;
