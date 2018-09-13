@@ -28,7 +28,7 @@ export default {
           title: 'Garantías y riesgos',
         },
         {
-          name: 'Garantias y riesgos',
+          name: '',
           title: 'Trabaja con nosotros',
         },
       ],
@@ -178,9 +178,14 @@ export default {
 .direccion {
   margin-top: 20px;
 }
-@media only screen and (max-width: 768px) {
-  .icon-container {
-    margin-top: 15px;
-  }
+.icon-container {
+  padding: 10px;
+}
+.icon-container .glyphicon {
+  color: #474747;
+  background-color: #b2b2b2;
+  padding: 5px;
+  border-radius: 50%;
+  margin-right: 3px;
 }
 </style>

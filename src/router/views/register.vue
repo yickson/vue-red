@@ -52,8 +52,8 @@ export default {
             type="text"
             class="form-control"
             placeholder="12345678">
-          <span>Al presionar registrar está aceptando nuestros terminos y condiciones</span>
           <button class="btn">Registrarse</button>
+          <span class="terms-conditions">Al presionar registrar está aceptando nuestros <a href="" class="link">terminos y condiciones</a></span>
         </div>
       </div>
     </div>
@@ -76,23 +76,31 @@ export default {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
-.form-control {
-  border: 1px solid #f47828;
+.registrarse .form-control {
+  border: 1px solid #ddd;
   border-radius: 2px;
   box-shadow: none;
-  height: 37px;
-  margin-bottom: 10px;
+  height: 40px;
+  margin-bottom: 15px;
 }
 .container-form .btn {
   background-color: #f47828;
   color: #ffffff;
   display: block;
+  height: 40px;
   width: 100%;
   margin-top: 30px;
   border-radius: 2px;
 }
 .container-form .btn:hover {
   box-shadow: 0 1px 3px 0 #ddd, 0 0 10px 2px #ddd;
+}
+.terms-conditions {
+  font-size: 12px;
+  text-align: center;
+}
+.terms-conditions .link {
+  color: #f47828;
 }
 .container-form h2 {
   margin-bottom: 20px;

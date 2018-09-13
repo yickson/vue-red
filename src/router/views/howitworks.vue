@@ -143,7 +143,7 @@ export default {
         <h2 class="text-center">ALTERNATIVAS PARA INVERTIR O RESERVAR</h2>
         <div class="col-xs-12 col-sm-12 col-md-4">
           <div class="section-card">
-            <div class="container-ico"><span class="glyphicons glyphicons-clock"></span></div>
+            <div class="container-ico"><span class="glyphicons glyphicons-clock"/></div>
             <p class="card-title">RENTABILIDAD</p>
             <p>Recibirás en tu cuenta corriente la rentabilidad de tu inversión (todos los meses o al final del período, según la inversión elegida).</p>
           </div>
