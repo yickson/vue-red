@@ -27,7 +27,7 @@ export default {
         {
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A TECNOLOGIA A',
+          name: 'FACTURA A TECN',
           amount: '2222222',
           tazaRetorno: '11%',
           plazo: '70 dias',
@@ -38,7 +38,7 @@ export default {
         {
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
+          name: 'FACTURA PROMET ',
           amount: '3333333',
           tazaRetorno: '11%',
           plazo: '70 dias',
@@ -79,28 +79,7 @@ export default {
           progress: 60,
           financiado: '10%',
         },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A FAS SA',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-        },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A FAS SA',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 30,
-          financiado: '10%',
-        },
+
         {
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
@@ -132,15 +111,23 @@ export default {
 <template>
   <Layout>
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-3 filtros">
+      <div class="col-xs-12 col-sm-12 col-md-2 filtros">
         <Filters/>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-9">
+      <div class="col-xs-12 col-sm-12 col-md-10">
         <HomeCard
           v-for="(item, index) in items"
           :item="item"
           :index="index"
           :key="item.id"/>
+      </div>
+    </div>
+    <div class="row sponsors-cont">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <img
+          src="../../../src/assets/images/sponsors.png"
+          alt=""
+          class="img-esponsors img-responsive">
       </div>
     </div>
   </Layout>
@@ -149,7 +136,17 @@ export default {
 <style>
 .filtros {
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-  height: 900px;
+  height: 1200px;
   background-color: #ffffff;
+}
+.sponsors-cont {
+  background: #ffffff;
+  margin-top: 0px;
+}
+.img-esponsors {
+  display: block;
+  margin: 0px auto 0 auto;
+}
+.pagination {
 }
 </style>

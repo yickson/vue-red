@@ -229,27 +229,27 @@ export default {
         <div class="container">
           <h4 class="home-title-section">¿Como Invertir?</h4>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img 
-              src="../../../src/assets/images/icon-oportunidad.svg" 
-              alt="" 
+            <img
+              src="../../../src/assets/images/icon-oportunidad.svg"
+              alt=""
               class="icon-comoinvertir">
             <p class="title-comoinvertir">Oportunidad</p>
             <p>
               Revisa las oportunidades de inversión y elige el proyecto que más te convenga.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img 
-              src="../../../src/assets/images/icon-registrate.svg" 
-              alt="" 
+            <img
+              src="../../../src/assets/images/icon-registrate.svg"
+              alt=""
               class="icon-comoinvertir">
             <p class="title-comoinvertir">Regístrate</p>
             <p>
               Crea una cuenta ingresando tus datos en nuestro formulario, es fácil y rápido.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img 
-              src="../../../src/assets/images/icon-invierte.svg" 
-              alt="" 
+            <img
+              src="../../../src/assets/images/icon-invierte.svg"
+              alt=""
               class="icon-comoinvertir">
             <p class="title-comoinvertir">Invierte</p>
             <p>Transfiere el monto a invertir y estará 100% garantizado por una SGR (fondos Corfo) o por una factura. Revisa Garantías y Riesgos</p>
@@ -265,9 +265,9 @@ export default {
       <div class="container">
         <h4 class="text-center">TESTIMONIOS</h4>
         <div class="col-xs-12 col-sm-12 col-md-2">
-          <img 
-            src="../../../src/assets/images/testimonio1.png" 
-            alt="testimonio 1" 
+          <img
+            src="../../../src/assets/images/testimonio1.png"
+            alt="testimonio 1"
             class="img-responsive testimonio_avatar">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 testimonio-container">
@@ -278,9 +278,9 @@ export default {
             en RedCapital.cl recibo en promedio un 13,5% anual.</p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-2">
-          <img 
-            src="../../../src/assets/images/testimonio2.png" 
-            alt="testimonio 1" 
+          <img
+            src="../../../src/assets/images/testimonio2.png"
+            alt="testimonio 1"
             class="img-responsive testimonio_avatar">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 testimonio-container">
@@ -300,14 +300,14 @@ export default {
       </div>
     </div>
 
-    <div 
-      id="dfinanciero" 
+    <div
+      id="dfinanciero"
       class="row">
       <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-3">
-          <img 
-            src="../../../src/assets/images/df_logo.gif" 
-            alt="" 
+          <img
+            src="../../../src/assets/images/df_logo.gif"
+            alt=""
             class="img-responsive">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9">

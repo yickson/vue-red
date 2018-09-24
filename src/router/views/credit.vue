@@ -15,7 +15,7 @@ export default {
   <Layout class="credit">
     <div class="row">
       <div class="col-xs-12 col-sm-12">
-         <h2 class="credit-title">SOLICITA TU FINANCIAMIENTO</h2>
+        <h2 class="credit-title">SOLICITA TU FINANCIAMIENTO</h2>
       </div>
     </div>
     <div class="container-credit">

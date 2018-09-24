@@ -1,54 +1,61 @@
 <template>
   <div class="col-xs-12 col-sm-6 col-md-3">
     <div class="card">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12">
-          <img
-            :src="item.avatar"
-            class="avatar img-responsive">
+      <div class="card-header">
+        <!-- header-->
+        <div class="row">
+          <div class="col-xs-12 col-sm-12">
+            <img
+              :src="item.avatar"
+              class="avatar img-responsive">
+          </div>
         </div>
       </div>
-      <p class="card-title">{{ item.name }}</p>
-      <p class="card-price">{{ item.amount }}</p>
-      <label for="progress">Financiado {{ item.financiado }}</label>
-      <progress-bar
-        v-model="item.progress"
-        type="success"
-        class="progress"/>
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6">
-          <p>Respaldo</p>
-          <p>Taza de Retorno</p>
-          <p>Plazo</p>
-          <p>ID</p>
+      <!-- header-->
+      <!-- body -->
+      <div class="card-body">
+        <p class="card-title">{{ item.name }}</p>
+        <p class="card-price">{{ item.amount }}</p>
+        <label for="progress">Financiado {{ item.financiado }}</label>
+        <progress-bar
+          v-model="item.progress"
+          type="success"
+          class="progress"/>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <p>Respaldo</p>
+            <p>Taza de Retorno</p>
+            <p>Plazo</p>
+            <p>ID</p>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <p>Factura</p>
+            <p class="card-value">{{ item.tazaRetorno }}</p>
+            <p class="card-value">{{ item.plazo }}</p>
+            <p class="card-value">{{ item.identificador }}</p>
+          </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6">
-          <p>Factura</p>
-          <p class="card-value">{{ item.tazaRetorno }}</p>
-          <p class="card-value">{{ item.plazo }}</p>
-          <p class="card-value">{{ item.identificador }}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <span
-            data-toggle="tooltip-dias"
-            data-placement="right"
-            alt="Dias Restantes"
-            title="Dias Restantes"
-            class="glyphicon glyphicon-calendar"/>
-          <span
-            data-toggle="tooltip-visitas"
-            data-placement="right"
-            class="glyphicon glyphicon-eye-open"
-            alt="Visitas"
-            title="Cantidad de Visitas"/>
-          <span
-            data-toggle="tooltip-inv"
-            data-placement="right"
-            alt="Inversionistas"
-            title="Cantidad de Inversionistas"
-            class="glyphicon glyphicon-user"/>
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <span
+              data-toggle="tooltip-dias"
+              data-placement="right"
+              alt="Dias Restantes"
+              title="Dias Restantes"
+              class="glyphicon glyphicon-calendar"/>
+            <span
+              data-toggle="tooltip-visitas"
+              data-placement="right"
+              class="glyphicon glyphicon-eye-open"
+              alt="Visitas"
+              title="Cantidad de Visitas"/>
+            <span
+              data-toggle="tooltip-inv"
+              data-placement="right"
+              alt="Inversionistas"
+              title="Cantidad de Inversionistas"
+              class="glyphicon glyphicon-user"/>
+          </div>
         </div>
       </div>
       <div class="row card-footer">
@@ -80,23 +87,29 @@ export default {
 <style>
 .card {
   margin-top: 10px;
-  padding: 10px 10px 0px 10px;
   overflow: hidden;
   font-size: 1em;
   text-align: left;
   background: #fff;
   border: none;
-  border-radius: 0.28571429rem;
-  box-shadow: 0 1px 3px 0 #ddd, 0 0 10px 2px #ddd;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+  transition: box-shadow 0.1s ease, transform 0.1s ease,
+    -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+.card-body {
+  padding: 10px;
 }
 .card p {
   margin-bottom: 3px;
 }
 .card .avatar {
-  height: 180px;
+  height: auto;
 }
 .card-footer {
-  padding: 0.75em 1em;
   font-size: 1em;
   color: rgba(0, 0, 0, 0.4);
   background: #fff;

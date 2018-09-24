@@ -34,12 +34,12 @@ export default {
 
 <template>
   <Layout class="contact">
-       <div class="row">
-        <div class="col-xs-12 col-md-12  col-md-12">
-          <h2 class="text-center title-contact">CONTACTO</h2>
-        </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12  col-md-12">
+        <h2 class="text-center title-contact">CONTACTO</h2>
       </div>
-      <div class="container-contact">
+    </div>
+    <div class="container-contact">
       <form @submit.prevent="handleSubmit">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12">
