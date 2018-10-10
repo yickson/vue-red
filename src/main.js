@@ -5,10 +5,12 @@ import store from '@state/store'
 import '@components/_globals'
 import * as uiv from 'uiv'
 import Chart from 'vue-chartjs'
+import Vuetabs from 'vue-nav-tabs'
 
 // Don't warn about using the dev version of Vue in development
 Vue.use(uiv)
 Vue.use(Chart)
+Vue.use(Vuetabs)
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 const app = new Vue({

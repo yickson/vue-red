@@ -14,6 +14,7 @@ export default {
     return {
       items: [
         {
+          id: 1,
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
           name: 'FACTURA A LOGISFA',
@@ -21,21 +22,38 @@ export default {
           tazaRetorno: '11%',
           plazo: '70 dias',
           identificador: '3D4CV',
-          progress: 60,
+          progress: 10,
           financiado: '10%',
+          rentabilidad: '20%',
         },
         {
+          id: 2,
           avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
+            'https://media.forfattarcentrum.se/2017/06/forfattares-arbetsplats.jpg',
           name: 'FACTURA A TECNOLOGIA A',
           amount: '2222222',
           tazaRetorno: '11%',
           plazo: '70 dias',
           identificador: '3D4CV',
-          progress: 60,
+          progress: 40,
           financiado: '10%',
+          rentabilidad: '20%',
         },
         {
+          id: 3,
+          avatar:
+            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
+          name: 'FACTURA PROMET SERCIOS',
+          amount: '3333333',
+          tazaRetorno: '11%',
+          plazo: '70 dias',
+          identificador: '3D4CV',
+          progress: 30,
+          financiado: '10%',
+          rentabilidad: '20%',
+        },
+        {
+          id: 4,
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
           name: 'FACTURA PROMET SERCIOS',
@@ -45,21 +63,12 @@ export default {
           identificador: '3D4CV',
           progress: 60,
           financiado: '10%',
-        },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
+          rentabilidad: '20%',
         },
       ],
     }
   },
+  methods: {},
 }
 </script>
 
@@ -106,9 +115,9 @@ export default {
         </div>
         <HomeCard
           v-for="(item, index) in items"
-          :item="item"
+          :key="item.id"
           :index="index"
-          :key="item.id"/>
+          :item="item"/>
       </div>
     </div>
 

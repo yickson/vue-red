@@ -1,6 +1,7 @@
 <template>
   <div class="col-xs-12 col-sm-6 col-md-3">
-    <div class="card">
+    <div
+      class="card">
       <div class="card-header">
         <!-- header-->
         <div class="row">
@@ -59,15 +60,39 @@
         </div>
       </div>
       <div class="row card-footer">
-        <div class="col-xs-12 col-sm-12">
-          <button
+        <div
+          v-show="!btnSimulateCliked"
+          class="col-xs-12 col-sm-12">
+          <button 
             class="btn card-button"
-            @click="hello()">Simular</button>
+            @click="simulate()"
+          >Simular</button>
+        </div>
+        <div
+          v-show="btnSimulateCliked"
+          class="col-xs-12 col-sm-12 text-center">
+          <form
+            class="form-inline footer-input"
+            @submit.prevent="submitAmount">
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  v-model="data.amount"
+                  type="text"
+                  class="form-control form-footer"
+                  placeholder="Cantidad">
+              </div>
+            </div>
+            <button
+              class="btn btn-submit-simulate"><i class="fas fa-arrow-circle-right"/></button>
+          </form>
+          <span v-show="dataEmpty">ingrese monto a calcular</span>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -77,11 +102,39 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      btnSimulateCliked: false,
+      dataEmpty: false,
+      data: {
+        amount: '',
+      },
+    }
+  },
   methods: {
-    simulate() {},
+    simulate() {
+      this.btnSimulateCliked = true
+    },
+    submitAmount() {
+      if (
+        this.data.amount === null ||
+        this.data.amount === '' ||
+        this.data.amount === undefined
+      ) {
+        console.log('ingresa monto a simular')
+        this.dataEmpty = true
+      } else {
+        this.dataEmpty = false
+        this.$router.push({
+          name: 'simulate',
+          params: { item: this.item, simulatevalue: this.data.amount },
+        })
+      }
+    },
   },
 }
 </script>
+
 
 
 <style>
@@ -100,6 +153,13 @@ export default {
 .card:hover {
   transform: translateY(-3px);
 }
+.btn-submit-simulate {
+  width: 40px;
+  height: 40px;
+  background-color: #f30;
+  color: #fff;
+  border-radius: 2px;
+}
 .card-body {
   padding: 10px;
 }
@@ -114,6 +174,14 @@ export default {
   color: rgba(0, 0, 0, 0.4);
   background: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+.footer-input {
+  padding: 6px;
+}
+.form-footer {
+  height: 40px;
+  box-shadow: none;
+  border-right: none;
 }
 .card .card-button {
   width: 100%;

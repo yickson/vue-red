@@ -59,7 +59,7 @@ export default {
             <textarea
               v-model="data.mensaje"
               type="text"
-              class="form-control"
+              class="form-control txtarea"
               placeholder="Mensaje.."
               maxlength="140"
               rows="7"
@@ -109,5 +109,8 @@ export default {
   height: 40px;
   border-radius: 2px;
   margin-bottom: 15px;
+}
+.container-contact .txtarea {
+  height: 160px;
 }
 </style>

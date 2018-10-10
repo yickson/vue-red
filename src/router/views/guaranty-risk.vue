@@ -36,39 +36,39 @@ export default {
       <div class="col-xs-12 col-sm-12 col-md-6">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-6">
-            <input 
-              type="text" 
-              class="form-control filter-question" 
+            <input
+              type="text"
+              class="form-control filter-question"
               placeholder="Ingrese su pregunta">
           </div>
         </div>
         <section>
           <div
-            class="question-container" 
-            role="button" 
+            class="question-container"
+            role="button"
             @click="toggleAccordion(0)">
-            <span class="glyphicon glyphicon-menu-right"/>
+            <i class="fas fa-angle-right"/>
             <p>¿Qué es RedCapital?</p>
           </div>
           <div
             class="question-container"
-            role="button" 
+            role="button"
             @click="toggleAccordion(1)">
-            <span class="glyphicon glyphicon-menu-right"/>
+            <i class="fas fa-angle-right"/>
             <p>¿Cuáles son los requisitos para invertir en RedCapital?</p>
           </div>
           <div
             class="question-container"
-            role="button" 
+            role="button"
             @click="toggleAccordion(2)">
-            <span class="glyphicon glyphicon-menu-right"/>
+            <i class="fas fa-angle-right"/>
             <p>¿Cuáles son los riesgos?</p>
           </div>
           <div
             class="question-container"
-            role="button" 
+            role="button"
             @click="toggleAccordion(3)">
-            <span class="glyphicon glyphicon-menu-right"/>
+            <i class="fas fa-angle-right"/>
             <p>¿RedCapital garantiza las inversiones?</p>
           </div>
         </section>
@@ -172,6 +172,11 @@ export default {
 .question-container span {
   display: inline;
   color: #f47828;
+  margin-right: 10px;
+}
+.question-container .fa-angle-right {
+  color: #f47828;
+  font-size: 20px;
   margin-right: 10px;
 }
 .filter-question {

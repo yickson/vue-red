@@ -6,6 +6,7 @@ export default {
   components: { NavBarRoutes },
   data() {
     return {
+      open1: false,
       navsfirst: [
         {
           name: 'about',
@@ -103,6 +104,8 @@ export default {
     </template>
   </navbar>
 </template>
+
+
 
 <style>
 .navbar-default .navbar-toggle {

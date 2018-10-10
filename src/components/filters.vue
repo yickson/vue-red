@@ -16,12 +16,13 @@
       </label>
       <!-- range -->
       <p class="label-range">Rentabilidad mínima</p>
-      <rangeSlider class="slider"
+      <rangeSlider 
+        v-model="value"
+        class="slider"
         min="10"
         max="1000"
-        v-model="value"
         step="10"/>
-      <p v-text="total"></p>
+      <p v-text="total"/>
       <p class="label-range">Plazo máximo en meses</p>
       <rangeSlider/>
       <!-- range -->

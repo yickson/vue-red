@@ -7,6 +7,12 @@ export default [
     component: () => lazyLoadView(import('@views/home')),
   },
   {
+    path: '/simulate',
+    name: 'simulate',
+    component: () => lazyLoadView(import('@views/simulate')),
+    props: true,
+  },
+  {
     path: '/invertir',
     name: 'invertir',
     component: () => lazyLoadView(import('@views/invertir')),

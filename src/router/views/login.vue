@@ -46,41 +46,60 @@ export default {
 
 <template>
   <Layout>
-    <form
-      :class="$style.form"
-      @submit.prevent="tryToLogIn"
-    >
-      <BaseInput
-        v-model="username"
-        name="username"
-      />
-      <BaseInput
-        v-model="password"
-        name="password"
-        type="password"
-      />
-      <BaseButton
-        :disabled="tryingToLogIn"
-        type="submit"
-      >
-        <BaseIcon
-          v-if="tryingToLogIn"
-          name="sync"
-          spin
-        />
-        <span v-else>Log in</span>
-      </BaseButton>
-      <p v-if="authError">
-        There was an error logging in to your account.
-      </p>
-    </form>
+      <div class="container">
+          <div class="form-login">
+            <form
+              @submit.prevent="tryToLogIn"
+            >
+              <label for="">RUT Usuario</label>
+              <BaseInput
+                v-model="username"
+                name="username"
+              />
+              <label for="">Contraseña</label>
+              <BaseInput
+                v-model="password"
+                name="password"
+                type="password"
+              />
+              <button
+                class="btn"
+                :disabled="tryingToLogIn"
+                type="submit"
+              >
+                <BaseIcon
+                  v-if="tryingToLogIn"
+                  name="sync"
+                  spin
+                />
+                <span v-else>Log in</span>
+              </button>
+              <p v-if="authError">
+                Hubo un error, porfavor reintenta.
+              </p>
+            </form>
+          </div>
+      </div>
   </Layout>
 </template>
 
-<style lang="scss" module>
-@import '@design';
-
+<style>
 .form {
   text-align: center;
+}
+.form-login {
+  background-color: #ffffff;
+  max-width: 400px;
+  padding: 40px;
+  margin: 40px auto;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+}
+.form-login .btn {
+  width: 120px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #f47828;
+  border-radius: 2px;
+  margin-top: 20px;
 }
 </style>
