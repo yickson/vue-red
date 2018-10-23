@@ -76,18 +76,18 @@ export default [
     path: '/profile',
     name: 'profile',
     component: () => lazyLoadView(import('@views/profile')),
-    meta: {
-      authRequired: true,
-    },
+    // meta: {
+    // authRequired: true,
+    // },
     props: route => ({ user: store.state.auth.currentUser }),
   },
   {
     path: '/profile/:username',
     name: 'username-profile',
     component: () => lazyLoadView(import('@views/profile')),
-    meta: {
-      authRequired: true,
-    },
+    // meta: {
+    // authRequired: true,
+    // },
     beforeEnter(routeTo, routeFrom, next) {
       store
         // Try to fetch the user's information by their username

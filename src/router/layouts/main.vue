@@ -19,7 +19,7 @@ export default {
 @import '@design';
 html,
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   width: 100%;
   height: 100%;
   margin: 0px;

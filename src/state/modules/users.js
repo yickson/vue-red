@@ -1,4 +1,4 @@
-import axios from 'axios'
+/* import axios from 'axios'
 
 export const state = {
   cached: [],
@@ -13,25 +13,27 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchUser({ commit, state, rootState }, { username }) {
+  fetchUser({ commit, state, rootState }, { email }) {
     // 1. Check if we already have the user as a current user.
     const { currentUser } = rootState.auth
-    if (currentUser && currentUser.username === username) {
+    if (currentUser && currentUser.email === email) {
       return Promise.resolve(currentUser)
     }
 
     // 2. Check if we've already fetched and cached the user.
-    const matchedUser = state.cached.find(user => user.name === username)
+    const matchedUser = state.cached.find(user => user.email === email)
     if (matchedUser) {
       return Promise.resolve(currentUser)
     }
 
     // 3. Fetch the user from the API and cache it in case
     //    we need it again in the future.
-    return axios.get(`/users/${username}`).then(response => {
-      const user = response.data
-      commit('CACHE_USER', user)
-      return user
-    })
+    return axios
+      .get(`http://52.67.70.146/api/login/${email}`)
+      .then(response => {
+        const user = response.data
+        commit('CACHE_USER', user)
+        return user
+      })
   },
-}
+} */

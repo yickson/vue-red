@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios'
 import { authComputed } from '@state/helpers'
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
@@ -7,7 +8,7 @@ import Card from '@components/home-card'
 export default {
   components: { Layout, Card },
   props: {
-    item: {
+    proyecto: {
       type: Object,
     },
   },
@@ -16,10 +17,34 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   data() {
-    return {}
+    return {
+      montoARecibir: '0',
+      simulateData: [],
+    }
   },
+
+  mounted() {},
   computed: {
     ...authComputed,
+  },
+  methods: {
+    simulate() {
+      axios
+        .post('http://52.67.70.146/api/simular', {
+          proyecto_id: this.proyecto.id,
+          monto: 40000000,
+          token:
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRiMTdmM2U3MzE5YWM2ZTkyYzE3NDJiOWE0OTYwNWZkOGU1NDAxOTMwMDIyMzhiNTMyMjJmZDk2Yzc5YTQwYTQyZDZlNGFkNTkzMWI0NzQ5In0.eyJhdWQiOiIzIiwianRpIjoiZGIxN2YzZTczMTlhYzZlOTJjMTc0MmI5YTQ5NjA1ZmQ4ZTU0MDE5MzAwMjIzOGI1MzIyMmZkOTZjNzlhNDBhNDJkNmU0YWQ1OTMxYjQ3NDkiLCJpYXQiOjE1MzkzNjA0OTEsIm5iZiI6MTUzOTM2MDQ5MSwiZXhwIjoxNTcwODk2NDkxLCJzdWIiOiI2MyIsInNjb3BlcyI6W119.NZn0Omh6CyNbiNiv3T7-GLaPCaaN1F221Qj5mI5AGbpIEiK3esZH9M-2ppTDiA5wpkd_jMNTfcR6EMjfpi1I877RvEE0HGElDvjhiCr2CgD6zR7bnvHKGAPSfiOBTc5aG7lGNcIdM8ZuK_uKlwqEIxB0l8eG1OXzDb25Re0O0vyOmThUUfbWBpqMy2m6KSkuUM0Z8TUUjxJOAAMnGKfsOIZS8QnPE8QzpbwKZPNa5K2wW9f-jWy4oolJGfQ5gk41XpUKUPmnmrFLNN4O2Vmpv3BC4y37aCQre_i2Albh9wpBrrKUP--ZopPG52qcEXrKPomQluhwYX3X1t_2zQRjYMj0_IaBEnUTT20oKvM7wjUEfI6VvjlTwQaSV2HuTsiiTit0MgMDqK5CpHy_pjheqaMbdmjRM-qSVJT7bcoI1SSPuMvwfb8Yz6JCZGUXaZpMqN6wgEldFlIKL5y8Bt8uCwqzc4YIU0YBBU2y6HPh9ki6MVYEfJtftAS-psukePcSXHjRtxj0tPZftqsLWKogEW6wcsvvbN8nwP3jBxpTpaI-aWKz7ECsOrL65UNiNXlzhBKXtiyuZEaHCTvM20yaHYZ9Vx8zM48psssXzwxWmO-8Gg8NLHTIZEBIk_3sgunjaoyubbN-vRg3DYDTuCmtwMz2aCdEAR7la151tvP14ls',
+        })
+        .then(response => (this.simulateData = response.data.data))
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
   },
 }
 </script>
@@ -31,10 +56,10 @@ export default {
 
         <!-- PROJECT PICTURE -->
         <div class="col-xs-12 col-sm-12 col-md-4">
-          <h2 class="project-title">{{ item.identificador }}</h2>
-          <h2 class="project-title">{{ item.name }}</h2>
+          <h2 class="project-title">{{ proyecto.id }}</h2>
+          <h2 class="project-title">{{ proyecto.nombre }}</h2>
           <img
-            :src="item.avatar"
+            :src="proyecto.foto_proyecto"
             alt=""
             class="img-responsive img-thumbnail">
         </div>
@@ -47,49 +72,58 @@ export default {
               for="progress"
               class="progress-label">Finanaciado al 0% - Reservado 0%</label>
             <progress-bar
-              v-model="item.progress"
               type="success"
               class="progress"/>
             <!-- INFO  -->
             <div class="row info-project">
               <div class="col-xs-3">
                 <p>$ 0 de </p>
-                <p>{{ item.amount }}</p>
+                <p>{{ proyecto.monto }}</p>
               </div>
               <div class="col-xs-3">
-                <p>{{ item.amount }}</p>
+                <p>{{ proyecto.monto }}</p>
                 <p>faltan para completarlo</p>
               </div>
               <div class="col-xs-3">
-                <p>{{ item.rentabilidad }}</p>
+                <p>{{ proyecto.desc_derechos }}</p>
                 <p>Rentabilidad anualizada</p>
               </div>
               <div class="col-xs-3">
-                <p>{{ item.plazo }}</p>
+                <p>{{ proyecto.cierre }}</p>
                 <p>Plazo para completarlo</p>
               </div>
             </div>
             <!-- HEADER INPUT AND BUTTONS -->
             <div class="simulate-header">
               <p class="text-center title-simulate">Ingrese monto a invertir</p>
-              <form class="form-inline text-center">
-                <div class="form-group">
-                  <label
-                    class="sr-only"
-                    for="exampleInputAmount">Ingresa monto a invertir</label>
-                  <div class="input-group">
-                    <input
-                      id="exampleInputAmount"
-                      :value="$route.params.simulatevalue"
-                      type="text"
-                      class="form-control"
-                      placeholder="Amount"
-                    >
-                  </div>
+              <div class="row simulate-input-result">
+                <div class="col-xs-12 col-sm-6">
+                  <form
+                    class="form-inline text-center"
+                    @submit.prevent="simulate">
+                    <div class="form-group">
+                      <label
+                        class="sr-only"
+                        for="exampleInputAmount">Ingresa monto a invertir</label>
+                      <div class="input-group">
+                        <input
+                          id="exampleInputAmount"
+                          v-model="$route.params.simulatevalue"
+                          type="text"
+                          class="form-control"
+                          placeholder="Amount"
+                        >
+                      </div>
+                    </div>
+                    <button class="btn">SIMULAR</button>
+                  </form>
                 </div>
-                <button class="btn">SIMULAR</button>
-              </form>
-              <p class="text-center">monto a recibir : </p>
+                <div class="col-xs-12 col-sm-6">
+                  <p class="text-center monto-recibir">monto a recibir : {{ formatPrice(simulateData.montoARecibir) }}</p>
+                </div>
+              </div>
+
+
 
               <div
                 v-if="!loggedIn"
@@ -170,20 +204,14 @@ export default {
                     <!-- tabla 3-->
                     <table class="table table-striped">
                       <tr>
-                        <td>Tipo de credito</td>
-                        <td>Factura</td>
+                        <td>Mes</td>
+                        <td>Cuota</td>
+                        <td>Fecha</td>
                       </tr>
-                      <tr>
-                        <td>Tiempo de prestamo</td>
-                        <td>62 Días</td>
-                      </tr>
-                      <tr>
-                        <td>Fecha inicio del proyecto</td>
-                        <td>27-09-2018</td>
-                      </tr>
-                      <tr>
-                        <td>Fecha estimada de pago</td>
-                        <td>27-09-2018</td>
+                      <tr v-for="cuota in simulateData.cuotas">
+                        <td>{{ cuota.mes }}</td>
+                        <td>{{ formatPrice(cuota.cuota) }}</td>
+                        <td>{{ cuota.fecha }}</td>
                       </tr>
                     </table>
                     <!-- tabla 3-->
@@ -213,7 +241,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 .container-simulate {
   background-color: #ffffff;
@@ -221,6 +249,12 @@ export default {
   padding: 40px;
   margin: 40px auto;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+}
+
+.simulate-input-result {
+  background-color: #eee;
+  padding: 20px 0;
+  margin-bottom: 20px;
 }
 .simulate-header {
   margin-bottom: 40px;
@@ -274,7 +308,9 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
-
+.monto-recibir {
+  font-size: 20px;
+}
 /* usuario loggeado */
 .userLogged .derechos {
   background-color: #d22743;

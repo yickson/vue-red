@@ -6,7 +6,6 @@ export default {
   components: { NavBarRoutes },
   data() {
     return {
-      open1: false,
       navsfirst: [
         {
           name: 'about',
@@ -51,11 +50,12 @@ export default {
       loggedInNavRoutes: [
         {
           name: 'profile',
-          title: () => 'Logged in as ' + this.currentUser.name,
+          title: () =>
+            'Sesión iniciada de ' + this.currentUser.data.usuario.email,
         },
         {
           name: 'logout',
-          title: 'Log out',
+          title: 'Cerrar sesión',
         },
       ],
       loggedOutNavRoutes: [
@@ -73,13 +73,15 @@ export default {
 </script>
 
 <template>
-  <navbar class="main-navbar">
-    <a
+  <navbar
+    class="main-navbar"
+    fluid>
+    <router-link :to="{ path: '/'}"
       slot="brand"
       class="navbar-brand"
       href="/">
       <img src="../../src/assets/images/logomain.svg">
-    </a>
+    </router-link>
     <template slot="collapse">
       <navbar-nav right>
         <NavBarRoutes
@@ -108,11 +110,14 @@ export default {
 
 
 <style>
+.main-navbar .nav {
+  padding-left: 9px;
+}
 .navbar-default .navbar-toggle {
   border: none;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background: #f90;
+  background: #ffffff;
   height: 4px;
 }
 .navbar-default .navbar-collapse,
@@ -148,11 +153,12 @@ export default {
 }
 .main-navbar .nav > li > a {
   color: #fff !important;
-  padding: 10px 10px;
+  padding: 1px 10px;
 }
 .first-nav {
   display: block;
   font-size: 12px;
   text-transform: capitalize;
+  margin-bottom: 20px;
 }
 </style>

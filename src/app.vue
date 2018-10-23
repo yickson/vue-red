@@ -86,6 +86,7 @@ h6 {
 // ===
 
 #nprogress .bar {
-  background: $color-link-text;
+  background: #f47828;
+  height: 5px;
 }
 </style>

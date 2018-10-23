@@ -1,4 +1,4 @@
-const _ = require('lodash')
+/* const _ = require('lodash')
 
 module.exports = {
   all: [
@@ -39,4 +39,4 @@ module.exports = {
   json(user) {
     return user && _.omit(user, ['password'])
   },
-}
+} */

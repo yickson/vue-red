@@ -40,7 +40,7 @@ export default {
 @import '@design';
 
 .active a {
-  background-color: #ff9302;
+  border-bottom: 5px solid #ff9302;
   text-decoration: none;
   cursor: default;
 }

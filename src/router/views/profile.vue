@@ -8,7 +8,7 @@ export default {
       meta: [
         {
           name: 'description',
-          content: `The user profile for ${this.user.name}.`,
+          content: `The user profile for ${this.user.data.usuario.nombre}.`,
         },
       ],
     }
@@ -27,9 +27,9 @@ export default {
   <Layout>
     <h1>
       <BaseIcon name="user"/>
-      {{ user.name }}
+      {{ user.data.usuario.nombre }}
       Profile
     </h1>
-    <pre>{{ user }}</pre>
+    {{ user.data.usuario }}
   </Layout>
 </template>

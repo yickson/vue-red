@@ -13,33 +13,17 @@ export default {
       data: {
         nombre: '',
         app_pat: '',
-        app_mat: 'Cuevas',
-        genero: 'M',
-        fec_nac: '1988-08-17',
         email: '',
         password: '',
         c_password: '',
         rut: '',
-        pais_id: 1,
-        e_civil: 1,
-        t_fijo: 22354481,
-        t_trabajo: 22388459,
-        t_movil: 56995422554,
-        direccion: 'Avenida Siempre Viva 742',
-        c_dom: 1,
-        nickname: 'NickName',
-        profesion: 'profesion',
-        region_id: 1,
-        comuna_id: 1,
-        confirmado: 0,
-        estado: 0,
-        user_tipo_id: 1,
+        telefono: 22354481,
       },
     }
   },
   methods: {
     submitRegister() {
-      fetch('http://127.0.0.1:8000/api/register', {
+      fetch('http://52.67.70.146/api/register', {
         method: 'post',
         headers: {
           Accept: 'application/json, text/plain, */*',
@@ -190,7 +174,7 @@ export default {
                 </div>
                 <input
                   id="exampleInputAmount"
-                  v-model="data.t_fijo"
+                  v-model="data.telefono"
                   type="text"
                   class="form-control"
                   placeholder="Ingrese su contraseña">
@@ -241,7 +225,7 @@ export default {
   color: #f47828;
 }
 .registrarse .form-control {
-  border: 1px solid #ddd;
+  border: 1px solid #bac9d8;
   border-radius: 2px;
   box-shadow: none;
   height: 40px;

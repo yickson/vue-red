@@ -104,7 +104,7 @@ export default {
 }
 
 .container-contact .form-control {
-  border: 1px solid #ddd;
+  border: 1px solid #bac9d8;
   box-shadow: none;
   height: 40px;
   border-radius: 2px;

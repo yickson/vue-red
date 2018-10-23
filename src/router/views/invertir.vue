@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import HomeCard from '@components/home-card'
 import Filters from '@components/filters'
+import axios from 'axios'
 
 export default {
   page: {
@@ -12,7 +13,8 @@ export default {
   components: { Layout, HomeCard, Filters },
   data() {
     return {
-      items: [
+      proyectos: [],
+      /* items: [
         {
           avatar:
             'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
@@ -102,8 +104,18 @@ export default {
           progress: 10,
           financiado: '10%',
         },
-      ],
+      ], */
     }
+  },
+  mounted() {
+    this.getProyects()
+  },
+  methods: {
+    getProyects() {
+      axios
+        .get('http://52.67.70.146/api/proyecto?page=1')
+        .then(response => (this.proyectos = response.data.data.data))
+    },
   },
 }
 </script>
@@ -115,11 +127,15 @@ export default {
         <Filters/>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-10">
-        <HomeCard
-          v-for="(item, index) in items"
-          :item="item"
-          :index="index"
-          :key="item.id"/>
+        <div
+          v-for="(proyecto, index) in proyectos"
+          :key="proyecto.id"
+          class="col-xs-12 col-md-3">
+          <HomeCard
+            :key="proyecto.id"
+            :index="index"
+            :proyecto="proyecto"/>
+        </div>
       </div>
     </div>
     <div class="row sponsors-cont">
@@ -141,7 +157,7 @@ export default {
 }
 .sponsors-cont {
   background: #ffffff;
-  margin-top: 0px;
+  margin-top: 50px;
 }
 .img-esponsors {
   display: block;

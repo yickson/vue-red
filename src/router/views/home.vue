@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import HomeCard from '@components/home-card'
 import Chart from '@components/chart'
+import axios from 'axios'
 
 export default {
   page: {
@@ -12,7 +13,8 @@ export default {
   components: { Layout, HomeCard, Chart },
   data() {
     return {
-      items: [
+      proyectos: [],
+      /* items: [
         {
           id: 1,
           avatar:
@@ -65,10 +67,20 @@ export default {
           financiado: '10%',
           rentabilidad: '20%',
         },
-      ],
+      ], */
     }
   },
-  methods: {},
+
+  mounted() {
+    this.getProyects()
+  },
+  methods: {
+    getProyects() {
+      axios
+        .get('http://52.67.70.146/api/proyecto')
+        .then(response => (this.proyectos = response.data.data.data))
+    },
+  },
 }
 </script>
 
@@ -87,17 +99,17 @@ export default {
 
     <!-- DESCRIPTION -->
     <div class="row home_description">
-      <div class="col-xs-4 col-sm-4 col-md-4">
+      <div class="col-xs-12 col-sm-4 col-md-4">
         <span>13,5%</span>
         <span>Rentabilidad</span>
         <span>promedio anual</span>
       </div>
-      <div class="col-xs-4 col-sm-4 col-md-4">
+      <div class="col-xs-12 col-sm-4 col-md-4">
         <span>Respaldo</span>
         <span> Doble Respaldo</span>
         <span>a nombre del inversionista</span>
       </div>
-      <div class="col-xs-4 col-sm-4 col-md-4">
+      <div class="col-xs-12 col-sm-4 col-md-4">
         <span>Diversifica</span>
         <span>Tú decides</span>
         <span>en qué invertir</span>
@@ -109,22 +121,33 @@ export default {
       id="carrousel"
       class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-12">
+        <div class="col-xs-12 col-sm-12 col-md-12">
           <h2>Proyectos para invertir</h2>
           <button class="btn home_vertodo_btn">ver todos</button>
         </div>
-        <HomeCard
-          v-for="(item, index) in items"
-          :key="item.id"
-          :index="index"
-          :item="item"/>
+        <carousel
+          :per-page-custom="[[768, 3], [1024, 4], [540, 1]]"
+          :navigation-enabled="true"
+          navigation-next-label="<i class='fas fa-arrow-circle-right'></i>"
+          navigation-prev-label="<i class='fas fa-arrow-circle-left'></i>"
+          >
+          <slide
+            v-for="(proyecto, index) in proyectos"
+            :key="proyecto.id"
+          >
+            <HomeCard
+              :key="proyecto.id"
+              :index="index"
+              :proyecto="proyecto"
+            />
+          </slide>
+        </carousel>
       </div>
     </div>
 
     <!-- DESCRIPCION -->
     <div
-      id="quienesSomos"
-      class="container">
+      id="quienesSomos">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
           <h2>Somos la nueva forma atractiva de invertir</h2>
@@ -335,12 +358,14 @@ export default {
 
 <style>
 .main_home_banner {
-  height: 450px;
-  background-image: url(../../../src/assets/images/banner_bg3.png);
-  background-repeat: no-repeat;
+  height: 490px;
+  background: url(../../../src/assets/images/banner_bg3.png);
+  background-size: cover;
+  background-position: center;
 }
 .main_home_banner h1 {
-  width: 90%;
+  width: 70%;
+  margin-top: 90px;
   margin-left: 10px;
   font-size: 5em;
   font-weight: normal;
@@ -389,6 +414,11 @@ export default {
   background: #f6f6f6;
   min-height: 400px;
   padding-bottom: 50px;
+}
+
+.VueCarousel-navigation-button .fa-arrow-circle-right,
+.fa-arrow-circle-left {
+  font-size: 30px;
 }
 
 #carrousel h2 {

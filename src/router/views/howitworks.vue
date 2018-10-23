@@ -11,55 +11,9 @@ export default {
   },
   components: { Layout, HomeCard, Chart },
   data() {
-    return {
-      items: [
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A LOGISFA',
-          amount: '1111111',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-        },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A TECNOLOGIA A',
-          amount: '2222222',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-        },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-        },
-        {
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-        },
-      ],
-    }
+    return {}
   },
+  methods: {},
 }
 </script>
 

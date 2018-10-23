@@ -28,14 +28,17 @@ export const actions = {
   },
 
   // Logs in the current user.
-  logIn({ commit, dispatch, getters }, { username, password } = {}) {
+  logIn({ commit, dispatch, getters }, { email, password } = {}) {
     if (getters.loggedIn) return dispatch('validate')
 
-    return axios.post('/api/session', { username, password }).then(response => {
-      const user = response.data
-      commit('SET_CURRENT_USER', user)
-      return user
-    })
+    return axios
+      .post('http://52.67.70.146/api/login', { email, password })
+      .then(response => {
+        const user = response.data
+        console.log(user.data)
+        commit('SET_CURRENT_USER', user)
+        return user
+      })
   },
 
   // Logs out the current user.
@@ -49,7 +52,7 @@ export const actions = {
     if (!state.currentUser) return Promise.resolve(null)
 
     return axios
-      .get('/api/session')
+      .post('http://52.67.70.146/api/login')
       .then(response => {
         const user = response.data
         commit('SET_CURRENT_USER', user)

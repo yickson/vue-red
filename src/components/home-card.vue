@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-sm-6 col-md-3">
+  <div>
     <div
       class="card">
       <div class="card-header">
@@ -7,19 +7,21 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12">
             <img
-              :src="item.avatar"
-              class="avatar img-responsive">
+              :src="proyecto.foto_proyecto"
+              alt=""
+              class="img-responsive avatar">
           </div>
         </div>
       </div>
       <!-- header-->
       <!-- body -->
       <div class="card-body">
-        <p class="card-title">{{ item.name }}</p>
-        <p class="card-price">{{ item.amount }}</p>
-        <label for="progress">Financiado {{ item.financiado }}</label>
+        <div class="card-title">
+          <p>{{ proyecto.nombre }}</p>
+        </div>
+        <p class="card-price">$ {{ formatPrice(proyecto.monto) }}</p>
+        <label for="progress">Financiado {{ proyecto.cuotas }}</label>
         <progress-bar
-          v-model="item.progress"
           type="success"
           class="progress"/>
         <div class="row">
@@ -31,31 +33,25 @@
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
             <p>Factura</p>
-            <p class="card-value">{{ item.tazaRetorno }}</p>
-            <p class="card-value">{{ item.plazo }}</p>
-            <p class="card-value">{{ item.identificador }}</p>
+            <p class="card-value">{{ proyecto.desc_derechos }}</p>
+            <p class="card-value">{{ proyecto.empresa_id }}</p>
+            <p class="card-value">{{ proyecto.monto_a_financiar }}</p>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12 text-center">
             <span
-              data-toggle="tooltip-dias"
-              data-placement="right"
-              alt="Dias Restantes"
-              title="Dias Restantes"
+              v-tooltip="'Dias Restantes'"
               class="glyphicon glyphicon-calendar"/>
+            <span>0</span>
             <span
-              data-toggle="tooltip-visitas"
-              data-placement="right"
-              class="glyphicon glyphicon-eye-open"
-              alt="Visitas"
-              title="Cantidad de Visitas"/>
+              v-tooltip="'Cantidad de visitas'"
+              class="glyphicon glyphicon-eye-open"/>
+            <span>0</span>
             <span
-              data-toggle="tooltip-inv"
-              data-placement="right"
-              alt="Inversionistas"
-              title="Cantidad de Inversionistas"
+              v-tooltip="'Cantidad de Inversionistas'"
               class="glyphicon glyphicon-user"/>
+            <span>0</span>
           </div>
         </div>
       </div>
@@ -63,7 +59,7 @@
         <div
           v-show="!btnSimulateCliked"
           class="col-xs-12 col-sm-12">
-          <button 
+          <button
             class="btn card-button"
             @click="simulate()"
           >Simular</button>
@@ -97,17 +93,18 @@
 <script>
 export default {
   props: {
-    item: {
+    proyecto: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
+      proyectos: [],
       btnSimulateCliked: false,
       dataEmpty: false,
       data: {
-        amount: '',
+        amount: null,
       },
     }
   },
@@ -127,9 +124,16 @@ export default {
         this.dataEmpty = false
         this.$router.push({
           name: 'simulate',
-          params: { item: this.item, simulatevalue: this.data.amount },
+          params: {
+            proyecto: this.proyecto,
+            simulatevalue: this.data.amount,
+          },
         })
       }
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
   },
 }
@@ -140,7 +144,11 @@ export default {
 <style>
 .card {
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
+  max-width: 240px;
+  min-height: 210px;
   font-size: 1em;
   text-align: left;
   background: #fff;
@@ -197,11 +205,10 @@ export default {
   color: #f30;
 }
 .card-title {
-  display: inline;
   padding: 0;
-  margin-top: 10px;
+  height: 40px;
+  margin-top: 5px;
   font-weight: bold;
-  line-height: 1.2857em;
   text-transform: uppercase;
 }
 .card-value {
