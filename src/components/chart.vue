@@ -7,10 +7,10 @@
 <script>
 export default {
   mounted() {
-    this.charts()
+    // this.charts()
   },
-  methods: {
-    charts: function() {
+  /* methods: {
+    charts() {
       var ctx = document.getElementById('chart').getContext('2d')
       var myChart = new Chart(ctx, {
         type: 'line',
@@ -53,7 +53,7 @@ export default {
         },
       })
     },
-  },
+  }, */
 }
 </script>
 

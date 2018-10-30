@@ -10,6 +10,7 @@ export default {
   props: {
     proyecto: {
       type: Object,
+      default: () => [],
     },
   },
   page: {
@@ -22,11 +23,10 @@ export default {
       simulateData: [],
     }
   },
-
-  mounted() {},
   computed: {
     ...authComputed,
   },
+  mounted() {},
   methods: {
     simulate() {
       axios
@@ -38,7 +38,7 @@ export default {
         })
         .then(response => (this.simulateData = response.data.data))
         .catch(function(error) {
-          console.log(error)
+          this.error = error
         })
     },
     formatPrice(value) {
@@ -208,7 +208,9 @@ export default {
                         <td>Cuota</td>
                         <td>Fecha</td>
                       </tr>
-                      <tr v-for="cuota in simulateData.cuotas">
+                      <tr
+                        v-for="cuota in simulateData.cuotas"
+                        :key="cuota">
                         <td>{{ cuota.mes }}</td>
                         <td>{{ formatPrice(cuota.cuota) }}</td>
                         <td>{{ cuota.fecha }}</td>
@@ -238,23 +240,23 @@ export default {
 
 <style>
 .project-title {
-  text-transform: uppercase;
-  font-weight: bold;
   margin-top: 40px;
   margin-bottom: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .container-simulate {
-  background-color: #ffffff;
   max-width: 700px;
   padding: 40px;
   margin: 40px auto;
+  background-color: #fff;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
 
 .simulate-input-result {
-  background-color: #eee;
   padding: 20px 0;
   margin-bottom: 20px;
+  background-color: #eee;
 }
 .simulate-header {
   margin-bottom: 40px;
@@ -264,8 +266,8 @@ export default {
 }
 .container-simulate .form-control {
   height: 40px;
-  box-shadow: none;
   border-radius: 2px;
+  box-shadow: none;
 }
 .container-simulate .title-simulate {
   font-size: 20px;
@@ -273,14 +275,14 @@ export default {
   text-transform: uppercase;
 }
 .container-simulate .progress-label {
-  font-weight: lighter;
   font-size: 12px;
+  font-weight: lighter;
 }
 .container-simulate .btn {
   height: 40px;
-  border-radius: 2px;
+  color: #fff;
   background-color: #ff9302;
-  color: #ffffff;
+  border-radius: 2px;
 }
 .container-simulate .table-title {
   font-weight: bold;
@@ -295,27 +297,29 @@ export default {
 .nav-pills > li.active > a:focus,
 .nav-pills > li.active > a:hover {
   color: #ff9302;
-  border-radius: 2px;
-  background-color: #ffffff;
+  background-color: #fff;
   border: ;
+  border-radius: 2px;
 }
+
 /* info project */
 .info-project {
-  text-align: center;
   margin-bottom: 30px;
+  text-align: center;
 }
 .info-project p:first-child {
-  font-weight: bold;
   font-size: 16px;
+  font-weight: bold;
 }
 .monto-recibir {
   font-size: 20px;
 }
+
 /* usuario loggeado */
 .userLogged .derechos {
-  background-color: #d22743;
-  color: #ffffff;
   margin-left: 0;
+  color: #fff;
+  background-color: #d22743;
 }
 .userLogged .invest-rights-txt {
 }

@@ -1,4 +1,4 @@
-export default {
+/*module.exports = {
   '*.js': [
     'eslint --fix',
     'prettier --write',
@@ -16,4 +16,4 @@ export default {
   '*.scss': ['stylelint --fix', 'prettier --write', 'git add'],
   '*.md': ['markdownlint', 'prettier --write', 'git add'],
   '*.{png,jpeg,jpg,gif,svg}': ['imagemin-lint-staged', 'git add'],
-}
+}*/

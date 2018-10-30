@@ -48,11 +48,10 @@ export default {
           propiedad_deuda: this.propiedad_deuda,
         })
         .then(response => {
-          console.log(response)
-          alert(response)
+          this.response = response
         })
         .catch(error => {
-          console.log(error)
+          this.error = error
         })
     },
   },
@@ -120,7 +119,8 @@ export default {
               class="form-control" >
               <option selected>Selecciona</option>
               <option
-                v-for="(option,index) in options.data.necesidad"
+                v-for="option in options.data.necesidad"
+                :key="option"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -134,7 +134,8 @@ export default {
               class="form-control" >
               <option selected>Selecciona</option>
               <option
-                v-for="(option,index) in options.data.objetivo"
+                v-for="option in options.data.objetivo"
+                :key="option"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -153,7 +154,8 @@ export default {
                 selected
                 disabled>Selecciona</option>
               <option
-                v-for="(option,index) in options.data.ventas"
+                v-for="option in options.data.ventas"
+                :key="option"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -190,7 +192,8 @@ export default {
                 selected
                 disabled>Choose</option>
               <option
-                v-for="(option,index) in options.data.garantia"
+                v-for="option in options.data.garantia"
+                :key="option"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -219,44 +222,44 @@ export default {
 <style>
 .credit {
   background-image: url(../../../src/assets/images/banner_bg.jpg);
-  background-size: cover;
   background-attachment: fixed;
   background-position: center;
+  background-size: cover;
 }
 .credit h2 {
-  text-align: center;
   margin-bottom: 50px;
+  text-align: center;
 }
 .container-credit {
   display: block;
-  margin: 20px auto 0 auto;
-  background-color: #ffffff;
   max-width: 760px;
   padding: 60px 60px 60px 60px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+  margin: 20px auto 0 auto;
+  background-color: #fff;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 }
 .credit-title {
-  color: #ffffff;
   margin-top: 40px;
   font-weight: bold;
+  color: #fff;
 }
 .credit label {
   height: 40px;
 }
 .credit .form-control {
-  border: 1px solid #bac9d8;
-  box-shadow: none;
   height: 40px;
-  border-radius: 0.25em;
   margin-bottom: 15px;
+  border: 1px solid #bac9d8;
+  border-radius: 0.25em;
+  box-shadow: none;
 }
 .credit .btn {
-  background: #f47828;
-  color: #ffffff;
   width: 100%;
-  border-radius: 2px;
   height: 40px;
   margin-top: 45px;
+  color: #fff;
+  background: #f47828;
+  border-radius: 2px;
 }
 
 @media only screen and (max-width: 768px) {

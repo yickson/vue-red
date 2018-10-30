@@ -76,8 +76,9 @@ export default {
   <navbar
     class="main-navbar"
     fluid>
-    <router-link :to="{ path: '/'}"
+    <router-link 
       slot="brand"
+      :to="{ path: '/'}"
       class="navbar-brand"
       href="/">
       <img src="../../src/assets/images/logomain.svg">
@@ -117,8 +118,8 @@ export default {
   border: none;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background: #ffffff;
   height: 4px;
+  background: #fff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
@@ -130,8 +131,8 @@ export default {
   border-radius: 0;
 }
 .navbar-brand img {
-  height: 52px;
   width: 187px;
+  height: 52px;
 }
 .main-navbar {
   display: block;
@@ -147,18 +148,18 @@ export default {
 }
 
 .second-nav {
-  font-weight: bold;
   display: block;
+  font-weight: bold;
   text-transform: uppercase;
 }
 .main-navbar .nav > li > a {
-  color: #fff !important;
   padding: 1px 10px;
+  color: #fff !important;
 }
 .first-nav {
   display: block;
+  margin-bottom: 20px;
   font-size: 12px;
   text-transform: capitalize;
-  margin-bottom: 20px;
 }
 </style>

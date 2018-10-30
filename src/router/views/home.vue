@@ -77,7 +77,7 @@ export default {
   methods: {
     getProyects() {
       axios
-        .get('http://52.67.70.146/api/proyecto')
+        .get('http://52.67.70.146/api/filtro')
         .then(response => (this.proyectos = response.data.data.data))
     },
   },
@@ -130,7 +130,7 @@ export default {
           :navigation-enabled="true"
           navigation-next-label="<i class='fas fa-arrow-circle-right'></i>"
           navigation-prev-label="<i class='fas fa-arrow-circle-left'></i>"
-          >
+        >
           <slide
             v-for="(proyecto, index) in proyectos"
             :key="proyecto.id"
@@ -360,8 +360,8 @@ export default {
 .main_home_banner {
   height: 490px;
   background: url(../../../src/assets/images/banner_bg3.png);
-  background-size: cover;
   background-position: center;
+  background-size: cover;
 }
 .main_home_banner h1 {
   width: 70%;
@@ -392,10 +392,10 @@ export default {
   text-transform: uppercase;
 }
 .home_big_amount {
-  color: #ad073d;
-  line-height: 0.9em;
   font-size: 5em;
   font-weight: bold;
+  line-height: 0.9em;
+  color: #ad073d;
 }
 .home_video {
   width: 100%;
@@ -409,11 +409,11 @@ export default {
 }
 
 #carrousel {
+  min-height: 400px;
   padding-top: 50px;
+  padding-bottom: 50px;
   text-align: center;
   background: #f6f6f6;
-  min-height: 400px;
-  padding-bottom: 50px;
 }
 
 .VueCarousel-navigation-button .fa-arrow-circle-right,
@@ -422,25 +422,25 @@ export default {
 }
 
 #carrousel h2 {
-  text-align: center;
   margin-bottom: 20px;
+  text-align: center;
   text-transform: uppercase;
 }
 #carrousel .home_vertodo_btn {
   display: block;
+  min-width: 130px;
   margin: 0 auto;
+  margin-bottom: 40px;
   color: #fff;
   background: #f47828;
   border: none;
-  min-width: 130px;
   border-radius: 2px;
-  margin-bottom: 40px;
 }
 
 #quienesSomos {
   min-height: 400px;
   padding: 40px 40px 50px 40px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 #quienesSomos .entrevista-txt {
@@ -451,30 +451,30 @@ export default {
 
 #grafico {
   min-height: 400px;
-  background-color: #f6f6f6;
   padding-bottom: 50px;
+  background-color: #f6f6f6;
 }
 
 #grafico p {
-  font-size: 25px;
   margin-top: 50px;
+  font-size: 25px;
 }
 #grafico span {
-  color: #ad073d;
   font-size: 30px;
   font-weight: bold;
+  color: #ad073d;
 }
 #grafico h3 {
-  text-transform: uppercase;
-  margin-top: 50px;
   padding-bottom: 50px;
+  margin-top: 50px;
+  text-transform: uppercase;
 }
 
 #plataforma {
-  background-color: #ffffff;
   min-height: 400px;
   padding-top: 50px;
   padding-bottom: 50px;
+  background-color: #fff;
 }
 #plataforma h3 {
   margin-bottom: 50px;
@@ -485,59 +485,59 @@ export default {
 
 /* como invertir */
 #comoInvertir {
-  background-image: url(../../../src/assets/images/bg_orange.jpeg);
   min-height: 400px;
+  color: #fff;
+  background-image: url(../../../src/assets/images/bg_orange.jpeg);
   background-attachment: fixed;
-  color: #ffffff;
 }
 #comoInvertir .background {
   min-height: 400px;
   background-color: rgba(234, 91, 43, 0.9);
 }
 #comoInvertir .home-title-section {
-  text-transform: uppercase;
-  color: #ffffff;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
   margin-top: 40px;
   margin-bottom: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
 }
 #comoInvertir p {
   margin-top: 20px;
 }
 #comoInvertir .title-comoinvertir {
-  font-weight: bold;
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 #comoInvertir .icon-comoinvertir {
+  display: block;
   width: 60px;
   height: auto;
-  display: block;
   margin: 0 auto;
 }
 
 /* testimonios */
 #testimonios {
-  background-color: #ffffff;
   min-height: 400px;
   padding-top: 50px;
   padding-bottom: 50px;
+  background-color: #fff;
 }
 #testimonios h4 {
+  margin-bottom: 100px;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 100px;
 }
 #testimonios .sponsors {
   display: block;
   margin: 50px auto 0 auto;
 }
 #testimonios .Invest_name {
-  border-bottom: #f90 1px solid;
-  font-weight: bold;
   font-size: 1.1em;
+  font-weight: bold;
+  border-bottom: #f90 1px solid;
 }
 .testimonio-container {
   background: url(../../../src/assets/images/quote.png) no-repeat right top;
@@ -548,10 +548,10 @@ export default {
 
 /* diario financiero*/
 #dfinanciero {
+  min-height: 120px;
   padding-top: 10px;
   padding-bottom: 10px;
   background: #fce4bf;
-  min-height: 120px;
 }
 #dfinanciero p {
   margin-top: 15px;

@@ -139,6 +139,105 @@ export default [
     path: '*',
     redirect: '404',
   },
+
+  // routes for admin dashboard
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => lazyLoadView(import('@views/admin/dashboard')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/listed',
+    name: 'listed',
+    component: () => lazyLoadView(import('@views/admin/listed')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/pending-payments',
+    name: 'pending payments',
+    component: () => lazyLoadView(import('@views/admin/pending-payments')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/invest',
+    name: 'invest',
+    component: () => lazyLoadView(import('@views/admin/invest')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/dues',
+    name: 'dues',
+    component: () => lazyLoadView(import('@views/admin/dues')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/mandates',
+    name: 'mandates',
+    component: () => lazyLoadView(import('@views/admin/mandates')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/payments-and-certificate',
+    name: 'payments and certificate',
+    component: () =>
+      lazyLoadView(import('@views/admin/payments-and-certificate')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/my-movements',
+    name: 'my movements',
+    component: () => lazyLoadView(import('@views/admin/my-movements')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/personal-information',
+    name: 'personal information',
+    component: () => lazyLoadView(import('@views/admin/personal-information')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/bank-account',
+    name: 'bank account',
+    component: () => lazyLoadView(import('@views/admin/bank-account')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/documents',
+    name: 'documents',
+    component: () => lazyLoadView(import('@views/admin/documents')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
+  {
+    path: '/password',
+    name: 'password',
+    component: () => lazyLoadView(import('@views/admin/password')),
+    // meta: {
+    // authRequired: true,
+    // },
+  },
 ]
 
 // Lazy-loads view components, but with better UX. A loading view

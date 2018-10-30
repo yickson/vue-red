@@ -10,7 +10,6 @@
 <script>
 import RangeSlider from 'vue-range-slider'
 // you probably need to import built-in style
-import 'vue-range-slider/dist/vue-range-slider.css'
 
 export default {
   components: {
@@ -30,6 +29,7 @@ export default {
 </script>
 
 <style>
+/*@import 'vue-range-slider/dist/vue-range-slider.css'*/
 .slider {
   /* overwrite slider styles */
   width: 167px;
@@ -37,6 +37,7 @@ export default {
 .range-slider {
   padding-left: 0;
 }
+
 /*.range-slider-hidden {
   display: block;
   background-color: #ad063c;
