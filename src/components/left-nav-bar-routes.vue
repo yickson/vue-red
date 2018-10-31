@@ -1,6 +1,6 @@
 <script>
 // Allows stubbing BaseLink in unit tests
-
+const BaseLink = 'BaseLink'
 export default {
   // Functional components are stateless, meaning they can't
   // have data, computed properties, etc and they have no

@@ -10,68 +10,68 @@ export default {
         {
           name: 'dashboard',
           title: 'Dashboard Invertir',
-          icon: 'user',
+          // icon: 'user',
         },
       ],
       InvestmentNav: [
         {
           name: 'listed',
           title: 'Ver listado',
-          icon: 'home',
+          // icon: 'home',
         },
         {
           name: 'pending payments',
           title: 'Pagos pendientes',
-          icon: 'bell',
+          // icon: 'bell',
         },
         {
           name: 'dues',
           title: 'Cuotas',
-          icon: 'bell',
+          // icon: 'bell',
         },
         {
           name: 'mandates',
           title: 'Mandatos',
-          icon: 'file',
+          // icon: 'file',
         },
         {
           name: 'payments and certificate',
           title: 'Pagares y certificados',
-          icon: 'file',
+          // icon: 'file',
         },
         {
           name: 'my movements',
           title: 'Mis Movitmientos',
-          icon: 'table',
+          // icon: 'table',
         },
       ],
       myDataNav: [
         {
           name: 'personal information',
           title: 'Datos personales',
-          icon: 'userCircle',
+          // icon: 'userCircle',
         },
         {
           name: 'bank account',
           title: 'Cuenta Bancaria',
-          icon: 'bank',
+          // icon: 'bank',
         },
         {
           name: 'documents',
           title: 'Documentos',
-          icon: 'file',
+          // icon: 'file',
         },
         {
           name: 'password',
           title: 'Contraseña',
-          icon: 'key',
+          // icon: 'key',
         },
       ],
       projectNav: [
         {
           name: 'invest',
           title: 'Invertir',
-          icon: 'tasks',
+          // icon: 'tasks',
         },
       ],
     }

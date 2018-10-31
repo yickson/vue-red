@@ -76,8 +76,8 @@ export default {}
 }
 .header-left .dropdown .dropdown-toggle .count {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 4px;
+  left: 21px;
   width: 15px;
   height: 15px;
   font-size: 11px;

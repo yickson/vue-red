@@ -1,3 +1,52 @@
+<script>
+export default {
+  props: {
+    proyecto: {
+      type: Object,
+      required: false,
+    },
+  },
+  data() {
+    return {
+      proyectos: [],
+      btnSimulateCliked: false,
+      dataEmpty: false,
+      data: {
+        amount: null,
+      },
+    }
+  },
+  methods: {
+    simulate() {
+      this.btnSimulateCliked = true
+    },
+    submitAmount() {
+      if (
+        this.data.amount === null ||
+        this.data.amount === '' ||
+        this.data.amount === undefined
+      ) {
+        console.log('ingresa monto a simular')
+        this.dataEmpty = true
+      } else {
+        this.dataEmpty = false
+        this.$router.push({
+          name: 'simulate',
+          params: {
+            proyecto: this.proyecto,
+            simulatevalue: this.data.amount,
+          },
+        })
+      }
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+  },
+}
+</script>
+
 <template>
   <div>
     <div
@@ -90,54 +139,6 @@
 </template>
 
 
-<script>
-export default {
-  props: {
-    proyecto: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      proyectos: [],
-      btnSimulateCliked: false,
-      dataEmpty: false,
-      data: {
-        amount: null,
-      },
-    }
-  },
-  methods: {
-    simulate() {
-      this.btnSimulateCliked = true
-    },
-    submitAmount() {
-      if (
-        this.data.amount === null ||
-        this.data.amount === '' ||
-        this.data.amount === undefined
-      ) {
-        console.log('ingresa monto a simular')
-        this.dataEmpty = true
-      } else {
-        this.dataEmpty = false
-        this.$router.push({
-          name: 'simulate',
-          params: {
-            proyecto: this.proyecto,
-            simulatevalue: this.data.amount,
-          },
-        })
-      }
-    },
-    formatPrice(value) {
-      let val = (value / 1).toFixed(2).replace('.', ',')
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    },
-  },
-}
-</script>
 
 
 

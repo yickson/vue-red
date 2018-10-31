@@ -18,9 +18,24 @@ export default {
       tryingToLogIn: false,
       Password: false,
       emailRetrievePassword: '',
+      apimessage: '',
     }
   },
   methods: {
+    info() {
+      this.$notify({
+        type: 'info',
+        title: 'Heads up!',
+        content: this.apimessage,
+      })
+    },
+    success() {
+      this.$notify({
+        type: 'success',
+        title: 'Well done!',
+        content: this.apimessage,
+      })
+    },
     ...authMethods,
     // Try to log the user in with the username
     // and password they provided.
@@ -36,11 +51,15 @@ export default {
           this.tryingToLogIn = false
 
           // Redirect to the originally requested page, or to the home page
-          this.$router.push(this.$route.query.redirectFrom || { name: 'home' })
+          this.$router.push(
+            this.$route.query.redirectFrom || { name: 'dashboard' }
+          )
         })
         .catch(error => {
           this.tryingToLogIn = false
           this.authError = error
+          this.apimessage = 'Hubo un error, porfavor vuelve a intentarlo.'
+          this.info()
         })
     },
     LinkRecuperar() {
@@ -50,15 +69,16 @@ export default {
       this.Password = false
     },
     nuevacontraseña() {
-      return Axios.post('http://52.67.70.146/api/password/email', {
+      return Axios.post('http://52.67.70.146/api/password/create', {
         email: this.emailRetrievePassword,
       })
         .then(response => {
-          console.log(response)
+          this.apimessage = response.data.message
+          this.success()
         })
         .catch(error => {
-          console.log(error)
-          console.log('hubo un error')
+          this.apimessage = error.response.data.message
+          this.info()
         })
     },
   },
@@ -101,16 +121,13 @@ export default {
 
         <!-- FORM RECUPERAR CONTRASEÑA-->
         <form
-          v-else="Password"
+          v-else
           @submit.prevent="nuevacontraseña()">
           <label for="">Email Usuario</label>
           <BaseInput
             v-model="emailRetrievePassword"
             name="email-contraseña"
           />
-          <alert type="success"><span>Se enviara la nueva clave al correo electronico ingresado,
-          solo si esta coincide con el Email del usuario ya previamente registrado.
-          </span></alert>
 
           <button
             class="btn"
@@ -119,15 +136,13 @@ export default {
             <span >Recuperar</span>
           </button>
         </form>
-        <p v-if="authError">
-          <alert type="danger">Hubo un error, porfavor vuelve a intentarlo.</alert>
-        </p>
+
         <span
           v-if="Password"
           class="link-login"
           @click="LinkLogin()">Ingresar</span>
         <span
-          v-else="!Password"
+          v-else
           class="link-login"
           @click="LinkRecuperar()">Recuperar contraseña</span> / <a href="/register">Crear cuenta</a>
       </div>
@@ -158,10 +173,14 @@ export default {
   color: #ffffff;
   background-color: #f47828;
   border-radius: 2px;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.link-login {
+  margin-top: 10px;
 }
 .form-login .link-login {
   cursor: pointer;
-  color: #b2b2b2;
+  color: #333;
 }
 </style>

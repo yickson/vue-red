@@ -16,7 +16,7 @@ export default {
       <div class="col-sm-4">
         <div class="page-header float-left">
           <div class="page-title">
-            <h1>DCambiar Contraseña</h1>
+            <h1>Cambiar Contraseña</h1>
           </div>
         </div>
       </div>
@@ -32,56 +32,21 @@ export default {
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
-                <div class="col-md-2">
-                  &nbsp;
-                </div>
-                <div class="col-md-8">
-                  <table 
-                    class="edit_form_table" 
-                    border="0">
-                    <tbody>
-                      <tr>
-                        <td>Contraseña actual</td>
-                        <td>
-                          <input 
-                            style="margin-bottom: 2px;" 
-                            required="required" 
-                            type="password" 
-                            name="passr" >
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Nueva contraseña</td>
-                        <td>
-                          <input 
-                            style="margin-bottom: 2px;" 
-                            required="required" 
-                            type="password" 
-                            name="passr" >
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Repetir contraseña</td>
-                        <td><input 
-                          style="margin-bottom: 2px;" 
-                          required="required" 
-                          type="password" 
-                          name="passr" ></td>
-                      </tr>
-                      <tr/>
-                      <tr>
-                        <td 
-                          colspan="2" 
-                          align="center"><input 
-                            id="next" 
-                            type="button" 
-                            value="Guardar" 
-                            href="#" 
-                            class="btn btn-block btn-rc"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                 <div class="row">
+                    <div class="col-xs-12 col-md-8 col-md-offset-2">
+                        <form id="CuentaBancaria">
+                  <label for="">Contraseña</label>
+                  <input type="text" class="form-control">
+
+                  <label for="">Contraseña nueva</label>
+                  <input type="text" class="form-control">
+
+                  <label for="">Repetir contraseña</label>
+                  <input type="text" class="form-control">
+                    <button class="button btn form-button-bank">Guardar</button>
+                </form>
+                    </div>
+                 </div>
               </div>
             </div>
           </div>
@@ -91,6 +56,21 @@ export default {
   </Layout>
 </template>
 
-<style lang="scss" module>
-@import '@design';
+<style>
+#CuentaBancaria .form-control {
+  box-shadow: none;
+  height: 40px;
+}
+#CuentaBancaria .form-button-bank {
+  width: 120px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #f47828;
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#CuentaBancaria label {
+  margin-top: 15px;
+}
 </style>
