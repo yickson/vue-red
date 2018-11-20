@@ -15,6 +15,11 @@ export default {
       plazo: 10,
     }
   },
+  methods: {
+    filterSearch() {
+      console.log('asd0')
+    },
+  },
 }
 </script>
 
@@ -25,19 +30,19 @@ export default {
     <div class="col-xs-12 col-sm-12">
       <label>
         <div class="active-projects">
-          <input 
-            v-model="proyectos" 
+          <input
+            v-model="proyectos"
             type="checkbox">Proyectos activos
         </div>
       </label>
       <label>
-        <input 
-          v-model="facturas" 
+        <input
+          v-model="facturas"
           type="checkbox"> Facturas
       </label>
       <label>
-        <input 
-          v-model="creditos" 
+        <input
+          v-model="creditos"
           type="checkbox"> Créditos (Pagaré)
       </label>
       <!-- range -->
@@ -59,7 +64,7 @@ export default {
         class="slider"/>
       <p class="chip-value-filter">{{ plazo }}</p>
       <!-- range -->
-      <button class="btn">Aplicar filtros</button>
+      <button class="btn" @click="filterSearch">Aplicar filtros</button>
       <div class="box-details">
         <span class="glyphicon glyphicon-flag"/>
         <p>Revisa los riesgos y garantías Aquí</p>

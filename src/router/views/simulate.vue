@@ -26,15 +26,26 @@ export default {
   computed: {
     ...authComputed,
   },
-  mounted() {},
+  mounted() {
+    this.simulate()
+    this.infoProject()
+  },
   methods: {
+    infoProject() {
+      axios
+        .get('http://52.67.70.146/api/filtro/' + this.proyecto.id)
+        .then(function(response) {
+          console.log(response.data.data)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
     simulate() {
       axios
         .post('http://52.67.70.146/api/simular', {
           proyecto_id: this.proyecto.id,
-          monto: 40000000,
-          token:
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRiMTdmM2U3MzE5YWM2ZTkyYzE3NDJiOWE0OTYwNWZkOGU1NDAxOTMwMDIyMzhiNTMyMjJmZDk2Yzc5YTQwYTQyZDZlNGFkNTkzMWI0NzQ5In0.eyJhdWQiOiIzIiwianRpIjoiZGIxN2YzZTczMTlhYzZlOTJjMTc0MmI5YTQ5NjA1ZmQ4ZTU0MDE5MzAwMjIzOGI1MzIyMmZkOTZjNzlhNDBhNDJkNmU0YWQ1OTMxYjQ3NDkiLCJpYXQiOjE1MzkzNjA0OTEsIm5iZiI6MTUzOTM2MDQ5MSwiZXhwIjoxNTcwODk2NDkxLCJzdWIiOiI2MyIsInNjb3BlcyI6W119.NZn0Omh6CyNbiNiv3T7-GLaPCaaN1F221Qj5mI5AGbpIEiK3esZH9M-2ppTDiA5wpkd_jMNTfcR6EMjfpi1I877RvEE0HGElDvjhiCr2CgD6zR7bnvHKGAPSfiOBTc5aG7lGNcIdM8ZuK_uKlwqEIxB0l8eG1OXzDb25Re0O0vyOmThUUfbWBpqMy2m6KSkuUM0Z8TUUjxJOAAMnGKfsOIZS8QnPE8QzpbwKZPNa5K2wW9f-jWy4oolJGfQ5gk41XpUKUPmnmrFLNN4O2Vmpv3BC4y37aCQre_i2Albh9wpBrrKUP--ZopPG52qcEXrKPomQluhwYX3X1t_2zQRjYMj0_IaBEnUTT20oKvM7wjUEfI6VvjlTwQaSV2HuTsiiTit0MgMDqK5CpHy_pjheqaMbdmjRM-qSVJT7bcoI1SSPuMvwfb8Yz6JCZGUXaZpMqN6wgEldFlIKL5y8Bt8uCwqzc4YIU0YBBU2y6HPh9ki6MVYEfJtftAS-psukePcSXHjRtxj0tPZftqsLWKogEW6wcsvvbN8nwP3jBxpTpaI-aWKz7ECsOrL65UNiNXlzhBKXtiyuZEaHCTvM20yaHYZ9Vx8zM48psssXzwxWmO-8Gg8NLHTIZEBIk_3sgunjaoyubbN-vRg3DYDTuCmtwMz2aCdEAR7la151tvP14ls',
+          monto: 4000000,
         })
         .then(response => (this.simulateData = response.data.data))
         .catch(function(error) {

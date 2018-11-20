@@ -30,7 +30,7 @@ export default {
     cantidadSolicitar() {
       axios
         .get('http://52.67.70.146/api/credito')
-        .then(response => (this.options = response.data))
+        .then(response => (this.options = response.data.data))
     },
     enviarSolicitud() {
       axios
@@ -119,8 +119,7 @@ export default {
               class="form-control" >
               <option selected>Selecciona</option>
               <option
-                v-for="option in options.data.necesidad"
-                :key="option"
+                v-for="option in options.necesidad"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -134,8 +133,7 @@ export default {
               class="form-control" >
               <option selected>Selecciona</option>
               <option
-                v-for="option in options.data.objetivo"
-                :key="option"
+                v-for="option in options.objetivo"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -154,8 +152,7 @@ export default {
                 selected
                 disabled>Selecciona</option>
               <option
-                v-for="option in options.data.ventas"
-                :key="option"
+                v-for="option in options.ventas"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>
@@ -192,8 +189,7 @@ export default {
                 selected
                 disabled>Choose</option>
               <option
-                v-for="option in options.data.garantia"
-                :key="option"
+                v-for="option in options.garantia"
                 :value="option.id">
                 {{ option.descripcion }}
               </option>

@@ -74,9 +74,8 @@ export default {
 
 <template>
   <navbar
-    class="main-navbar"
-    fluid>
-    <router-link 
+    class="main-navbar" :fluid="false">
+    <router-link
       slot="brand"
       :to="{ path: '/'}"
       class="navbar-brand"
@@ -138,7 +137,7 @@ export default {
   display: block;
   min-height: 100px;
   color: #fff;
-  background-color: rgba(234, 91, 43, 0.9);
+  background-color: #ea5b2b;
 }
 
 .main-navbar ul li {

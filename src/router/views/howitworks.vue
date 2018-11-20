@@ -217,12 +217,12 @@ export default {
   background-image: url(../../../src/assets/images/bg_invest.jpg);
   background-repeat: no-repeat;
 }
-.howitworks_banner h1 {
-  width: 90%;
-  margin-left: 10px;
+.howitworks_banner h1  {
+  font-family: 'Passion One';
+  width: 60%;
+  margin-top: 120px;
   font-size: 5em;
   font-weight: normal;
-  font-weight: bold;
   color: #fff;
   text-align: left;
 }

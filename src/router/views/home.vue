@@ -91,7 +91,7 @@ export default {
     <div class="row main_home_banner">
       <div class="container">
         <div class="col-xs-12 col-sm-12">
-          <h1>LA OTRA FORMA
+          <h1 class="mainpage_title">LA OTRA FORMA
           ATRACTIVA DE INVERTIR</h1>
         </div>
       </div>
@@ -363,16 +363,17 @@ export default {
   background-position: center;
   background-size: cover;
 }
-.main_home_banner h1 {
-  width: 70%;
-  margin-top: 90px;
+.mainpage_title {
+  font-family: 'Passion One';
+  width: 60%;
+  margin-top: 120px;
   margin-left: 10px;
   font-size: 5em;
   font-weight: normal;
-  font-weight: bold;
   color: #fff;
   text-align: left;
 }
+
 .home_description {
   min-height: 120px;
   color: #fff;

@@ -11,6 +11,10 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, HomeCard, Filters },
+  proyecto: {
+    type: Array,
+    required: false,
+  },
   data() {
     return {
       proyectos: [],
@@ -43,7 +47,35 @@ export default {
           <HomeCard
             :key="proyecto.id"
             :index="index"
-            :proyecto="proyecto"/>
+            :proyecto="proyecto"
+          />
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 text-center">
+            <nav aria-label="Page navigation">
+              <ul class="pagination invest-pagination " >
+                <li>
+                  <a
+                    href="#"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                  <a
+                    href="#"
+                    aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
@@ -71,7 +103,5 @@ export default {
 .img-esponsors {
   display: block;
   margin: 0px auto 0 auto;
-}
-.pagination {
 }
 </style>

@@ -4,11 +4,11 @@ export default {
     proyecto: {
       type: Object,
       required: false,
+      value: '',
     },
   },
   data() {
     return {
-      proyectos: [],
       btnSimulateCliked: false,
       dataEmpty: false,
       data: {
@@ -165,7 +165,7 @@ export default {
 .btn-submit-simulate {
   width: 40px;
   height: 40px;
-  background-color: #f30;
+  background-color: #ea5b2b;
   color: #fff;
   border-radius: 2px;
 }
@@ -195,7 +195,7 @@ export default {
 .card .card-button {
   width: 100%;
   color: #fff;
-  background-color: #f30;
+  background-color: #ea5b2b;
   border: none;
   border-radius: 2px;
 }
@@ -203,7 +203,7 @@ export default {
   margin-bottom: 0;
   font-size: 1.2em;
   font-weight: bold;
-  color: #f30;
+  color: #ea5b2b;
 }
 .card-title {
   padding: 0;
@@ -220,7 +220,7 @@ export default {
   border-radius: 0;
 }
 .card .progress-bar-success {
-  background-color: #f30;
+  background-color: #ea5b2b;
   height: 100%;
 }
 .card .glyphicon {

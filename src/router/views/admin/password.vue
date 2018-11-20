@@ -32,21 +32,27 @@ export default {
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
-                 <div class="row">
-                    <div class="col-xs-12 col-md-8 col-md-offset-2">
-                        <form id="CuentaBancaria">
-                  <label for="">Contraseña</label>
-                  <input type="text" class="form-control">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8 col-md-offset-2">
+                    <form id="CuentaBancaria">
+                      <label for="">Contraseña</label>
+                      <input 
+                        type="text" 
+                        class="form-control">
 
-                  <label for="">Contraseña nueva</label>
-                  <input type="text" class="form-control">
+                      <label for="">Contraseña nueva</label>
+                      <input 
+                        type="text" 
+                        class="form-control">
 
-                  <label for="">Repetir contraseña</label>
-                  <input type="text" class="form-control">
-                    <button class="button btn form-button-bank">Guardar</button>
-                </form>
-                    </div>
-                 </div>
+                      <label for="">Repetir contraseña</label>
+                      <input 
+                        type="text" 
+                        class="form-control">
+                      <button class="button btn form-button-bank">Guardar</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
