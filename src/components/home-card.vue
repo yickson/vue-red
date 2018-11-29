@@ -4,17 +4,18 @@ export default {
     proyecto: {
       type: Object,
       required: false,
-      value: '',
     },
   },
   data() {
     return {
       btnSimulateCliked: false,
       dataEmpty: false,
-      data: {
-        amount: null,
-      },
+      amount: 0,
+      porcentajeFinanciado: 0,
     }
+  },
+  mounted() {
+    this.porcentajeProyecto()
   },
   methods: {
     simulate() {
@@ -22,9 +23,9 @@ export default {
     },
     submitAmount() {
       if (
-        this.data.amount === null ||
-        this.data.amount === '' ||
-        this.data.amount === undefined
+        this.amount === null ||
+        this.amount === '' ||
+        this.amount === undefined
       ) {
         console.log('ingresa monto a simular')
         this.dataEmpty = true
@@ -34,14 +35,20 @@ export default {
           name: 'simulate',
           params: {
             proyecto: this.proyecto,
-            simulatevalue: this.data.amount,
+            simulatevalue: this.amount,
           },
         })
       }
     },
     formatPrice(value) {
-      let val = (value / 1).toFixed(2).replace('.', ',')
+      let val = (value / 1).toFixed(0).replace('.', '.')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    porcentajeProyecto() {
+      var porcentajeFinanciado =
+        this.proyecto.get_monto_proyecto[0].monto / this.proyecto.monto
+      var result = (porcentajeFinanciado * 100).toFixed(2)
+      this.porcentajeFinanciado = parseInt(result)
     },
   },
 }
@@ -49,15 +56,14 @@ export default {
 
 <template>
   <div>
-    <div
-      class="card">
+    <div class="card-proyect">
       <div class="card-header">
         <!-- header-->
         <div class="row">
           <div class="col-xs-12 col-sm-12">
-            <img
-              :src="proyecto.foto_proyecto"
-              alt=""
+            <img 
+              :src="proyecto.foto_proyecto" 
+              alt 
               class="img-responsive avatar">
           </div>
         </div>
@@ -69,10 +75,19 @@ export default {
           <p>{{ proyecto.nombre }}</p>
         </div>
         <p class="card-price">$ {{ formatPrice(proyecto.monto) }}</p>
-        <label for="progress">Financiado {{ proyecto.cuotas }}</label>
-        <progress-bar
-          type="success"
-          class="progress"/>
+        <label for="progress">Financiado {{ porcentajeFinanciado + '%' }}</label>
+        <progress-bar>
+          <progress-bar-stack
+            v-if="porcentajeFinanciado == 100 "
+            v-model="porcentajeFinanciado"
+            class="Fullfinanced"
+            type="success"
+          />
+          <progress-bar-stack 
+            v-else 
+            v-model=" porcentajeFinanciado" 
+            type="warning"/>
+        </progress-bar>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
             <p>Respaldo</p>
@@ -89,47 +104,55 @@ export default {
         </div>
         <div class="row">
           <div class="col-xs-12 text-center">
-            <span
-              v-tooltip="'Dias Restantes'"
+            <span 
+              v-tooltip="'Dias Restantes'" 
               class="glyphicon glyphicon-calendar"/>
             <span>0</span>
-            <span
-              v-tooltip="'Cantidad de visitas'"
+            <span 
+              v-tooltip="'Cantidad de visitas'" 
               class="glyphicon glyphicon-eye-open"/>
             <span>0</span>
-            <span
-              v-tooltip="'Cantidad de Inversionistas'"
+            <span 
+              v-tooltip="'Cantidad de Inversionistas'" 
               class="glyphicon glyphicon-user"/>
             <span>0</span>
           </div>
         </div>
       </div>
       <div class="row card-footer">
-        <div
-          v-show="!btnSimulateCliked"
+        <div 
+          v-show="!btnSimulateCliked" 
           class="col-xs-12 col-sm-12">
-          <button
-            class="btn card-button"
-            @click="simulate()"
-          >Simular</button>
+          <button 
+            v-if="porcentajeFinanciado == 100" 
+            class="btn card-button Fullfinanced">
+            financiado
+            <i class="fas fa-check-circle"/>
+          </button>
+          <button 
+            v-else 
+            class="btn card-button" 
+            @click="simulate()">Simular</button>
         </div>
-        <div
-          v-show="btnSimulateCliked"
+        <div 
+          v-show="btnSimulateCliked" 
           class="col-xs-12 col-sm-12 text-center">
-          <form
-            class="form-inline footer-input"
+          <form 
+            class="form-inline footer-input" 
             @submit.prevent="submitAmount">
             <div class="form-group">
               <div class="input-group">
                 <input
-                  v-model="data.amount"
+                  v-model="amount"
                   type="text"
                   class="form-control form-footer"
-                  placeholder="Cantidad">
+                  placeholder="Cantidad"
+                >
               </div>
             </div>
-            <button
-              class="btn btn-submit-simulate"><i class="fas fa-arrow-circle-right"/></button>
+            <button class="btn btn-submit-simulate">
+              <i class="fas fa-arrow-circle-right"/>
+            </button>
           </form>
           <span v-show="dataEmpty">ingrese monto a calcular</span>
         </div>
@@ -143,7 +166,7 @@ export default {
 
 
 <style>
-.card {
+.card-proyect {
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -159,9 +182,10 @@ export default {
   transition: box-shadow 0.1s ease, transform 0.1s ease,
     -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
 }
-.card:hover {
+.card-proyect:hover {
   transform: translateY(-3px);
 }
+
 .btn-submit-simulate {
   width: 40px;
   height: 40px;
@@ -172,10 +196,10 @@ export default {
 .card-body {
   padding: 10px;
 }
-.card p {
+.card-proyect p {
   margin-bottom: 3px;
 }
-.card .avatar {
+.card-proyect .avatar {
   height: auto;
 }
 .card-footer {
@@ -192,12 +216,15 @@ export default {
   box-shadow: none;
   border-right: none;
 }
-.card .card-button {
+.card-proyect .card-button {
   width: 100%;
   color: #fff;
   background-color: #ea5b2b;
   border: none;
   border-radius: 2px;
+}
+.Fullfinanced {
+  background-color: green !important;
 }
 .card-price {
   margin-bottom: 0;
@@ -219,11 +246,8 @@ export default {
   height: 7px;
   border-radius: 0;
 }
-.card .progress-bar-success {
-  background-color: #ea5b2b;
-  height: 100%;
-}
-.card .glyphicon {
+
+.card-proyect .glyphicon {
   margin: 0 15px 0 15px;
 }
 </style>

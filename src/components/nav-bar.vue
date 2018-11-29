@@ -73,33 +73,32 @@ export default {
 </script>
 
 <template>
-  <navbar
-    class="main-navbar" :fluid="false">
-    <router-link
-      slot="brand"
-      :to="{ path: '/'}"
-      class="navbar-brand"
+  <navbar 
+    :fluid="false" 
+    class="main-navbar">
+    <router-link 
+      slot="brand" 
+      :to="{ path: '/'}" 
+      class="navbar-brand" 
       href="/">
       <img src="../../src/assets/images/logomain.svg">
     </router-link>
     <template slot="collapse">
       <navbar-nav right>
-        <NavBarRoutes
-          v-if="loggedIn"
-          :routes="loggedInNavRoutes"
-        />
-        <NavBarRoutes
-          v-else
-          :routes="loggedOutNavRoutes"
-        />
+        <NavBarRoutes 
+          v-if="loggedIn" 
+          :routes="loggedInNavRoutes"/>
+        <NavBarRoutes 
+          v-else 
+          :routes="loggedOutNavRoutes"/>
       </navbar-nav>
-      <navbar-nav
-        right
+      <navbar-nav 
+        right 
         class="first-nav">
         <NavBarRoutes :routes="navsfirst"/>
       </navbar-nav>
-      <navbar-nav
-        right
+      <navbar-nav 
+        right 
         class="second-nav">
         <NavBarRoutes :routes="persistentNavRoutes"/>
       </navbar-nav>

@@ -13,6 +13,12 @@ export default [
     props: true,
   },
   {
+    path: '/successproyect',
+    name: 'successproyect',
+    component: () => lazyLoadView(import('@views/successproyect')),
+    props: true,
+  },
+  {
     path: '/invertir',
     name: 'invertir',
     component: () => lazyLoadView(import('@views/invertir')),

@@ -51,9 +51,7 @@ export default {
           this.tryingToLogIn = false
 
           // Redirect to the originally requested page, or to the home page
-          this.$router.push(
-            this.$route.query.redirectFrom || { name: 'dashboard' }
-          )
+          this.$router.push(this.$route.query.redirectFrom || { name: 'home' })
         })
         .catch(error => {
           this.tryingToLogIn = false
@@ -90,61 +88,55 @@ export default {
     <div class="container">
       <div class="form-login">
         <!--FORM LOGIN -->
-        <form
-          v-if="!Password"
-          @submit.prevent="tryToLogIn"
-        >
-          <label for="">Email</label>
-          <BaseInput
-            v-model="email"
-            name="email"
-          />
-          <label for="">Contraseña</label>
-          <BaseInput
-            v-model="password"
-            name="password"
-            type="password"
-          />
-          <button
-            :disabled="tryingToLogIn"
-            class="btn"
-            type="submit"
-          >
-            <BaseIcon
-              v-if="tryingToLogIn"
-              name="sync"
-              spin
-            />
+        <form 
+          v-if="!Password" 
+          @submit.prevent="tryToLogIn">
+          <label for>Email</label>
+          <BaseInput 
+            v-model="email" 
+            name="email"/>
+          <label for>Contraseña</label>
+          <BaseInput 
+            v-model="password" 
+            name="password" 
+            type="password"/>
+          <button 
+            :disabled="tryingToLogIn" 
+            class="btn" 
+            type="submit">
+            <BaseIcon 
+              v-if="tryingToLogIn" 
+              name="sync" 
+              spin/>
             <span v-else>Log in</span>
           </button>
         </form>
 
         <!-- FORM RECUPERAR CONTRASEÑA-->
-        <form
-          v-else
+        <form 
+          v-else 
           @submit.prevent="nuevacontraseña()">
-          <label for="">Email Usuario</label>
-          <BaseInput
-            v-model="emailRetrievePassword"
-            name="email-contraseña"
-          />
+          <label for>Email Usuario</label>
+          <BaseInput 
+            v-model="emailRetrievePassword" 
+            name="email-contraseña"/>
 
-          <button
-            class="btn"
-            type="submit"
-          >
-            <span >Recuperar</span>
+          <button 
+            class="btn" 
+            type="submit">
+            <span>Recuperar</span>
           </button>
         </form>
 
-        <span
-          v-if="Password"
-          class="link-login"
+        <span 
+          v-if="Password" 
+          class="link-login" 
           @click="LinkLogin()">Ingresar</span>
-        <span
-          v-else
-          class="link-login"
-          @click="LinkRecuperar()">Recuperar contraseña</span> / <a href="/register">Crear cuenta</a>
+        <span 
+          v-else 
+          class="link-login" 
+          @click="LinkRecuperar()">Recuperar contraseña</span> /
+        <a href="/register">Crear cuenta</a>
       </div>
     </div>
   </Layout>

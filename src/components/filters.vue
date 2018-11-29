@@ -64,7 +64,9 @@ export default {
         class="slider"/>
       <p class="chip-value-filter">{{ plazo }}</p>
       <!-- range -->
-      <button class="btn" @click="filterSearch">Aplicar filtros</button>
+      <button 
+        class="btn" 
+        @click="filterSearch">Aplicar filtros</button>
       <div class="box-details">
         <span class="glyphicon glyphicon-flag"/>
         <p>Revisa los riesgos y garantías Aquí</p>
