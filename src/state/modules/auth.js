@@ -26,13 +26,16 @@ export const actions = {
     setDefaultAuthHeaders(state)
     dispatch('validate')
   },
-
   // Logs in the current user.
-  logIn({ commit, dispatch, getters }, { email, password } = {}) {
+  logIn({ commit, dispatch, getters }, { email, password, provider } = {}) {
     if (getters.loggedIn) return dispatch('validate')
 
     return axios
-      .post('http://52.67.70.146/api/login', { email, password })
+      .post('http://52.67.70.146/api/login', {
+        email,
+        password,
+        provider,
+      })
       .then(response => {
         const user = response.data
         console.log(user.data)
@@ -40,12 +43,10 @@ export const actions = {
         return user
       })
   },
-
   // Logs out the current user.
   logOut({ commit }) {
     commit('SET_CURRENT_USER', null)
   },
-
   // Validates the current user's token and refreshes it
   // with new data from the API.
   validate({ commit, state }) {

@@ -16,9 +16,6 @@
     "new": "hygen new",
     "docs": "vuepress dev"
   },
-  "gitHooks": {
-    "pre-commit": "cross-env PRE_COMMIT=true lint-staged"
-  },
   "engines": {
     "node": ">=8.9.0",
     "yarn": ">=1.0.0"
@@ -39,6 +36,7 @@
     "nprogress": "0.2.0",
     "uiv": "^0.26.0",
     "vue": "2.5.16",
+    "vue-burger-menu": "^1.0.9",
     "vue-carousel": "^0.14.0",
     "vue-chartjs": "^3.4.0",
     "vue-chartkick": "^0.5.0",

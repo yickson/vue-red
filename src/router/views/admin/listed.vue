@@ -1,5 +1,7 @@
 <script>
 import Layout from '@layouts/admin'
+import { authComputed } from '@state/helpers'
+import axios from 'axios'
 
 export default {
   page: {
@@ -9,69 +11,34 @@ export default {
   components: { Layout },
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A LOGISFA',
-          amount: '1111111',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 10,
-          financiado: '10%',
-          rentabilidad: '20%',
-          iconedit: 'far fa-edit',
-          iconchat: 'far fa-comment-alt',
-        },
-        {
-          id: 2,
-          avatar:
-            'https://media.forfattarcentrum.se/2017/06/forfattares-arbetsplats.jpg',
-          name: 'FACTURA A TECNOLOGIA A',
-          amount: '2222222',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 40,
-          financiado: '10%',
-          rentabilidad: '20%',
-          iconedit: 'far fa-edit',
-          iconchat: 'far fa-comment-alt',
-        },
-        {
-          id: 3,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 30,
-          financiado: '10%',
-          rentabilidad: '20%',
-          iconedit: 'far fa-edit',
-          iconchat: 'far fa-comment-alt',
-        },
-        {
-          id: 4,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-          rentabilidad: '20%',
-          iconedit: 'far fa-edit',
-          iconchat: 'far fa-comment-alt',
-        },
-      ],
+      inversiones: [],
     }
+  },
+  mounted() {
+    this.getInversiones()
+  },
+  methods: {
+    getInversiones() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get(
+          'http://52.67.70.146/api/inversiones/' +
+            this.currentUser.data.usuario.id,
+          { headers: headers }
+        )
+        .then(response => {
+          this.inversiones = response.data.data
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+  },
+  computed: {
+    ...authComputed,
   },
 }
 </script>
@@ -99,143 +66,41 @@ export default {
             <div class="card">
               <div class="card-body">
                 <div class="col-md-12">
-                  <div class="col-md-5">
-                    <div class="col-md-4">
-                      <div class="button-group">
-                        <dropdown ref="dropdown">
-                          <btn
-                            type="primary"
-                            class="dropdown-toggle">Dropdown <span class="caret"/></btn>
-                          <template slot="dropdown">
-                            <li><a role="button">Action</a></li>
-                            <li><a role="button">Another action</a></li>
-                            <li><a role="button">Something else here</a></li>
-                            <li
-                              role="separator"
-                              class="divider"/>
-                            <li><a role="button">Separated link</a></li>
-                          </template>
-                        </dropdown>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="button-group">
-                        <dropdown ref="dropdown">
-                          <btn
-                            type="primary"
-                            class="dropdown-toggle">Dropdown <span class="caret"/></btn>
-                          <template slot="dropdown">
-                            <li><a role="button">Action</a></li>
-                            <li><a role="button">Another action</a></li>
-                            <li><a role="button">Something else here</a></li>
-                            <li
-                              role="separator"
-                              class="divider"/>
-                            <li><a role="button">Separated link</a></li>
-                          </template>
-                        </dropdown>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="button-group">
-                        <dropdown ref="dropdown">
-                          <btn
-                            type="primary"
-                            class="dropdown-toggle">Dropdown <span class="caret"/></btn>
-                          <template slot="dropdown">
-                            <li><a role="button">Action</a></li>
-                            <li><a role="button">Another action</a></li>
-                            <li><a role="button">Something else here</a></li>
-                            <li
-                              role="separator"
-                              class="divider"/>
-                            <li><a role="button">Separated link</a></li>
-                          </template>
-                        </dropdown>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-7 text-right">
-                    <div class="col-md-4">
-                      <a
-                        href="#"
-                        class="btn btn-success btn-block"><i class="fa fa-file-excel-o"/> Consolidado</a>
-                    </div>
-                    <div class="col-md-4">
-                      <a
-                        href="#"
-                        class="btn btn-success btn-block"><i class="fa fa-file-excel-o"/>Detalle de pagos</a>
-                    </div>
-                    <div class="col-md-4">
-                      <a
-                        href="#"
-                        class="btn btn-success btn-block"><i class="fa fa-file-excel-o"/>Detalle de pagos</a>
-                    </div>
-                  </div>
                   <div class="table-responsive-sm col-padding-up">
-                    <table class="table table-small verysmal table-hover">
+                    <table class="table table-hover">
                       <thead class="thead-light">
                         <tr>
-                          <th
-                            scope="col"
-                            width="5%">Id</th>
-                          <th
-                            scope="col"
-                            width="15%">Proyecto</th>
-                          <th
-                            scope="col"
-                            width="10%">N# doc</th>
-                          <th
-                            scope="col"
-                            width="7%">TIR ppto %</th>
-                          <th
-                            scope="col"
-                            width="7%">TIR mes %</th>
-                          <th
-                            scope="col"
-                            width="7%">TIR real %</th>
-                          <th
-                            scope="col"
-                            width="7%">Fecha inv.</th>
-                          <th
-                            scope="col"
-                            width="12%">Inversión</th>
-                          <th
-                            scope="col"
-                            width="12%">Derechos</th>
-                          <th
-                            scope="col"
-                            width="12%">Monto recibido a la fecha</th>
-                          <th
-                            scope="col"
-                            width="12%">Monto a recibir</th>
-                          <th
-                            scope="col"
-                            width="5%">E </th>
-                          <th
-                            scope="col"
-                            width="7%">Otro</th>
+                          <th>Id</th>
+                          <th>Proyecto</th>
+                          <th>N° Doc</th>
+                          <th>TIR ppto %</th>
+                          <th>TIR mes %</th>
+                          <th>Fecha inv.</th>
+                          <th>Inversión</th>
+                          <th>Derechos</th>
+                          <th>Monto recibido a la fecha</th>
+                          <th>Monto a recibir</th>
+                          <th>Cuota por pagar</th>
+                          <th>Estado</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr
-                          v-for="item in items"
-                          :key="item">
-                          <th>{{ item.id }}</th>
-                          <td>{{ item.name }}</td>
-                          <td>123123</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td>{{ item.financiado }}</td>
-                          <td><i :class="item.iconedit"/></td>
-                          <td><i :class="item.iconchat"/></td>
+                        <tr 
+                          v-for="inversion in inversiones" 
+                          :key="inversion.id">
+                          <td :key="inversion.id">{{ inversion.id }}</td>
+                          <td>{{ inversion.proyecto.nombre }}</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>{{ inversion.derechos }}</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>--</td>
+                          <td>--</td>
                         </tr>
-
                       </tbody>
                     </table>
                   </div>

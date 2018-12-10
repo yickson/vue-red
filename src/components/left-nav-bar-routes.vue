@@ -23,12 +23,12 @@ export default {
     // root node.
     return props.routes.map(route => (
       <BaseLink
-        tag="a"
+        tag="li"
         key={route.name}
         to={route}
         exact-active-class={$style.active}
       >
-        {getRouteTitle(route)}
+        <a>{getRouteTitle(route)}</a>
       </BaseLink>
     ))
   },
@@ -39,10 +39,8 @@ export default {
 
 <style lang="scss" module>
 @import '@design';
-
 .active a {
   text-decoration: none;
   cursor: default;
-  background-color: #ff9302;
 }
 </style>

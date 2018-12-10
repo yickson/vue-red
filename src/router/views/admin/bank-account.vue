@@ -1,12 +1,85 @@
 <script>
 import Layout from '@layouts/admin'
+import { authComputed } from '@state/helpers'
+import axios from 'axios'
 
 export default {
   page: {
-    title: 'BankAccount',
-    meta: [{ name: 'description', content: 'BankAccount' }],
+    title: 'Cuenta Bancaria',
+    meta: [{ name: 'description', content: 'Bank acount' }],
   },
   components: { Layout },
+  data: () => ({
+    bancos: [],
+    responseMessage: '',
+    newBank: 1,
+    acountnumber: 0,
+    accounttype: 1,
+  }),
+  mounted() {
+    this.getBancos()
+  },
+  methods: {
+    success() {
+      this.$notify({
+        type: 'success',
+        title: '¡Bien!',
+        content: this.responseMessage,
+      })
+    },
+    warning() {
+      this.$notify({
+        type: 'warning',
+        title: '¡Atención!',
+        content: this.responseMessage,
+      })
+    },
+    getBancos() {
+      axios
+        .get('http://52.67.70.146/api/banco')
+        .then(response => {
+          console.log(response)
+          this.bancos = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    editBank() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      var databank = {
+        user_id: this.currentUser.data.usuario.id,
+        banco_id: this.newBank,
+        tipo_cuenta_id: this.accounttype,
+        numero: this.acountnumber,
+      }
+      axios
+        .put(
+          'http://52.67.70.146/api/usuario/banco/' +
+            this.currentUser.data.usuario.id,
+          databank,
+          {
+            headers: headers,
+          }
+        )
+        .then(response => {
+          console.log(response)
+          this.responseMessage = response.data.message
+          this.success()
+          console.log(this.responseMessage)
+        })
+        .catch(error => {
+          console.log(error)
+          this.warning()
+          this.responseMessage = 'Todos los campos son requeridos*'
+        })
+    },
+  },
+  computed: {
+    ...authComputed,
+  },
 }
 </script>
 
@@ -16,7 +89,7 @@ export default {
       <div class="col-sm-4">
         <div class="page-header float-left">
           <div class="page-title">
-            <h1>Datos Bancarios</h1>
+            <h1>Cambiar Cuenta Bancaria</h1>
           </div>
         </div>
       </div>
@@ -29,59 +102,42 @@ export default {
     <div class="content mt-3">
       <div class="animated fadeIn">
         <div class="row">
-          <div class="col col-md-12">
+          <div class="col-md-4 col-md-offset-4">
             <div class="card">
               <div class="card-body">
-                <form id="CuentaBancaria">
-                  <label for="">Banco</label>
-                  <select
-                    id="bancoDestino"
-                    name="bancoDestino"
-                    tabindex="6"
-                    class="form-control"
-                    required>
-                    <option value="">Seleccione</option><option
-                      selected=""
-                      value="1">BANCO DE CHILE - EDWARDS</option>
-                    <option value="9">BANCO INTERNACIONAL</option>
-                    <option value="12">BANCO ESTADO </option>
-                    <option value="14">SCOTIABANK (Y EX DESARROLLO)</option>
-                    <option value="16">BCI / TBANC(BCO DE CREDITO E I</option>
-                    <option value="17">BANCO DO BRASIL S.A</option>
-                    <option value="27">CORPBANCA</option>
-                    <option value="28">BANCO BICE</option>
-                    <option value="31">HSBC BANK</option>
-                    <option value="37">BANCO SANTANDER</option>
-                    <option value="39">BANCO ITAU CHILE</option>
-                    <option value="49">BANCO SECURITY</option>
-                    <option value="51">BANCO FALABELLA</option>
-                    <option value="53">BANCO RIPLEY</option>
-                    <option value="54">RABOBANK</option>
-                    <option value="55">BANCO CONSORCIO</option>
-                    <option value="57">BANCO PARIS</option>
-                    <option value="504">BBVA</option>
-                  </select>
+                <div 
+                  id="Password" 
+                  class="row">
+                  <div class="col-xs-12 col-sm-12">
+                    <form 
+                      action 
+                      @submit.prevent="editBank">
+                      <label for>Número de cuenta</label>
+                      <BaseInput 
+                        v-model="acountnumber" 
+                        class="form-control"/>
 
-                  <label for="">Tipo de cuenta</label>
-                  <select
-                    id="tipo_cuenta"
-                    name="cuenta_cr"
-                    class="form-control">
-                    4<option value="1">Cuenta de Ahorro</option>4<option value="2">Cuenta Vista</option>4<option
-                      selected=""
-                      value="4">Cuenta Corriente</option>
-                  </select>
-
-                  <label for="">Nro de cuenta</label>
-                  <input
-                    id="cuenta_banco"
-                    class="form-control"
-                    required="required"
-                    type="text"
-                    name="cuenta_banco">
-                      </input>
-                  <button class="button btn form-button-bank">Guardar</button>
-                </form>
+                      <label for>Tipo de cuenta</label>
+                      <select 
+                        v-model="accounttype" 
+                        class="form-control">
+                        <option value="0">Cuenta vista</option>
+                        <option value="1">Cuenta corriente</option>
+                        <option value="2">Cuenta de Ahorro</option>
+                      </select>
+                      
+                      <label for>Seleccione Banco</label>
+                      <select 
+                        v-model="newBank" 
+                        class="form-control">
+                        <option 
+                          v-for="banco in bancos" 
+                          :value="banco.id">{{ banco.nombre }}</option>
+                      </select>
+                      <button class="button btn form-button-bank">GUARDAR CAMBIOS</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -91,19 +147,22 @@ export default {
   </Layout>
 </template>
 
-
 <style>
-#CuentaBancaria .form-control {
+#Password.form-control {
   box-shadow: none;
   height: 40px;
 }
-#CuentaBancaria .form-button-bank {
-  width: 120px;
+#Password .form-button-bank {
+  width: 100%;
   height: 40px;
+  font-size: 14px;
   color: #ffffff;
   background-color: #f47828;
   border-radius: 2px;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 10px;
+}
+#Password label {
+  margin-top: 15px;
 }
 </style>

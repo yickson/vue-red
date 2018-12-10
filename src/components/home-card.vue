@@ -111,11 +111,11 @@ export default {
             <span 
               v-tooltip="'Cantidad de visitas'" 
               class="glyphicon glyphicon-eye-open"/>
-            <span>0</span>
+            <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
             <span 
               v-tooltip="'Cantidad de Inversionistas'" 
               class="glyphicon glyphicon-user"/>
-            <span>0</span>
+            <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
           </div>
         </div>
       </div>
@@ -147,6 +147,7 @@ export default {
                   type="text"
                   class="form-control form-footer"
                   placeholder="Cantidad"
+                  @keyup="formatPrice"
                 >
               </div>
             </div>
@@ -183,7 +184,7 @@ export default {
     -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
 }
 .card-proyect:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 .btn-submit-simulate {
@@ -242,7 +243,7 @@ export default {
 .card-value {
   font-weight: bold;
 }
-.progress {
+.card-proyect .progress {
   height: 7px;
   border-radius: 0;
 }

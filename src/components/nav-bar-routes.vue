@@ -40,7 +40,7 @@ export default {
 @import '@design';
 
 .active a {
-  border-bottom: 5px solid #ff9302;
+  transition: border 0.35s linear;
   text-decoration: none;
   cursor: default;
 }

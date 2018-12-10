@@ -1,12 +1,67 @@
 <script>
 import Layout from '@layouts/admin'
+import { authComputed } from '@state/helpers'
+import axios from 'axios'
 
 export default {
   page: {
-    title: 'Mandates',
-    meta: [{ name: 'description', content: 'Mandates' }],
+    title: 'Mandatos',
+    meta: [{ name: 'description', content: 'Mandatos' }],
   },
   components: { Layout },
+  data() {
+    return {
+      contratos: [],
+      proyecto: 0,
+      gettedproyect: [],
+    }
+  },
+  mounted() {
+    this.getMandatos()
+  },
+  methods: {
+    getMandatos() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get(
+          'http://52.67.70.146/api/inversiones/' +
+            this.currentUser.data.usuario.id +
+            '/mandatos',
+          {
+            headers: headers,
+          }
+        )
+        .then(response => {
+          this.contratos = response.data.data.contratos
+          this.proyecto = response.data.data.contratos[0].proyecto_id
+          this.getDetalleProyecto()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getDetalleProyecto() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get('http://52.67.70.146/api/proyecto/' + this.proyecto, {
+          headers: headers,
+        })
+        .then(response => {
+          console.log(response)
+          this.gettedproyect = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+  },
+  computed: {
+    ...authComputed,
+  },
 }
 </script>
 
@@ -37,31 +92,24 @@ export default {
                     <thead class="thead-light">
                       <tr>
                         <th scope="col">Nombre contrato</th>
+                        <th scope="col">ID Proyecto</th>
+                        <th scope="col">Nombre Proyecto</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Descargar</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">Definiciones y Antecedentes previos al uso</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#"><i class="fa fa-file-pdf-o"/></a></td>
+                      <tr v-for="contrato in contratos">
+                        <td>{{ contrato.contrato.nombre }}</td>
+                        <td>{{ gettedproyect.id }}</td>
+                        <td>{{ gettedproyect.nombre }}</td>
+                        <td>{{ contrato.fecha }}</td>
+                        <td>{{ contrato.estado.descripcion }}</td>
+                        <td class="text-center">
+                          <i class="far fa-file-pdf"/>
+                        </td>
                       </tr>
-                      <tr>
-                        <th scope="row">Mandato Especial Inversionista</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#"><i class="fa fa-file-pdf-o"/></a></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Mandato Especial Inversionista</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#"><i class="fa fa-file-pdf-o"/></a></td>
-                      </tr>
-
                     </tbody>
                   </table>
                 </div>
@@ -75,6 +123,8 @@ export default {
 </template>
 
 
-<style lang="scss" module>
-@import '@design';
+<style>
+.fa-file-pdf {
+  font-size: 20px;
+}
 </style>

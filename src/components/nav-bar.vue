@@ -1,9 +1,10 @@
 <script>
 import { authComputed } from '@state/helpers'
 import NavBarRoutes from './nav-bar-routes.vue'
+import LeftNavRoutes from './left-nav-bar-routes.vue'
 
 export default {
-  components: { NavBarRoutes },
+  components: { NavBarRoutes, LeftNavRoutes },
   data() {
     return {
       navsfirst: [
@@ -48,14 +49,18 @@ export default {
         },
       ],
       loggedInNavRoutes: [
-        {
+        /* {
           name: 'profile',
           title: () =>
             'Sesión iniciada de ' + this.currentUser.data.usuario.email,
-        },
+        }, */
         {
           name: 'logout',
           title: 'Cerrar sesión',
+        },
+        {
+          name: 'personal information',
+          title: 'Mi Panel',
         },
       ],
       loggedOutNavRoutes: [

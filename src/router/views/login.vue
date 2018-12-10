@@ -14,6 +14,7 @@ export default {
     return {
       email: '',
       password: '',
+      provider: 'users',
       authError: null,
       tryingToLogIn: false,
       Password: false,
@@ -46,6 +47,7 @@ export default {
       return this.logIn({
         email: this.email,
         password: this.password,
+        provider: this.provider,
       })
         .then(token => {
           this.tryingToLogIn = false

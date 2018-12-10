@@ -14,60 +14,6 @@ export default {
   data() {
     return {
       proyectos: [],
-      /* items: [
-        {
-          id: 1,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA A LOGISFA',
-          amount: '1111111',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 10,
-          financiado: '10%',
-          rentabilidad: '20%',
-        },
-        {
-          id: 2,
-          avatar:
-            'https://media.forfattarcentrum.se/2017/06/forfattares-arbetsplats.jpg',
-          name: 'FACTURA A TECNOLOGIA A',
-          amount: '2222222',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 40,
-          financiado: '10%',
-          rentabilidad: '20%',
-        },
-        {
-          id: 3,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 30,
-          financiado: '10%',
-          rentabilidad: '20%',
-        },
-        {
-          id: 4,
-          avatar:
-            'https://icdn2.digitaltrends.com/image/artifox-desk-02-720x720.jpg?ver=1.jpg',
-          name: 'FACTURA PROMET SERCIOS',
-          amount: '3333333',
-          tazaRetorno: '11%',
-          plazo: '70 dias',
-          identificador: '3D4CV',
-          progress: 60,
-          financiado: '10%',
-          rentabilidad: '20%',
-        },
-      ], */
     }
   },
 

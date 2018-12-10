@@ -1,56 +1,50 @@
 <script>
-export default {}
+import { authComputed } from '@state/helpers'
+import NavBarRoutes from './nav-bar-routes.vue'
+import LeftNav from './left-nav.vue'
+
+export default {
+  components: { NavBarRoutes, LeftNav },
+  data() {
+    return {
+      loggedInNavRoutes: [
+        {
+          name: 'profile',
+          title: () =>
+            'Sesión iniciada de ' + this.currentUser.data.usuario.email,
+        },
+        {
+          name: 'logout',
+          title: 'Cerrar sesión',
+        },
+      ],
+    }
+  },
+
+  computed: {
+    ...authComputed,
+  },
+}
 </script>
 
 <template>
-  <header
-    id="header"
+  <header 
+    id="header" 
     class="header">
     <div class="header-menu">
-      <div class="col-sm-7">
-        <div class="header-left">
-          <div class="dropdown for-notification">
-            <button
-              id="notification"
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              <i class="fa fa-bell"/>
-              <span class="count bg-danger">5</span>
-            </button>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="notification">
-              <p class="red">Notificaciones</p>
-              <a
-                class="dropdown-item media"
-                href="#">
-                <i class="fa fa-check"/>
-                <p>Server #1 overloaded.</p>
-              </a>
-              <a
-                class="dropdown-item media"
-                href="#">
-                <i class="fa fa-info"/>
-                <p>Server #2 overloaded.</p>
-              </a>
-              <a
-                class="dropdown-item media bg-flat-color-3"
-                href="#">
-                <i class="fa fa-warning"/>
-                <p>Server #3 overloaded.</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-5">
+      <div class="col-sm-12 user-options">
         <div class="user-area dropdown float-right">
-          <a href="/logout">
-            <i class="fa fa-sign-out"/>Cerrar sesion abuschmann@valorreal.cl
-          </a>
+          <dropdown menu-right>
+            <btn class="dropdown-toggle avatar-btn"/>
+            <template slot="dropdown">
+              <NavBarRoutes 
+                v-if="loggedIn" 
+                :routes="loggedInNavRoutes"/>
+              <NavBarRoutes 
+                v-else 
+                :routes="loggedOutNavRoutes"/>
+            </template>
+          </dropdown>
         </div>
       </div>
     </div>
@@ -84,5 +78,32 @@ export default {}
   line-height: 15px;
   color: #fff;
   border-radius: 50%;
+}
+.user-options ul li {
+  list-style: none;
+}
+.avatar-btn {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+.avatar-btn {
+  font-size: 30px;
+  background-image: url(https://www.w3schools.com/howto/img_avatar.png);
+  background-size: cover;
+}
+.avatar-btn::after {
+}
+.avatar-btn .btn-default.active.focus,
+.btn-default.active:focus,
+.btn-default.active:hover,
+.btn-default:active.focus,
+.btn-default:active:focus,
+.btn-default:active:hover,
+.open > .dropdown-toggle.btn-default.focus,
+.open > .dropdown-toggle.btn-default:focus,
+.open > .dropdown-toggle.btn-default:hover {
+  background-image: url(https://www.w3schools.com/howto/img_avatar.png);
+  background-size: cover;
 }
 </style>

@@ -1,12 +1,46 @@
 <script>
 import Layout from '@layouts/admin'
+import { authComputed } from '@state/helpers'
+import axios from 'axios'
 
 export default {
   page: {
-    title: 'PendingPayments',
+    title: 'Pagos pendientes',
     meta: [{ name: 'description', content: 'PendingPayments' }],
   },
   components: { Layout },
+  data() {
+    return {
+      inversionespendientes: [],
+    }
+  },
+  mounted() {
+    this.getPendingInversiones()
+  },
+  methods: {
+    getPendingInversiones() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get(
+          'http://52.67.70.146/api/inversiones/' +
+            this.currentUser.data.usuario.id +
+            '/pendiente',
+          { headers: headers }
+        )
+        .then(response => {
+          this.inversionespendientes = response.data.data
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+  },
+  computed: {
+    ...authComputed,
+  },
 }
 </script>
 
@@ -41,72 +75,22 @@ export default {
                           <th scope="col">Proyecto</th>
                           <th scope="col">Fecha Inv.</th>
                           <th scope="col">Fecha límite Tir</th>
-                          <th scope="col">Derechos </th>
+                          <th scope="col">Derechos</th>
                           <th scope="col">Préstamos</th>
                           <th scope="col">Inversión</th>
                           <th scope="col">Transferir ahora</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">11</th>
-                          <td>Nombre proyecto</td>
-                          <td>0000-00-0</td>
-                          <td>0000-00-0</td>
-                          <td> ---- </td>
-                          <td> ---- </td>
-                          <td>3.0000.000</td>
-                          <td><a href="#">Transferir</a></td>
+                        <tr v-for="inversion in inversionespendientes">
+                          <td>{{ inversion.nombre }}</td>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
+                          <td/>
                         </tr>
                       </tbody>
                     </table>

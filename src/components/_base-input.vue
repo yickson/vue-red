@@ -22,12 +22,11 @@ export default {
 </script>
 
 <template>
-  <input
-    :type="type"
-    :value="value"
-    :class="$style.input"
-    v-on="listeners"
-  >
+  <input 
+    :type="type" 
+    :value="value" 
+    :class="$style.input" 
+    v-on="listeners">
 </template>
 
 <style lang="scss" module>
@@ -44,5 +43,6 @@ export default {
   height: 40px;
   border: $size-input-border solid $color-input-border;
   border-radius: $size-input-border-radius;
+  box-shadow: none;
 }
 </style>

@@ -11,11 +11,10 @@ export default {
 <template>
   <div>
     <LeftNavBar/>
-    <div
-      id="right-panel">
+    <main id="right-panel">
       <TopNavBar/>
       <slot/>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -25,17 +24,24 @@ body {
   background: #f1f2f7;
 }
 .form-control {
+  height: 40px !important;
+  box-shadow: none;
+  border: 1px solid #bac9d8;
+}
+.form-control {
   font-size: inherit;
 }
 select.form-control:not([size]):not([multiple]) {
   height: auto;
+}
+#right-panel {
+  font-size: 14px;
 }
 #right-panel .page-header h1 {
   padding: 15px 0;
   font-size: 18px;
 }
 #right-panel {
-  display: table-cell !important;
   padding-left: 0 !important;
   -webkit-transition: all 0.35s ease;
   transition: all 0.35s ease;
@@ -82,5 +88,17 @@ select.form-control:not([size]):not([multiple]) {
 .mt-3,
 .my-3 {
   margin-top: 1rem !important;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.fade:not(.show) {
+  opacity: 1;
+}
+
+#right-panel .table .thead-light th {
+  color: white;
+  background-color: #5397da;
+  border-color: #337ab7;
 }
 </style>
