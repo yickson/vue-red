@@ -71,7 +71,7 @@ export default [
       // If the user is already logged in
       if (store.getters['auth/loggedIn']) {
         // Redirect to the home page instead
-        next({ name: 'dashboard' })
+        next({ name: 'home' })
       } else {
         // Continue to the login page
         next()
@@ -120,14 +120,14 @@ export default [
     name: 'logout',
     meta: {
       authRequired: true,
-    },
-    beforeEnter(routeTo, routeFrom, next) {
-      store.dispatch('auth/logOut')
-      const authRequiredOnPreviousRoute = routeFrom.matched.some(
-        route => route.meta.authRequired
-      )
-      // Navigate back to previous page, or home as a fallback
-      next(authRequiredOnPreviousRoute ? { name: 'home' } : { ...routeFrom })
+      beforeResolve(routeTo, routeFrom, next) {
+        store.dispatch('auth/logOut')
+        const authRequiredOnPreviousRoute = routeFrom.matched.some(
+          route => route.meta.authRequired
+        )
+        // Navigate back to previous page, or home as a fallback
+        next(authRequiredOnPreviousRoute ? { name: 'home' } : { ...routeFrom })
+      },
     },
   },
   {

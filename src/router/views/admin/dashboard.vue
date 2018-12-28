@@ -32,10 +32,7 @@ export default {
     </div>
     <div class="content mt-3">
       <div class="col-sm-12">
-        <alert 
-          type="success" 
-          dismissible 
-          @dismissed="show = false">
+        <alert type="success" dismissible @dismissed="show = false">
           <b>¡Bienvenido!</b>
           <br>
           {{ currentUser.data.usuario.nombre }} {{ currentUser.data.usuario.app_pat }}, Aquí podras ver toda la información relevante para ti.
@@ -55,16 +52,7 @@ export default {
             </h4>
             <p class="text-light">Total Invertido</p>
 
-            <div 
-              class="chart-wrapper px-0" 
-              style="height:70px;" 
-              height="70">
-              <line-chart
-                :colors="['#ffffff91', '#ffffff91']"
-                :data="{'2017-05-13': 2, '2017-05-14': 5}"
-                width="110px"
-                height="110px"
-              />
+            <div class="chart-wrapper px-0" style="height:70px;" height="70">
               <!--CHART-->
             </div>
           </div>
@@ -85,16 +73,7 @@ export default {
               <span>%</span>
             </h4>
             <p class="text-light">Mora promedio gnral.</p>
-            <div 
-              class="chart-wrapper px-0" 
-              style="height:70px;" 
-              height="70">
-              <line-chart
-                :colors="['#ffffff', '#ffffff']"
-                :data="{'2017-05-13': 2, '2017-05-14': 5}"
-                width="110px"
-                height="110px"
-              />
+            <div class="chart-wrapper px-0" style="height:70px;" height="70">
               <!--CHART-->
             </div>
           </div>
@@ -117,16 +96,7 @@ export default {
             <p class="text-light">Rentabilidad prom. devengado</p>
           </div>
 
-          <div 
-            class="chart-wrapper px-0" 
-            style="height:70px;" 
-            height="70">
-            <line-chart
-              :colors="['#ffffff', '#ffffff']"
-              :data="{'2017-05-13': 2, '2017-05-14': 5}"
-              width="110px"
-              height="130px"
-            />
+          <div class="chart-wrapper px-0" style="height:70px;" height="70">
             <!--CHART-->
           </div>
         </div>
@@ -143,18 +113,7 @@ export default {
               <span>$50.000.000</span>
             </h4>
             <p class="text-light">Vencimiento en 90 días</p>
-            <div 
-              class="chart-wrapper px-3" 
-              style="height:70px;" 
-              height="70">
-              <column-chart
-                :data="[['Sun', 32], ['Mon', 46], ['Tue', 28], ['Sun', 39],['Mon', 28],['Tue', 28],['Tue', 28]]"
-                :colors="['#fa9898']"
-                :dataset="{borderWidth:0}"
-                width="110px"
-                height="110px"
-              />
-            </div>
+            <div class="chart-wrapper px-3" style="height:70px;" height="70"></div>
           </div>
         </div>
       </div>
@@ -249,9 +208,7 @@ export default {
               <li>
                 <div class="text-muted">Indicador</div>
                 <strong>29.703</strong>
-                <div 
-                  class="progress progress-xs mt-2" 
-                  style="height: 5px;">
+                <div class="progress progress-xs mt-2" style="height: 5px;">
                   <div
                     class="progress-bar bg-success"
                     role="progressbar"
@@ -265,9 +222,7 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Unique</div>
                 <strong>20%</strong>
-                <div 
-                  class="progress progress-xs mt-2" 
-                  style="height: 5px;">
+                <div class="progress progress-xs mt-2" style="height: 5px;">
                   <div
                     class="progress-bar bg-info"
                     role="progressbar"
@@ -281,9 +236,7 @@ export default {
               <li>
                 <div class="text-muted">Indicador</div>
                 <strong>78.706</strong>
-                <div 
-                  class="progress progress-xs mt-2" 
-                  style="height: 5px;">
+                <div class="progress progress-xs mt-2" style="height: 5px;">
                   <div
                     class="progress-bar bg-warning"
                     role="progressbar"
@@ -297,9 +250,7 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Indicador</div>
                 <strong>22.123</strong>
-                <div 
-                  class="progress progress-xs mt-2" 
-                  style="height: 5px;">
+                <div class="progress progress-xs mt-2" style="height: 5px;">
                   <div
                     class="progress-bar bg-danger"
                     role="progressbar"
@@ -313,9 +264,7 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Indicador</div>
                 <strong>40.15%</strong>
-                <div 
-                  class="progress progress-xs mt-2" 
-                  style="height: 5px;">
+                <div class="progress progress-xs mt-2" style="height: 5px;">
                   <div
                     class="progress-bar"
                     role="progressbar"
@@ -342,7 +291,16 @@ export default {
 
 .card {
   margin-bottom: 1.5rem;
-  border-radius: 0;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1); */
+  border: 1px solid transparent;
+}
+.card:hover {
+  -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  opacity: 1;
 }
 .stat-widget-one .stat-text {
   font-size: 14px;
@@ -364,19 +322,59 @@ ol {
   padding-left: 0;
 }
 .bg-flat-color-1 {
-  background: #20a8d8;
+  background: #00c6ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #0072ff,
+    #00c6ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #0072ff,
+    #00c6ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .bg-flat-color-2 {
-  background: #63c2de;
+  background: #56ccf2; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2f80ed,
+    #56ccf2
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2f80ed,
+    #56ccf2
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .bg-flat-color-3 {
-  background: #ffc107;
+  background: #f7971e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #ffd200,
+    #f7971e
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #ffd200,
+    #f7971e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .bg-flat-color-4 {
-  background: #f86c6b;
+  background: #ff512f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #f09819,
+    #ff512f
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #f09819,
+    #ff512f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .bg-flat-color-5 {

@@ -1,12 +1,47 @@
 <script>
 import Layout from '@layouts/admin'
+import { authComputed } from '@state/helpers'
+import axios from 'axios'
 
 export default {
   page: {
-    title: 'PaymentsAndCertificate',
-    meta: [{ name: 'description', content: 'PaymentsAndCertificate' }],
+    title: 'Pagos y certificados',
+    meta: [{ name: 'description', content: 'Pagos y certificados' }],
+  },
+  data() {
+    return {
+      pagares: [],
+    }
   },
   components: { Layout },
+  mounted() {
+    this.getPagares()
+  },
+  methods: {
+    getPagares() {
+      var headers = {
+        'Content-type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get(
+          'http://52.67.70.146/api/inversiones/' +
+            this.currentUser.data.usuario.id +
+            '/pagares',
+          { headers: headers }
+        )
+        .then(response => {
+          console.log('respuesta' + response)
+          this.pagares = response.data.data.contratos
+        })
+        .catch(error => {
+          console.log('error' + error)
+        })
+    },
+  },
+  computed: {
+    ...authComputed,
+  },
 }
 </script>
 
@@ -31,35 +66,25 @@ export default {
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-body" >
+              <div class="card-body">
                 <div class="col-md-12">
                   <table class="table">
                     <thead class="thead-light">
                       <tr>
                         <th scope="col">Nombre contrato</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
                         <th scope="col">Ver en Google Drive</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">Definiciones y Antecedentes previos al uso</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#">Ver en drive</a></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Mandato Especial Inversionista</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#">Ver en drive</a></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Mandato Especial Inversionista</th>
-                        <td>Aprobado</td>
-                        <td>Mandato Especial Inversionista</td>
-                        <td><a href="#">Ver en drive</a></td>
+                      <tr v-for="pagare in pagares">
+                        <td>
+                          <strong>{{pagare.contrato.nombre}}</strong>
+                        </td>
+                        <td>{{pagare.fecha}}</td>
+                        <td>
+                          <a :href="pagare.documento">Ver en google drive</a>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

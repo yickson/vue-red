@@ -12,10 +12,12 @@ export default {
   data() {
     return {
       inversionespendientes: [],
+      //proyecto: proyectopendiente[i],
     }
   },
   mounted() {
     this.getPendingInversiones()
+    this.getInversionData()
   },
   methods: {
     getPendingInversiones() {
@@ -32,6 +34,24 @@ export default {
         .then(response => {
           this.inversionespendientes = response.data.data
           console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getInversionData() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get(
+          'http://52.67.70.146/api/inversiones/' +
+            this.currentUser.data.usuario.id,
+          { headers: headers }
+        )
+        .then(response => {
+          console.log(response)
+          this.proyectopendiente = response.data
         })
         .catch(error => {
           console.log(error)
@@ -74,7 +94,6 @@ export default {
                           <th scope="col">Id</th>
                           <th scope="col">Proyecto</th>
                           <th scope="col">Fecha Inv.</th>
-                          <th scope="col">Fecha límite Tir</th>
                           <th scope="col">Derechos</th>
                           <th scope="col">Préstamos</th>
                           <th scope="col">Inversión</th>
@@ -83,13 +102,10 @@ export default {
                       </thead>
                       <tbody>
                         <tr v-for="inversion in inversionespendientes">
-                          <td>{{ inversion.nombre }}</td>
-                          <td/>
-                          <td/>
-                          <td/>
-                          <td/>
-                          <td/>
-                          <td/>
+                          <td>{{inversion.empresa_id}}</td>
+                          <td>{{inversion.nombre }}</td>
+                          <td>27/12/2018</td>
+                          <td>5.000</td>
                           <td/>
                         </tr>
                       </tbody>

@@ -52,6 +52,8 @@ select.form-control:not([size]):not([multiple]) {
   padding: 0 5px;
   margin-top: 0;
   background-color: #fff;
+  position: relative;
+  top: -21px;
 }
 
 #right-panel .page-header {
@@ -70,6 +72,8 @@ select.form-control:not([size]):not([multiple]) {
   background: #fff;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  position: relative;
+  top: -21px;
 }
 .card {
   word-wrap: break-word;

@@ -28,12 +28,11 @@ export const actions = {
 
     // 3. Fetch the user from the API and cache it in case
     //    we need it again in the future.
-    return axios
-      .get(`http://52.67.70.146/api/login/${email}`)
-      .then(response => {
-        const user = response.data
-        commit('CACHE_USER', user)
-        return user
-      })
+    data = { email: this.email, password: this.password, provider: 'users' }
+    return axios.get(`http://52.67.70.146/api/login/`, data).then(response => {
+      const user = response.data.usuario
+      commit('CACHE_USER', user)
+      return user
+    })
   },
 } */

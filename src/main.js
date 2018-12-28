@@ -8,6 +8,7 @@ import Chart from 'vue-chartjs'
 import Vuetabs from 'vue-nav-tabs'
 import VueCarousel from 'vue-carousel'
 import VueChartkick from 'vue-chartkick'
+import jsPDF from 'jspdf'
 
 // Don't warn about using the dev version of Vue in development
 Vue.use(uiv)
@@ -15,6 +16,7 @@ Vue.use(Chart)
 Vue.use(Vuetabs)
 Vue.use(VueCarousel)
 Vue.use(VueChartkick)
+Vue.use(jsPDF)
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 const app = new Vue({

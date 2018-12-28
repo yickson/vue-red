@@ -143,7 +143,7 @@ export default {
 }
 /* burger */
 .bm-burger-button {
-  position: fixed;
+  position: relative;
   width: 31px;
   height: 21px;
   left: 36px;
@@ -180,17 +180,7 @@ export default {
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
-  background: #2b5876; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #26242d,
-    #2b5876
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #26242d,
-    #2b5876
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #333; /* fallback for old browsers */
 
   /*overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 0px; /* Place content 60px from the top */
@@ -217,8 +207,8 @@ export default {
 }
 @media screen and (max-width: 40em) {
   .bm-burger-button {
-    left: 6px;
-    top: 6px;
+    left: 36px;
+    top: 26px;
   }
 }
 </style>

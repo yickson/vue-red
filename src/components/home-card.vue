@@ -61,10 +61,7 @@ export default {
         <!-- header-->
         <div class="row">
           <div class="col-xs-12 col-sm-12">
-            <img 
-              :src="proyecto.foto_proyecto" 
-              alt 
-              class="img-responsive avatar">
+            <img :src="proyecto.foto_proyecto" alt class="img-responsive avatar">
           </div>
         </div>
       </div>
@@ -83,10 +80,7 @@ export default {
             class="Fullfinanced"
             type="success"
           />
-          <progress-bar-stack 
-            v-else 
-            v-model=" porcentajeFinanciado" 
-            type="warning"/>
+          <progress-bar-stack v-else v-model=" porcentajeFinanciado" type="warning"/>
         </progress-bar>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
@@ -104,42 +98,25 @@ export default {
         </div>
         <div class="row">
           <div class="col-xs-12 text-center">
-            <span 
-              v-tooltip="'Dias Restantes'" 
-              class="glyphicon glyphicon-calendar"/>
+            <span v-tooltip="'Dias Restantes'" class="glyphicon glyphicon-calendar"/>
             <span>0</span>
-            <span 
-              v-tooltip="'Cantidad de visitas'" 
-              class="glyphicon glyphicon-eye-open"/>
+            <span v-tooltip="'Cantidad de visitas'" class="glyphicon glyphicon-eye-open"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
-            <span 
-              v-tooltip="'Cantidad de Inversionistas'" 
-              class="glyphicon glyphicon-user"/>
+            <span v-tooltip="'Cantidad de Inversionistas'" class="glyphicon glyphicon-user"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
           </div>
         </div>
       </div>
       <div class="row card-footer">
-        <div 
-          v-show="!btnSimulateCliked" 
-          class="col-xs-12 col-sm-12">
-          <button 
-            v-if="porcentajeFinanciado == 100" 
-            class="btn card-button Fullfinanced">
+        <div v-show="!btnSimulateCliked" class="col-xs-12 col-sm-12">
+          <button v-if="porcentajeFinanciado == 100" class="btn card-button Fullfinanced">
             financiado
             <i class="fas fa-check-circle"/>
           </button>
-          <button 
-            v-else 
-            class="btn card-button" 
-            @click="simulate()">Simular</button>
+          <button v-else class="btn card-button" @click="simulate()">Simular</button>
         </div>
-        <div 
-          v-show="btnSimulateCliked" 
-          class="col-xs-12 col-sm-12 text-center">
-          <form 
-            class="form-inline footer-input" 
-            @submit.prevent="submitAmount">
+        <div v-show="btnSimulateCliked" class="col-xs-12 col-sm-12 text-center">
+          <form class="form-inline footer-input" @submit.prevent="submitAmount">
             <div class="form-group">
               <div class="input-group">
                 <input
@@ -168,29 +145,43 @@ export default {
 
 <style>
 .card-proyect {
-  margin-top: 10px;
+  margin-top: 40px;
+  margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
-  max-width: 240px;
-  min-height: 210px;
+  max-width: 250px;
+  min-height: 190px;
   font-size: 1em;
   text-align: left;
   background: #fff;
   border: none;
-  border-radius: 2px;
-  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.1s ease, transform 0.1s ease,
     -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
 }
 .card-proyect:hover {
   transform: translateY(-5px);
+  -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .btn-submit-simulate {
   width: 40px;
   height: 40px;
-  background-color: #ea5b2b;
+  background: #fc4a1a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
   border-radius: 2px;
 }
@@ -217,16 +208,29 @@ export default {
   box-shadow: none;
   border-right: none;
 }
+.card-proyect .btn > .Fullfinanced {
+  background-color: green !important;
+}
 .card-proyect .card-button {
   width: 100%;
   color: #fff;
-  background-color: #ea5b2b;
+  /*background-color: #ea5b2b;*/
+  background: #fc4a1a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   border: none;
   border-radius: 2px;
 }
-.Fullfinanced {
-  background-color: green !important;
-}
+
 .card-price {
   margin-bottom: 0;
   font-size: 1.2em;

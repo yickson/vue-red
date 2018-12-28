@@ -51,7 +51,6 @@ export default {
       })
         .then(token => {
           this.tryingToLogIn = false
-
           // Redirect to the originally requested page, or to the home page
           this.$router.push(this.$route.query.redirectFrom || { name: 'home' })
         })
@@ -90,54 +89,29 @@ export default {
     <div class="container">
       <div class="form-login">
         <!--FORM LOGIN -->
-        <form 
-          v-if="!Password" 
-          @submit.prevent="tryToLogIn">
-          <label for>Email</label>
-          <BaseInput 
-            v-model="email" 
-            name="email"/>
+        <form v-if="!Password" @submit.prevent="tryToLogIn">
+          <label for>RUT</label>
+          <BaseInput v-model="email" name="email"/>
           <label for>Contraseña</label>
-          <BaseInput 
-            v-model="password" 
-            name="password" 
-            type="password"/>
-          <button 
-            :disabled="tryingToLogIn" 
-            class="btn" 
-            type="submit">
-            <BaseIcon 
-              v-if="tryingToLogIn" 
-              name="sync" 
-              spin/>
+          <BaseInput v-model="password" name="password" type="password"/>
+          <button :disabled="tryingToLogIn" class="btn" type="submit">
+            <BaseIcon v-if="tryingToLogIn" name="sync" spin/>
             <span v-else>Log in</span>
           </button>
         </form>
 
         <!-- FORM RECUPERAR CONTRASEÑA-->
-        <form 
-          v-else 
-          @submit.prevent="nuevacontraseña()">
+        <form v-else @submit.prevent="nuevacontraseña()">
           <label for>Email Usuario</label>
-          <BaseInput 
-            v-model="emailRetrievePassword" 
-            name="email-contraseña"/>
+          <BaseInput v-model="emailRetrievePassword" name="email-contraseña"/>
 
-          <button 
-            class="btn" 
-            type="submit">
+          <button class="btn" type="submit">
             <span>Recuperar</span>
           </button>
         </form>
 
-        <span 
-          v-if="Password" 
-          class="link-login" 
-          @click="LinkLogin()">Ingresar</span>
-        <span 
-          v-else 
-          class="link-login" 
-          @click="LinkRecuperar()">Recuperar contraseña</span> /
+        <span v-if="Password" class="link-login" @click="LinkLogin()">Ingresar</span>
+        <span v-else class="link-login" @click="LinkRecuperar()">Recuperar contraseña</span> /
         <a href="/register">Crear cuenta</a>
       </div>
     </div>
@@ -159,7 +133,13 @@ export default {
   max-width: 400px;
   padding: 40px;
   margin: 40px auto;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+.form-login:hover {
+  -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 .form-login .btn {
   width: 120px;

@@ -162,10 +162,7 @@ export default {
         <div class="col-xs-12 col-sm-12 col-md-4">
           <h2 class="project-title">{{ proyecto.id }}</h2>
           <h2 class="project-title">{{ proyecto.nombre }}</h2>
-          <img 
-            :src="proyecto.foto_proyecto" 
-            alt 
-            class="img-responsive img-thumbnail">
+          <img :src="proyecto.foto_proyecto" alt class="img-responsive img-thumbnail">
         </div>
 
         <!-- SIMULATOR -->
@@ -178,13 +175,8 @@ export default {
                 class="progress-label"
               >Finanaciado al {{ porcentajeFinanciado }}% - Reservado {{ porcentajeReservado }}%</label>
               <progress-bar>
-                <progress-bar-stack 
-                  v-model="porcentajeFinanciado" 
-                  type="success"/>
-                <progress-bar-stack 
-                  v-model="porcentajeReservado" 
-                  type="warning" 
-                  striped/>
+                <progress-bar-stack v-model="porcentajeFinanciado" type="success"/>
+                <progress-bar-stack v-model="porcentajeReservado" type="warning" striped/>
               </progress-bar>
               <!-- INFO  -->
               <div class="row">
@@ -208,21 +200,15 @@ export default {
             </div>
           </div>
           <!--PASO 1 -->
-          <div 
-            v-if="pasopago == 1" 
-            class="container-simulate animated fadeIn">
+          <div v-if="pasopago == 1" class="container-simulate animated fadeIn">
             <!-- HEADER INPUT AND BUTTONS -->
             <div class="simulate-header">
               <p class="text-center title-simulate">Ingrese monto a invertir</p>
               <div class="row simulate-input-result">
                 <div class="col-xs-12 col-sm-6">
-                  <form 
-                    class="form-inline text-center" 
-                    @submit.prevent="simulate">
+                  <form class="form-inline text-center" @submit.prevent="simulate">
                     <div class="form-group">
-                      <label 
-                        class="sr-only" 
-                        for="exampleInputAmount">Ingresa monto a invertir</label>
+                      <label class="sr-only" for="exampleInputAmount">Ingresa monto a invertir</label>
                       <div class="input-group">
                         <input
                           id="exampleInputAmount"
@@ -244,35 +230,33 @@ export default {
                 </div>
               </div>
 
-              <div 
-                v-if="!loggedIn" 
-                class="text-center">
+              <div v-if="!loggedIn" class="text-center">
                 <p>Debes iniciar sesion para poder invertir.</p>
                 <button class="btn">INGRESAR</button>
               </div>
 
-              <div 
-                v-else="loggedIn" 
-                class="userLogged text-center">
-                <button 
-                  class="btn total" 
-                  @click="investamount">INVERTIR EL TOTAL AHORA</button>
-                <p>
-                  Reservaremos tu cupo. El beneficio es que no tendrás que volver para transferir.
-                  Si aún no es la fecha de inicio del proyecto: Tu rentabilidad real bajará por unos días.
-                </p>
-                <button class="btn derechos">INVERTIR SOLO LOS DERECHOS</button>
-                <p class="invest-rights-txt">
-                  Al transferir reservaremos tu cupo. Te avisaremos cuando debes transferir el saldo de tu inversión.
-                  Desde ahí tienes 1 día para hacerlo, si no, pierdes los derechos.
-                </p>
+              <div v-else="loggedIn" class="userLogged">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <button class="btn total" @click="investamount">INVERTIR EL TOTAL AHORA</button>
+                    <p class="text-left">
+                      Reservaremos tu cupo. El beneficio es que no tendrás que volver para transferir.
+                      Si aún no es la fecha de inicio del proyecto: Tu rentabilidad real bajará por unos días.
+                    </p>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <button class="btn derechos">INVERTIR SOLO LOS DERECHOS</button>
+                    <p class="text-left">
+                      Al transferir reservaremos tu cupo. Te avisaremos cuando debes transferir el saldo de tu inversión.
+                      Desde ahí tienes 1 día para hacerlo, si no, pierdes los derechos.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- HEADER INPUT AND BUTTONS -->
             <!-- TABS -->
-            <vue-tabs 
-              type="pills" 
-              centered>
+            <vue-tabs type="pills" centered>
               <v-tab title="Simulaciones">
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-6">
@@ -328,9 +312,7 @@ export default {
                         <td>Cuota</td>
                         <td>Fecha</td>
                       </tr>
-                      <tr 
-                        v-for="cuota in simulateData.cuotas" 
-                        :key="cuota.id">
+                      <tr v-for="cuota in simulateData.cuotas" :key="cuota.id">
                         <td>{{ cuota.mes }}</td>
                         <td>{{ formatPrice(cuota.cuota) }}</td>
                         <td>{{ cuota.fecha }}</td>
@@ -352,24 +334,16 @@ export default {
           </div>
           <!--PASO 1 -->
           <!-- PASO 2 -->
-          <div 
-            v-else-if="pasopago == 2" 
-            class="container-simulate paso2 animated fadeIn">
+          <div v-else-if="pasopago == 2" class="container-simulate paso2 animated fadeIn">
             <form @submit.prevent="sendDataBank">
               <h3 class="text-center">Cuenta donde pagaremos tu inversión</h3>
               <label for>Banco</label>
-              <select 
-                v-model="banco_id" 
-                class="form-control">
+              <select v-model="banco_id" class="form-control">
                 <option>Selecciona una institución bancaria</option>
-                <option 
-                  v-for="banco in bancos" 
-                  :value="banco.id">{{ banco.nombre }}</option>
+                <option v-for="banco in bancos" :value="banco.id">{{ banco.nombre }}</option>
               </select>
               <label for>Tipo Cuenta</label>
-              <select 
-                v-model="tipo_cuenta_id" 
-                class="form-control">
+              <select v-model="tipo_cuenta_id" class="form-control">
                 <option value>Selecciona tipo de cuenta</option>
                 <option value="1">Cuenta de Ahorro</option>
                 <option value="2">Cuenta Vista</option>
@@ -392,9 +366,7 @@ export default {
               >
               <div class="text-center">
                 <label>
-                  <input 
-                    type="checkbox" 
-                    value>
+                  <input type="checkbox" value>
                   Acepto Condiciones de uso
                 </label>
                 <a href>Ver Condiciones de Uso</a>
@@ -404,9 +376,7 @@ export default {
           </div>
           <!-- PASO 2 -->
           <!-- PASO 3 -->
-          <div 
-            v-else-if="pasopago == 3" 
-            class="container-simulate paso3 animated fadeIn">
+          <div v-else-if="pasopago == 3" class="container-simulate paso3 animated fadeIn">
             <form action>
               <h3 class="text-center">Detalle de la Inversión:</h3>
               <div class="row text-center">
@@ -437,9 +407,7 @@ export default {
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 text-center">
-                  <div 
-                    class="btn-pago bank" 
-                    @click="transferBank()">
+                  <div class="btn-pago bank" @click="transferBank()">
                     <img
                       src="../../../src/assets/images/transfer.jpg"
                       alt="pago khipu"
@@ -470,7 +438,9 @@ export default {
   padding: 20px 40px 20px 40px;
   margin: 10px auto 40px auto;
   background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .simulate-input-result {
@@ -518,11 +488,9 @@ export default {
 .nav-pills > li.active > a:hover {
   color: #ff9302;
   background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
   border-radius: 2px;
 }
 .tab-content {
-  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
   padding: 10px;
 }
 

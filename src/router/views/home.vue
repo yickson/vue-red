@@ -1,6 +1,7 @@
 <script>
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
+import { authComputed } from '@state/helpers'
 import HomeCard from '@components/home-card'
 import Chart from '@components/chart'
 import axios from 'axios'
@@ -19,6 +20,7 @@ export default {
 
   mounted() {
     this.getProyects()
+    // this.getSecretProyects()
   },
   methods: {
     getProyects() {
@@ -26,19 +28,38 @@ export default {
         .get('http://52.67.70.146/api/filtro')
         .then(response => (this.proyectos = response.data.data.data))
     },
+    /* getSecretProyects() {
+      var headers = {
+        Authorization: `Bearer ${this.currentUser.data.token}`,
+      }
+      axios
+        .get('http://52.67.70.146/api/secretos/1', {
+          headers: headers,
+        })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }, */
+  },
+  computed: {
+    ...authComputed,
   },
 }
 </script>
 
 <template>
   <Layout>
-
     <!-- BANNER -->
     <div class="row main_home_banner">
       <div class="container">
         <div class="col-xs-12 col-sm-12">
-          <h1 class="mainpage_title">LA OTRA FORMA
-          ATRACTIVA DE INVERTIR</h1>
+          <h1 class="mainpage_title">
+            LA OTRA FORMA
+            ATRACTIVA DE INVERTIR
+          </h1>
         </div>
       </div>
     </div>
@@ -52,7 +73,7 @@ export default {
       </div>
       <div class="col-xs-12 col-sm-4 col-md-4">
         <span>Respaldo</span>
-        <span> Doble Respaldo</span>
+        <span>Doble Respaldo</span>
         <span>a nombre del inversionista</span>
       </div>
       <div class="col-xs-12 col-sm-4 col-md-4">
@@ -63,8 +84,8 @@ export default {
     </div>
 
     <!-- CARROUSEL -->
-    <div
-      id="carrousel"
+    <div 
+      id="carrousel" 
       class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -77,40 +98,42 @@ export default {
           navigation-next-label="<i class='fas fa-arrow-circle-right'></i>"
           navigation-prev-label="<i class='fas fa-arrow-circle-left'></i>"
         >
-          <slide
-            v-for="(proyecto, index) in proyectos"
-            :key="proyecto.id"
-          >
-            <HomeCard
-              :key="proyecto.id"
-              :index="index"
-              :proyecto="proyecto"
-            />
+          <slide 
+            v-for="(proyecto, index) in proyectos" 
+            :key="proyecto.id">
+            <HomeCard 
+              :key="proyecto.id" 
+              :index="index" 
+              :proyecto="proyecto"/>
           </slide>
         </carousel>
       </div>
     </div>
 
     <!-- DESCRIPCION -->
-    <div
-      id="quienesSomos">
+    <div id="quienesSomos">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
           <h2>Somos la nueva forma atractiva de invertir</h2>
           <p class="home_monto_financiado">Monto total financiado (2015 a la Fecha)</p>
           <p class="home_big_amount">28.359 MILLONES</p>
-          <p>Monto pagado a inversionistas los últimos 30 días: <span class="home_monto_financiado"><strong>$1.343 Millones</strong></span></p>
+          <p>
+            Monto pagado a inversionistas los últimos 30 días:
+            <span class="home_monto_financiado">
+              <strong>$1.343 Millones</strong>
+            </span>
+          </p>
         </div>
         <div class="row">
-          <Chart />
+          <Chart/>
           <div class="col-xs-12 col-sm-12 col-md-6">
             <p class="entrevista-txt">Entrevista Redcapital CNN</p>
-            <video
-              class="home_video"
-              controls=""
+            <video 
+              class="home_video" 
+              controls 
               controlslist="nodownload">
-              <source
-                src="assets/video/RedcaCNN.mp4"
+              <source 
+                src="assets/video/RedcaCNN.mp4" 
                 type="video/mp4">
             </video>
           </div>
@@ -119,28 +142,32 @@ export default {
     </div>
 
     <!-- GRAFICO -->
-    <div
-      id="grafico"
+    <div 
+      id="grafico" 
       class="container">
       <div class="row">
         <h3 class="text-center">Comparación Rentabilidad Nominal vs Real</h3>
         <div class="col-xs-12 col-sm-12 col-md-6">
-          <img
-            src="../../../src/assets/images/grafico_rc.png"
-            alt=""
+          <img 
+            src="../../../src/assets/images/grafico_rc.png" 
+            alt 
             class="img-responsive">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
-          <p>En <span>RedCapital</span> recibes en
-          promedio <span>10 veces más</span> que en un
-          <span>fondo mutuo tradicional</span></p>
+          <p>
+            En
+            <span>RedCapital</span> recibes en
+            promedio
+            <span>10 veces más</span> que en un
+            <span>fondo mutuo tradicional</span>
+          </p>
         </div>
       </div>
     </div>
 
     <!-- PLATAFORMA -->
-    <div
-      id="plataforma"
+    <div 
+      id="plataforma" 
       class="row">
       <div class="col-xs-12 col-sm-12 col-md-12">
         <h3 class="text-center">¿POR QUÉ SOMOS LA FORMA ATRACTIVA DE INVERTIR?</h3>
@@ -148,51 +175,59 @@ export default {
           <!-- row 1 -->
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img
-                src="../../../src/assets/images/ico_home1.png"
-                alt=""
+              <img 
+                src="../../../src/assets/images/ico_home1.png" 
+                alt 
                 class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-              <p>Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
-              Llevamos años apoyando a las pequeñas y medianas empresas,
-              por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.</p>
+              <p>
+                Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
+                Llevamos años apoyando a las pequeñas y medianas empresas,
+                por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.
+              </p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img
-                src="../../../src/assets/images/ico_home2.png"
-                alt=""
+              <img 
+                src="../../../src/assets/images/ico_home2.png" 
+                alt 
                 class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-              <p>Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
-              Llevamos años apoyando a las pequeñas y medianas empresas,
-              por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.</p>
+              <p>
+                Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
+                Llevamos años apoyando a las pequeñas y medianas empresas,
+                por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.
+              </p>
             </div>
           </div>
           <!-- row 2 -->
           <div class="row second-row">
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img
-                src="../../../src/assets/images/ico_home3.png"
-                alt=""
+              <img 
+                src="../../../src/assets/images/ico_home3.png" 
+                alt 
                 class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-              <p>Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
-              Llevamos años apoyando a las pequeñas y medianas empresas,
-              por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.</p>
+              <p>
+                Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
+                Llevamos años apoyando a las pequeñas y medianas empresas,
+                por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.
+              </p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img
-                src="../../../src/assets/images/ico_home4.png"
-                alt=""
+              <img 
+                src="../../../src/assets/images/ico_home4.png" 
+                alt 
                 class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-              <p>Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
-              Llevamos años apoyando a las pequeñas y medianas empresas,
-              por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.</p>
+              <p>
+                Somos el Crowdfunding en Chile orientado exclusivamente a las Pymes.
+                Llevamos años apoyando a las pequeñas y medianas empresas,
+                por lo que conocemos bien la problemática de financiamiento que enfrentan día a día.
+              </p>
             </div>
           </div>
         </div>
@@ -200,8 +235,8 @@ export default {
     </div>
 
     <!-- COMO INVERTIR -->
-    <div
-      id="comoInvertir"
+    <div 
+      id="comoInvertir" 
       class="row">
       <div class="background">
         <div class="container">
@@ -209,25 +244,24 @@ export default {
           <div class="col-xs-12 col-sm-12 col-md-4">
             <img
               src="../../../src/assets/images/icon-oportunidad.svg"
-              alt=""
-              class="icon-comoinvertir">
+              alt
+              class="icon-comoinvertir"
+            >
             <p class="title-comoinvertir">Oportunidad</p>
-            <p>
-              Revisa las oportunidades de inversión y elige el proyecto que más te convenga.</p>
+            <p>Revisa las oportunidades de inversión y elige el proyecto que más te convenga.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img
-              src="../../../src/assets/images/icon-registrate.svg"
-              alt=""
+            <img 
+              src="../../../src/assets/images/icon-registrate.svg" 
+              alt 
               class="icon-comoinvertir">
             <p class="title-comoinvertir">Regístrate</p>
-            <p>
-              Crea una cuenta ingresando tus datos en nuestro formulario, es fácil y rápido.</p>
+            <p>Crea una cuenta ingresando tus datos en nuestro formulario, es fácil y rápido.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img
-              src="../../../src/assets/images/icon-invierte.svg"
-              alt=""
+            <img 
+              src="../../../src/assets/images/icon-invierte.svg" 
+              alt 
               class="icon-comoinvertir">
             <p class="title-comoinvertir">Invierte</p>
             <p>Transfiere el monto a invertir y estará 100% garantizado por una SGR (fondos Corfo) o por una factura. Revisa Garantías y Riesgos</p>
@@ -237,8 +271,8 @@ export default {
     </div>
 
     <!-- OPINIONES -->
-    <div
-      id="testimonios"
+    <div 
+      id="testimonios" 
       class="row">
       <div class="container">
         <h4 class="text-center">TESTIMONIOS</h4>
@@ -246,59 +280,59 @@ export default {
           <img
             src="../../../src/assets/images/testimonio1.png"
             alt="testimonio 1"
-            class="img-responsive testimonio_avatar">
+            class="img-responsive testimonio_avatar"
+          >
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 testimonio-container">
           <p class="Invest_name">VIVIANNE RECHNER - Inversionista</p>
           <p>
             He visto que la rentabilidad en RedCapital.cl es mucho mayor que en fondos mutuos o invertir en propiedades.
             Por otra parte, me aburrí de invertir en monedas o acciones por la variación que estos pueden tener. Hoy un buen fondo mutuo renta un 5,0% anual,
-            en RedCapital.cl recibo en promedio un 13,5% anual.</p>
+            en RedCapital.cl recibo en promedio un 13,5% anual.
+          </p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-2">
           <img
             src="../../../src/assets/images/testimonio2.png"
             alt="testimonio 1"
-            class="img-responsive testimonio_avatar">
+            class="img-responsive testimonio_avatar"
+          >
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 testimonio-container">
           <p class="Invest_name">RODRIGO RODRIGUEZ - Inversionista</p>
-          <p>
-            Me gusta que sea una plataforma transparente, donde yo elijo en qué invertir y que cuenta con buenos respaldo para mis inversiones como el aval de SGR o una facturas. Me interesa diversificar invirtiendo en distintas empresas. Además, estamos apoyando a las pymes que son fundamentales para el crecimiento del país.
-          </p>
+          <p>Me gusta que sea una plataforma transparente, donde yo elijo en qué invertir y que cuenta con buenos respaldo para mis inversiones como el aval de SGR o una facturas. Me interesa diversificar invirtiendo en distintas empresas. Además, estamos apoyando a las pymes que son fundamentales para el crecimiento del país.</p>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12">
-          <img
-            src="../../../src/assets/images/sponsors.png"
-            alt=""
+          <img 
+            src="../../../src/assets/images/sponsors.png" 
+            alt 
             class="img-responsive sponsors">
         </div>
       </div>
     </div>
 
-    <div
-      id="dfinanciero"
+    <div 
+      id="dfinanciero" 
       class="row">
       <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-3">
-          <img
-            src="../../../src/assets/images/df_logo.gif"
-            alt=""
+          <img 
+            src="../../../src/assets/images/df_logo.gif" 
+            alt 
             class="img-responsive">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9">
-          <p>“Facilitar el acceso al financiamiento de las Pymes y ser una herramienta de
-          inversión con bajo riesgo, es lo que mueve a RedCapital.cl, plataforma de crowdfunding
-          – financiamiento colectivo- orientada a la pequeña y mediana empresa.”
+          <p>
+            “Facilitar el acceso al financiamiento de las Pymes y ser una herramienta de
+            inversión con bajo riesgo, es lo que mueve a RedCapital.cl, plataforma de crowdfunding
+            – financiamiento colectivo- orientada a la pequeña y mediana empresa.”
           </p>
           <p>-Diario Financiero, Febrero 2017</p>
         </div>
       </div>
     </div>
-
-
   </Layout>
 </template>
 

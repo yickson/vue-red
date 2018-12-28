@@ -1,8 +1,6 @@
-const Users = require('../resources/users')
-
 module.exports = app => {
   // Log in a user with a username and password
-  app.post('/api/session', (request, response) => {
+  app.post('http://52.67.70.146/api/login', (request, response) => {
     Users.authenticate(request.body)
       .then(user => {
         response.json(user)
@@ -13,7 +11,7 @@ module.exports = app => {
   })
 
   // Get the user of a provided token, if valid
-  app.get('/api/session', (request, response) => {
+  app.get('http://52.67.70.146/api/login', (request, response) => {
     const currentUser = Users.findBy('token', request.headers.authorization)
 
     if (!currentUser) {

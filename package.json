@@ -31,6 +31,7 @@
     "@fortawesome/vue-fontawesome": "0.0.23",
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
+    "jspdf": "^1.4.1",
     "lodash": "4.17.10",
     "normalize.css": "8.0.0",
     "nprogress": "0.2.0",
