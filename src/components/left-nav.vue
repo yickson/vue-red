@@ -119,6 +119,7 @@ export default {
 #left-panel .navbar-brand {
   padding: 0;
 }
+
 .img-brand {
   border-bottom: 1px solid whitesmoke;
   padding-bottom: 10px;
@@ -152,7 +153,7 @@ export default {
   z-index: 999;
 }
 .bm-burger-bars {
-  background-color: #373a47;
+  background-color: #141c3a;
 }
 .line-style {
   position: absolute;
@@ -180,7 +181,7 @@ export default {
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
-  background: #333; /* fallback for old browsers */
+  background: #141c3a; /* fallback for old browsers */
 
   /*overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 0px; /* Place content 60px from the top */

@@ -32,7 +32,10 @@ export default {
     </div>
     <div class="content mt-3">
       <div class="col-sm-12">
-        <alert type="success" dismissible @dismissed="show = false">
+        <alert 
+          type="success" 
+          dismissible 
+          @dismissed="show = false">
           <b>¡Bienvenido!</b>
           <br>
           {{ currentUser.data.usuario.nombre }} {{ currentUser.data.usuario.app_pat }}, Aquí podras ver toda la información relevante para ti.
@@ -52,7 +55,10 @@ export default {
             </h4>
             <p class="text-light">Total Invertido</p>
 
-            <div class="chart-wrapper px-0" style="height:70px;" height="70">
+            <div 
+              class="chart-wrapper px-0" 
+              style="height:70px;" 
+              height="70">
               <!--CHART-->
             </div>
           </div>
@@ -73,7 +79,10 @@ export default {
               <span>%</span>
             </h4>
             <p class="text-light">Mora promedio gnral.</p>
-            <div class="chart-wrapper px-0" style="height:70px;" height="70">
+            <div 
+              class="chart-wrapper px-0" 
+              style="height:70px;" 
+              height="70">
               <!--CHART-->
             </div>
           </div>
@@ -96,7 +105,10 @@ export default {
             <p class="text-light">Rentabilidad prom. devengado</p>
           </div>
 
-          <div class="chart-wrapper px-0" style="height:70px;" height="70">
+          <div 
+            class="chart-wrapper px-0" 
+            style="height:70px;" 
+            height="70">
             <!--CHART-->
           </div>
         </div>
@@ -113,7 +125,10 @@ export default {
               <span>$50.000.000</span>
             </h4>
             <p class="text-light">Vencimiento en 90 días</p>
-            <div class="chart-wrapper px-3" style="height:70px;" height="70"></div>
+            <div 
+              class="chart-wrapper px-3" 
+              style="height:70px;" 
+              height="70"/>
           </div>
         </div>
       </div>
@@ -208,7 +223,9 @@ export default {
               <li>
                 <div class="text-muted">Indicador</div>
                 <strong>29.703</strong>
-                <div class="progress progress-xs mt-2" style="height: 5px;">
+                <div 
+                  class="progress progress-xs mt-2" 
+                  style="height: 5px;">
                   <div
                     class="progress-bar bg-success"
                     role="progressbar"
@@ -222,7 +239,9 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Unique</div>
                 <strong>20%</strong>
-                <div class="progress progress-xs mt-2" style="height: 5px;">
+                <div 
+                  class="progress progress-xs mt-2" 
+                  style="height: 5px;">
                   <div
                     class="progress-bar bg-info"
                     role="progressbar"
@@ -236,7 +255,9 @@ export default {
               <li>
                 <div class="text-muted">Indicador</div>
                 <strong>78.706</strong>
-                <div class="progress progress-xs mt-2" style="height: 5px;">
+                <div 
+                  class="progress progress-xs mt-2" 
+                  style="height: 5px;">
                   <div
                     class="progress-bar bg-warning"
                     role="progressbar"
@@ -250,7 +271,9 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Indicador</div>
                 <strong>22.123</strong>
-                <div class="progress progress-xs mt-2" style="height: 5px;">
+                <div 
+                  class="progress progress-xs mt-2" 
+                  style="height: 5px;">
                   <div
                     class="progress-bar bg-danger"
                     role="progressbar"
@@ -264,7 +287,9 @@ export default {
               <li class="hidden-sm-down">
                 <div class="text-muted">Indicador</div>
                 <strong>40.15%</strong>
-                <div class="progress progress-xs mt-2" style="height: 5px;">
+                <div 
+                  class="progress progress-xs mt-2" 
+                  style="height: 5px;">
                   <div
                     class="progress-bar"
                     role="progressbar"

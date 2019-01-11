@@ -84,15 +84,14 @@ export default {
     </div>
 
     <!-- CARROUSEL -->
-    <div 
-      id="carrousel" 
-      class="container">
+    <div id="carrousel">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
           <h2>Proyectos para invertir</h2>
           <button class="btn home_vertodo_btn">ver todos</button>
         </div>
         <carousel
+          v-if="loggedIn"
           :per-page-custom="[[768, 3], [1024, 4], [540, 1]]"
           :navigation-enabled="true"
           navigation-next-label="<i class='fas fa-arrow-circle-right'></i>"
@@ -107,6 +106,10 @@ export default {
               :proyecto="proyecto"/>
           </slide>
         </carousel>
+        <div v-else>
+          <h2>Si QUIERES CONOCER TODAS LAS OPORTUNIDADES DE INVERSIÓN </BR>
+            REGISTRATE EN NUESTRA PLATAFORMA</h2>
+        </div>
       </div>
     </div>
 
@@ -394,7 +397,7 @@ export default {
   padding-top: 50px;
   padding-bottom: 50px;
   text-align: center;
-  background: #f6f6f6;
+  background: #ffffff;
 }
 
 .VueCarousel-navigation-button .fa-arrow-circle-right,

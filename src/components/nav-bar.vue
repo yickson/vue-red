@@ -113,7 +113,7 @@ export default {
 
 
 
-<style>
+<style scoped>
 .main-navbar .nav {
   padding-left: 9px;
 }

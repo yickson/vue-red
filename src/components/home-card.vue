@@ -18,6 +18,26 @@ export default {
     this.porcentajeProyecto()
   },
   methods: {
+    success() {
+      this.$swal(
+        '¡Bien!',
+        'Tu solicitud se ha procesado correctamente',
+        'success',
+        {
+          button: false,
+        }
+      )
+    },
+    warning() {
+      this.$swal(
+        'Lo sentimos',
+        'El monto a simular debe ser mayor a 1.000.000',
+        'warning',
+        {
+          button: false,
+        }
+      )
+    },
     simulate() {
       this.btnSimulateCliked = true
     },
@@ -30,14 +50,18 @@ export default {
         console.log('ingresa monto a simular')
         this.dataEmpty = true
       } else {
-        this.dataEmpty = false
-        this.$router.push({
-          name: 'simulate',
-          params: {
-            proyecto: this.proyecto,
-            simulatevalue: this.amount,
-          },
-        })
+        if (this.amount > 100000 || this.proyecto.monto < 800000) {
+          this.dataEmpty = false
+          this.$router.push({
+            name: 'simulate',
+            params: {
+              proyecto: this.proyecto,
+              simulatevalue: this.amount,
+            },
+          })
+        } else {
+          this.warning()
+        }
       }
     },
     formatPrice(value) {
@@ -61,7 +85,10 @@ export default {
         <!-- header-->
         <div class="row">
           <div class="col-xs-12 col-sm-12">
-            <img :src="proyecto.foto_proyecto" alt class="img-responsive avatar">
+            <img 
+              :src="proyecto.foto_proyecto" 
+              alt 
+              class="img-responsive avatar">
           </div>
         </div>
       </div>
@@ -80,7 +107,10 @@ export default {
             class="Fullfinanced"
             type="success"
           />
-          <progress-bar-stack v-else v-model=" porcentajeFinanciado" type="warning"/>
+          <progress-bar-stack 
+            v-else 
+            v-model=" porcentajeFinanciado" 
+            type="warning"/>
         </progress-bar>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
@@ -98,25 +128,42 @@ export default {
         </div>
         <div class="row">
           <div class="col-xs-12 text-center">
-            <span v-tooltip="'Dias Restantes'" class="glyphicon glyphicon-calendar"/>
+            <span 
+              v-tooltip="'Dias Restantes'" 
+              class="glyphicon glyphicon-calendar"/>
             <span>0</span>
-            <span v-tooltip="'Cantidad de visitas'" class="glyphicon glyphicon-eye-open"/>
+            <span 
+              v-tooltip="'Cantidad de visitas'" 
+              class="glyphicon glyphicon-eye-open"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
-            <span v-tooltip="'Cantidad de Inversionistas'" class="glyphicon glyphicon-user"/>
+            <span 
+              v-tooltip="'Cantidad de Inversionistas'" 
+              class="glyphicon glyphicon-user"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
           </div>
         </div>
       </div>
       <div class="row card-footer">
-        <div v-show="!btnSimulateCliked" class="col-xs-12 col-sm-12">
-          <button v-if="porcentajeFinanciado == 100" class="btn card-button Fullfinanced">
+        <div 
+          v-show="!btnSimulateCliked" 
+          class="col-xs-12 col-sm-12">
+          <button 
+            v-if="porcentajeFinanciado == 100" 
+            class="btn card-button Fullfinanced">
             financiado
             <i class="fas fa-check-circle"/>
           </button>
-          <button v-else class="btn card-button" @click="simulate()">Simular</button>
+          <button 
+            v-else 
+            class="btn card-button" 
+            @click="simulate()">Simular</button>
         </div>
-        <div v-show="btnSimulateCliked" class="col-xs-12 col-sm-12 text-center">
-          <form class="form-inline footer-input" @submit.prevent="submitAmount">
+        <div 
+          v-show="btnSimulateCliked" 
+          class="col-xs-12 col-sm-12 text-center">
+          <form 
+            class="form-inline footer-input" 
+            @submit.prevent="submitAmount">
             <div class="form-group">
               <div class="input-group">
                 <input

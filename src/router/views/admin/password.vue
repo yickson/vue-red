@@ -17,43 +17,54 @@ export default {
   }),
   methods: {
     success() {
-      this.$notify({
-        type: 'success',
-        title: '¡Bien!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        '¡Bien!',
+        'Tu contraseña sido exitosamente actualizada',
+        'success',
+        {
+          button: false,
+        }
+      )
     },
     warning() {
-      this.$notify({
-        type: 'warning',
-        title: '¡Atención!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con la actualización de tu contraseña',
+        'error',
+        {
+          button: false,
+        }
+      )
     },
     editPassword() {
-      var headers = {
-        Authorization: `Bearer ${this.currentUser.data.token}`,
-      }
-      var dataPassword = {
-        password: this.password,
-        password_new: this.newpasword,
-        password_c: this.newpassrepeat,
-      }
-      axios
-        .post('http://52.67.70.146/api/usuario/password', dataPassword, {
-          headers: headers,
-        })
-        .then(response => {
-          console.log(response)
-          this.responseMessage = response.data.message
-          this.success()
-          console.log(this.responseMessage)
-        })
-        .catch(error => {
-          console.log(error)
-          this.warning()
-          this.responseMessage = 'Todos los campos son requeridos*'
-        })
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          var headers = {
+            Authorization: `Bearer ${this.currentUser.data.token}`,
+          }
+          var dataPassword = {
+            password: this.password,
+            password_new: this.newpasword,
+            password_c: this.newpassrepeat,
+          }
+          axios
+            .post('http://52.67.70.146/api/usuario/password', dataPassword, {
+              headers: headers,
+            })
+            .then(response => {
+              console.log(response)
+              this.responseMessage = response.data.message
+              this.success()
+              console.log(this.responseMessage)
+            })
+            .catch(error => {
+              console.log(error)
+              this.warning()
+              this.responseMessage = 'Todos los campos son requeridos*'
+            })
+        } else {
+        }
+      })
     },
   },
   computed: {
@@ -92,24 +103,43 @@ export default {
                       action 
                       @submit.prevent="editPassword">
                       <label for>Contraseña</label>
-                      <BaseInput
-                        :type="password"
+                      <input
+                        v-validate="'required'"
+                        :class="{'input': true, 'is-danger': errors.has('password') }"
                         v-model="password"
-                        type="text"
+                        type="password"
                         class="form-control"
-                      />
-
+                        name="password"
+                        data-vv-validate-on="blur"
+                      >
+                      <span class="error">{{ errors.first('password') }}</span>
+                      
                       <label for>Contraseña nueva</label>
-                      <BaseInput 
-                        v-model="newpasword" 
-                        type="text" 
-                        class="form-control"/>
-
+                      <input
+                        v-validate="'required'"
+                        ref="password"
+                        v-model="newpasword"
+                        :class="{'input': true, 'is-danger': errors.has('newpassword') }"
+                        type="password"
+                        name="newpassword"
+                        class="form-control"
+                        data-vv-validate-on="blur"
+                      >
+                      <span class="error">{{ errors.first('newpassword') }}</span>
+                      
                       <label for>Repetir contraseña</label>
-                      <BaseInput 
-                        v-model="newpassrepeat" 
-                        type="text" 
-                        class="form-control"/>
+                      <input
+                        v-validate="'required|confirmed:password'"
+                        v-model="newpassrepeat"
+                        :class="{'input': true, 'is-danger': errors.has('newpassrepeat') }"
+                        type="password"
+                        class="form-control"
+                        name="newpassrepeat"
+                        data-vv-validate-on="blur"
+                        data-vv-as="newpassword"
+                      >
+                      <span class="error">{{ errors.first('newpassrepeat') }}</span>
+                      
                       <button class="button btn form-button-bank">GUARDAR NUEVA CONTRASEÑA</button>
                     </form>
                   </div>
@@ -140,5 +170,23 @@ export default {
 }
 #Password label {
   margin-top: 15px;
+}
+#Password span {
+  display: block;
+}
+#Password .is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+#Password .error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -1px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
 }
 </style>

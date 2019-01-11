@@ -8,12 +8,12 @@ export default {
     title: 'Pagos y certificados',
     meta: [{ name: 'description', content: 'Pagos y certificados' }],
   },
+  components: { Layout },
   data() {
     return {
       pagares: [],
     }
   },
-  components: { Layout },
   mounted() {
     this.getPagares()
   },
@@ -79,9 +79,9 @@ export default {
                     <tbody>
                       <tr v-for="pagare in pagares">
                         <td>
-                          <strong>{{pagare.contrato.nombre}}</strong>
+                          <strong>{{ pagare.contrato.nombre }}</strong>
                         </td>
-                        <td>{{pagare.fecha}}</td>
+                        <td>{{ pagare.fecha }}</td>
                         <td>
                           <a :href="pagare.documento">Ver en google drive</a>
                         </td>

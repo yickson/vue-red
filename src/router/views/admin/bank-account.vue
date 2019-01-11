@@ -12,27 +12,37 @@ export default {
   data: () => ({
     bancos: [],
     responseMessage: '',
-    newBank: 1,
-    acountnumber: 0,
-    accounttype: 1,
+    newBank: '',
+    acountnumber: '',
+    accounttype: '',
+    bancoTipo: [],
   }),
   mounted() {
     this.getBancos()
   },
+  beforeMount() {
+    this.getTipoCuenta()
+  },
   methods: {
     success() {
-      this.$notify({
-        type: 'success',
-        title: '¡Bien!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        '¡Bien!',
+        'Tus datos han sido exitosamente actualizados',
+        'success',
+        {
+          button: false,
+        }
+      )
     },
     warning() {
-      this.$notify({
-        type: 'warning',
-        title: '¡Atención!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con la actualización de tu cuenta',
+        'error',
+        {
+          button: false,
+        }
+      )
     },
     getBancos() {
       axios
@@ -45,36 +55,47 @@ export default {
           console.log(error)
         })
     },
+    getTipoCuenta() {
+      axios.get('http://52.67.70.146/api/bancos/tipos').then(response => {
+        this.bancoTipo = response.data.data
+      })
+    },
     editBank() {
-      var headers = {
-        Authorization: `Bearer ${this.currentUser.data.token}`,
-      }
-      var databank = {
-        user_id: this.currentUser.data.usuario.id,
-        banco_id: this.newBank,
-        tipo_cuenta_id: this.accounttype,
-        numero: this.acountnumber,
-      }
-      axios
-        .put(
-          'http://52.67.70.146/api/usuario/banco/' +
-            this.currentUser.data.usuario.id,
-          databank,
-          {
-            headers: headers,
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          var headers = {
+            Authorization: `Bearer ${this.currentUser.data.token}`,
           }
-        )
-        .then(response => {
-          console.log(response)
-          this.responseMessage = response.data.message
-          this.success()
-          console.log(this.responseMessage)
-        })
-        .catch(error => {
-          console.log(error)
-          this.warning()
-          this.responseMessage = 'Todos los campos son requeridos*'
-        })
+          var databank = {
+            user_id: this.currentUser.data.usuario.id,
+            banco_id: this.newBank,
+            tipo_cuenta_id: this.accounttype,
+            numero: this.acountnumber,
+          }
+          axios
+            .put(
+              'http://52.67.70.146/api/usuario/banco/' +
+                this.currentUser.data.usuario.id,
+              databank,
+              {
+                headers: headers,
+              }
+            )
+            .then(response => {
+              console.log(response)
+              this.responseMessage = response.data.message
+              this.success()
+              console.log(this.responseMessage)
+            })
+            .catch(error => {
+              console.log(error)
+              this.warning()
+              this.responseMessage = 'Todos los campos son requeridos*'
+            })
+        } else {
+          console.log('no confiasd')
+        }
+      })
     },
   },
   computed: {
@@ -113,27 +134,49 @@ export default {
                       action 
                       @submit.prevent="editBank">
                       <label for>Número de cuenta</label>
-                      <BaseInput 
-                        v-model="acountnumber" 
-                        class="form-control"/>
-
+                      <input
+                        v-validate="'required'"
+                        :class="{'input': true, 'is-danger': errors.has('numero_cuenta') }"
+                        v-model="acountnumber"
+                        class="form-control"
+                        data-vv-validate-on="blur"
+                        name="numero_cuenta"
+                      >
+                      <span class="error">{{ errors.first('numero_cuenta') }}</span>
+                      
                       <label for>Tipo de cuenta</label>
-                      <select 
-                        v-model="accounttype" 
-                        class="form-control">
-                        <option value="0">Cuenta vista</option>
-                        <option value="1">Cuenta corriente</option>
-                        <option value="2">Cuenta de Ahorro</option>
+                      <select
+                        v-validate="'required'"
+                        :class="{'input': true, 'is-danger': errors.has('tipocuenta') }"
+                        v-model="accounttype"
+                        name="tipocuenta"
+                        class="form-control"
+                        data-vv-validate-on="blur"
+                      >
+                        <option value>Seleccione tipo de cuenta</option>
+                        <option
+                          v-for="bancoTipo in bancoTipo"
+                          :value="bancoTipo.id"
+                          value
+                        >{{ bancoTipo.descripcion }}</option>
                       </select>
+                      <span class="error">{{ errors.first('tipocuenta') }}</span>
                       
                       <label for>Seleccione Banco</label>
-                      <select 
-                        v-model="newBank" 
-                        class="form-control">
+                      <select
+                        v-validate="'required'"
+                        v-model="newBank"
+                        :class="{'input': true, 'is-danger': errors.has('banco') }"
+                        class="form-control"
+                        name="banco"
+                        data-vv-validate-on="blur"
+                      >
+                        <option value>Seleccione su banco</option>
                         <option 
                           v-for="banco in bancos" 
                           :value="banco.id">{{ banco.nombre }}</option>
                       </select>
+                      <span class="error">{{ errors.first('banco') }}</span>
                       <button class="button btn form-button-bank">GUARDAR CAMBIOS</button>
                     </form>
                   </div>
@@ -164,5 +207,23 @@ export default {
 }
 #Password label {
   margin-top: 15px;
+}
+#Password span {
+  display: block;
+}
+#Password .is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+#Password .error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -1px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
 }
 </style>

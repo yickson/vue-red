@@ -41,25 +41,33 @@ export default {
     // Try to log the user in with the username
     // and password they provided.
     tryToLogIn() {
-      this.tryingToLogIn = true
-      // Reset the authError if it existed.
-      this.authError = null
-      return this.logIn({
-        email: this.email,
-        password: this.password,
-        provider: this.provider,
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          /* llama al servicio de auth */
+          this.tryingToLogIn = true
+          // Reset the authError if it existed.
+          this.authError = null
+          return this.logIn({
+            email: this.email,
+            password: this.password,
+            provider: this.provider,
+          })
+            .then(token => {
+              this.tryingToLogIn = false
+              // Redirect to the originally requested page, or to the home page
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'home' }
+              )
+            })
+            .catch(error => {
+              this.tryingToLogIn = false
+              this.authError = error
+              this.apimessage = 'Hubo un error, porfavor vuelve a intentarlo.'
+              this.info()
+            })
+        } else {
+        }
       })
-        .then(token => {
-          this.tryingToLogIn = false
-          // Redirect to the originally requested page, or to the home page
-          this.$router.push(this.$route.query.redirectFrom || { name: 'home' })
-        })
-        .catch(error => {
-          this.tryingToLogIn = false
-          this.authError = error
-          this.apimessage = 'Hubo un error, porfavor vuelve a intentarlo.'
-          this.info()
-        })
     },
     LinkRecuperar() {
       this.Password = true
@@ -89,29 +97,66 @@ export default {
     <div class="container">
       <div class="form-login">
         <!--FORM LOGIN -->
-        <form v-if="!Password" @submit.prevent="tryToLogIn">
+        <form 
+          v-if="!Password" 
+          @submit.prevent="tryToLogIn">
           <label for>RUT</label>
-          <BaseInput v-model="email" name="email"/>
+          <input
+            v-validate="'required'"
+            :class="{'input': true, 'is-danger': errors.has('email') }"
+            v-model="email"
+            data-vv-validate-on="blur"
+            name="email"
+            class="form-control"
+          >
+          <span class="error">{{ errors.first('email') }}</span>
           <label for>Contraseña</label>
-          <BaseInput v-model="password" name="password" type="password"/>
-          <button :disabled="tryingToLogIn" class="btn" type="submit">
-            <BaseIcon v-if="tryingToLogIn" name="sync" spin/>
+          <input
+            v-validate="'required'"
+            :class="{'input': true, 'is-danger': errors.has('password') }"
+            v-model="password"
+            data-vv-validate-on="blur"
+            name="password"
+            type="password"
+            class="form-control"
+          >
+          <span class="error">{{ errors.first('password') }}</span>
+          <button 
+            :disabled="tryingToLogIn" 
+            class="btn" 
+            type="submit">
+            <BaseIcon 
+              v-if="tryingToLogIn" 
+              name="sync" 
+              spin/>
             <span v-else>Log in</span>
           </button>
         </form>
 
         <!-- FORM RECUPERAR CONTRASEÑA-->
-        <form v-else @submit.prevent="nuevacontraseña()">
+        <form 
+          v-else 
+          @submit.prevent="nuevacontraseña()">
           <label for>Email Usuario</label>
-          <BaseInput v-model="emailRetrievePassword" name="email-contraseña"/>
+          <BaseInput 
+            v-model="emailRetrievePassword" 
+            name="email-contraseña"/>
 
-          <button class="btn" type="submit">
+          <button 
+            class="btn" 
+            type="submit">
             <span>Recuperar</span>
           </button>
         </form>
 
-        <span v-if="Password" class="link-login" @click="LinkLogin()">Ingresar</span>
-        <span v-else class="link-login" @click="LinkRecuperar()">Recuperar contraseña</span> /
+        <a 
+          v-if="Password" 
+          class="link-login" 
+          @click="LinkLogin()">Ingresar</a>
+        <a 
+          v-else 
+          class="link-login" 
+          @click="LinkRecuperar()">Recuperar contraseña</a> /
         <a href="/register">Crear cuenta</a>
       </div>
     </div>
@@ -156,5 +201,35 @@ export default {
 .form-login .link-login {
   cursor: pointer;
   color: #333;
+}
+.form-login .form-control {
+  display: block;
+  width: 100%;
+  padding: 0.75em 1em;
+  margin-bottom: 1.3rem;
+  line-height: 1;
+  height: 40px;
+  border: 1px solid #bac9d8;
+  border-radius: 2px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.form-login span {
+  display: block;
+}
+.form-login .is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+.form-login .error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -13px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
 }
 </style>

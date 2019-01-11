@@ -24,10 +24,12 @@ export default {
       porcentajeReservado: 0,
       mountRest: 0,
       bancos: [],
-      numero: 0,
-      banco_id: 0,
-      tipo_cuenta_id: 0,
+      cuentatipo: [],
+      numero: '',
+      banco_id: '',
+      tipo_cuenta_id: '',
       pasopago: 1,
+      userBanco: [],
     }
   },
   computed: {
@@ -36,6 +38,10 @@ export default {
   mounted() {
     this.simulate()
     this.porcentajeProyecto()
+  },
+  beforeMount() {
+    this.getUserBanco()
+    this.getTipoCuenta()
   },
   methods: {
     porcentajeProyecto() {
@@ -78,28 +84,56 @@ export default {
       this.pasopago = 2
     },
     // paso 2 //
+    getUserBanco() {
+      axios
+        .get(
+          'http://52.67.70.146/api/usuario/banco/' +
+            this.currentUser.data.usuario.id
+        )
+        .then(
+          response => (
+            (this.userBanco = response.data.data.cuenta_bancaria),
+            (this.banco_id = this.userBanco.banco.id),
+            (this.numero = this.userBanco.numero),
+            (this.tipo_cuenta_id = this.userBanco.tipo_cuenta_id)
+          )
+        )
+    },
     getBancos() {
       axios
         .get('http://52.67.70.146/api/banco')
         .then(response => (this.bancos = response.data.data))
     },
-    sendDataBank() {
+    getTipoCuenta() {
       axios
-        .post('http://52.67.70.146/api/usuario/banco', {
-          numero: this.numero,
-          banco_id: this.banco_id,
-          tipo_cuenta_id: 1,
-          user_id: this.currentUser.data.usuario.id,
-        })
-        .then(response => {
-          this.response = response
-          console.log(response)
-          this.pasopago = 3
-        })
-        .catch(error => {
-          this.error = error
-          console.log(error)
-        })
+        .get('http://52.67.70.146/api/bancos/tipos/')
+        .then(response => (this.cuentatipo = response.data.data))
+    },
+
+    sendDataBank() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          /** llamada para enviar la data del banco que transferirá */
+          axios
+            .post('http://52.67.70.146/api/usuario/banco', {
+              numero: this.numero,
+              banco_id: this.banco_id,
+              tipo_cuenta_id: 1,
+              user_id: this.currentUser.data.usuario.id,
+            })
+            .then(response => {
+              this.response = response
+              console.log(response)
+              this.pasopago = 3
+            })
+            .catch(error => {
+              this.error = error
+              console.log(error)
+            })
+        } else {
+          console.log('errp')
+        }
+      })
     },
     // paso 3//
     sendMail() {
@@ -162,7 +196,10 @@ export default {
         <div class="col-xs-12 col-sm-12 col-md-4">
           <h2 class="project-title">{{ proyecto.id }}</h2>
           <h2 class="project-title">{{ proyecto.nombre }}</h2>
-          <img :src="proyecto.foto_proyecto" alt class="img-responsive img-thumbnail">
+          <img 
+            :src="proyecto.foto_proyecto" 
+            alt 
+            class="img-responsive img-thumbnail">
         </div>
 
         <!-- SIMULATOR -->
@@ -175,8 +212,15 @@ export default {
                 class="progress-label"
               >Finanaciado al {{ porcentajeFinanciado }}% - Reservado {{ porcentajeReservado }}%</label>
               <progress-bar>
-                <progress-bar-stack v-model="porcentajeFinanciado" type="success"/>
-                <progress-bar-stack v-model="porcentajeReservado" type="warning" striped/>
+                <progress-bar-stack 
+                  v-model="porcentajeFinanciado" 
+                  type="success"/>
+                <progress-bar-stack
+                  v-if="porcentajeFinanciado > 0"
+                  v-model="porcentajeReservado"
+                  type="warning"
+                  striped
+                />
               </progress-bar>
               <!-- INFO  -->
               <div class="row">
@@ -189,29 +233,38 @@ export default {
                   <p>faltan para completarlo</p>
                 </div>
                 <div class="col-xs-3">
-                  <p>{{ proyecto.desc_derechos }}</p>
+                  <p>{{ proyecto.tir }} %</p>
                   <p>Rentabilidad anualizada</p>
                 </div>
                 <div class="col-xs-3">
-                  <p>{{ proyecto.cierre }}</p>
+                  <p>
+                    {{ proyecto.cuotas }}
+                    <span v-if="proyecto.credito_tipo = 1">Días</span>
+                    <span v-else>Cuotas</span>
+                  </p>
                   <p>Plazo para completarlo</p>
                 </div>
               </div>
             </div>
           </div>
           <!--PASO 1 -->
-          <div v-if="pasopago == 1" class="container-simulate animated fadeIn">
+          <div 
+            v-if="pasopago == 1" 
+            class="container-simulate animated fadeIn">
             <!-- HEADER INPUT AND BUTTONS -->
             <div class="simulate-header">
               <p class="text-center title-simulate">Ingrese monto a invertir</p>
               <div class="row simulate-input-result">
                 <div class="col-xs-12 col-sm-6">
-                  <form class="form-inline text-center" @submit.prevent="simulate">
+                  <form 
+                    class="form-inline text-center" 
+                    @submit.prevent="simulate">
                     <div class="form-group">
-                      <label class="sr-only" for="exampleInputAmount">Ingresa monto a invertir</label>
+                      <label 
+                        class="sr-only" 
+                        for="exampleInputAmount">Ingresa monto a invertir</label>
                       <div class="input-group">
                         <input
-                          id="exampleInputAmount"
                           v-model="$route.params.simulatevalue"
                           type="text"
                           class="form-control"
@@ -230,15 +283,21 @@ export default {
                 </div>
               </div>
 
-              <div v-if="!loggedIn" class="text-center">
+              <div 
+                v-if="!loggedIn" 
+                class="text-center">
                 <p>Debes iniciar sesion para poder invertir.</p>
                 <button class="btn">INGRESAR</button>
               </div>
 
-              <div v-else="loggedIn" class="userLogged">
+              <div 
+                v-else="loggedIn" 
+                class="userLogged">
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
-                    <button class="btn total" @click="investamount">INVERTIR EL TOTAL AHORA</button>
+                    <button 
+                      class="btn total" 
+                      @click="investamount">INVERTIR EL TOTAL AHORA</button>
                     <p class="text-left">
                       Reservaremos tu cupo. El beneficio es que no tendrás que volver para transferir.
                       Si aún no es la fecha de inicio del proyecto: Tu rentabilidad real bajará por unos días.
@@ -256,7 +315,9 @@ export default {
             </div>
             <!-- HEADER INPUT AND BUTTONS -->
             <!-- TABS -->
-            <vue-tabs type="pills" centered>
+            <vue-tabs 
+              type="pills" 
+              centered>
               <v-tab title="Simulaciones">
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-6">
@@ -312,7 +373,9 @@ export default {
                         <td>Cuota</td>
                         <td>Fecha</td>
                       </tr>
-                      <tr v-for="cuota in simulateData.cuotas" :key="cuota.id">
+                      <tr 
+                        v-for="cuota in simulateData.cuotas" 
+                        :key="cuota.id">
                         <td>{{ cuota.mes }}</td>
                         <td>{{ formatPrice(cuota.cuota) }}</td>
                         <td>{{ cuota.fecha }}</td>
@@ -334,28 +397,60 @@ export default {
           </div>
           <!--PASO 1 -->
           <!-- PASO 2 -->
-          <div v-else-if="pasopago == 2" class="container-simulate paso2 animated fadeIn">
-            <form @submit.prevent="sendDataBank">
+          <div 
+            v-else-if="pasopago == 2" 
+            class="container-simulate paso2">
+            <form 
+              class="animated fadeIn" 
+              @submit.prevent="sendDataBank">
               <h3 class="text-center">Cuenta donde pagaremos tu inversión</h3>
               <label for>Banco</label>
-              <select v-model="banco_id" class="form-control">
-                <option>Selecciona una institución bancaria</option>
-                <option v-for="banco in bancos" :value="banco.id">{{ banco.nombre }}</option>
+              <select
+                v-validate="'required'"
+                :class="{'input': true, 'is-danger': errors.has('banco') }"
+                v-model="banco_id"
+                name="banco"
+                class="form-control"
+                data-vv-validate-on="blur"
+              >
+                <option value>Selecciona una institución bancaria</option>
+                <option 
+                  v-for="banco in bancos" 
+                  :value="banco.id">{{ banco.nombre }}</option>
               </select>
+              <span class="error">{{ errors.first('banco') }}</span>
+
+              <!--tipo de cuenta -->
               <label for>Tipo Cuenta</label>
-              <select v-model="tipo_cuenta_id" class="form-control">
+              <select
+                v-validate="'required'"
+                :class="{'input': true, 'is-danger': errors.has('cuenta_tipo') }"
+                v-model="tipo_cuenta_id"
+                name="cuenta_tipo"
+                class="form-control"
+                data-vv-validate-on="blur"
+              >
                 <option value>Selecciona tipo de cuenta</option>
-                <option value="1">Cuenta de Ahorro</option>
-                <option value="2">Cuenta Vista</option>
-                <option value="3">Cuenta Corriente</option>
+                <option
+                  v-for="cuentatipo in cuentatipo"
+                  :value="cuentatipo.id"
+                >{{ cuentatipo.descripcion }}</option>
               </select>
+              <span class="error">{{ errors.first('cuenta_tipo') }}</span>
+              <!-- numero de cuenta -->
               <label for>Nro Cuenta</label>
               <input
+                v-validate="'required'"
+                :class="{'input': true, 'is-danger': errors.has('numero_cuenta') }"
                 v-model="numero"
+                data-vv-validate-on="blur"
                 type="text"
+                name="numero_cuenta"
                 class="form-control"
                 placeholder="Ingrese número de cuenta"
               >
+              <span class="error">{{ errors.first('numero_cuenta') }}</span>
+              <!-- rut -->
               <label for>Rut</label>
               <input
                 v-model="this.currentUser.data.usuario.rut"
@@ -364,11 +459,21 @@ export default {
                 disabled
                 placeholder="Ingrese su RUT"
               >
+              <!-- condiciones de uso -->
               <div class="text-center">
                 <label>
-                  <input type="checkbox" value>
+                  <input
+                    v-validate="'required'"
+                    :class="{'input': true, 'is-danger': errors.has('terms') }"
+                    type="checkbox"
+                    data-vv-validate-on="blur"
+                    name="terms"
+                  >
                   Acepto Condiciones de uso
                 </label>
+                <span 
+                  v-show="errors.has('terms')" 
+                  class="error-terms">{{ errors.first('terms') }}</span>
                 <a href>Ver Condiciones de Uso</a>
                 <button class="btn">SIGUIENTE</button>
               </div>
@@ -376,8 +481,12 @@ export default {
           </div>
           <!-- PASO 2 -->
           <!-- PASO 3 -->
-          <div v-else-if="pasopago == 3" class="container-simulate paso3 animated fadeIn">
-            <form action>
+          <div 
+            v-else-if="pasopago == 3" 
+            class="container-simulate paso3">
+            <form 
+              action 
+              class="animated fadeIn">
               <h3 class="text-center">Detalle de la Inversión:</h3>
               <div class="row text-center">
                 <div class="col-xs-12 col-sm-3">
@@ -398,19 +507,21 @@ export default {
               <div class="row">
                 <h3 class="text-center">Métodos de Pago</h3>
                 <div class="col-xs-12 col-sm-6">
-                  <div class="btn-pago khipu">
+                  <!--<div class="btn-pago khipu">
                     <img
                       src="../../../src/assets/images/khipu.png"
                       alt="pago khipu"
                       class="img-responsive"
                     >
-                  </div>
+                  </div>-->
                 </div>
-                <div class="col-xs-12 col-sm-6 text-center">
-                  <div class="btn-pago bank" @click="transferBank()">
+                <div class="col-xs-12 col-sm-12 text-center">
+                  <div 
+                    class="btn-pago bank" 
+                    @click="transferBank()">
                     <img
                       src="../../../src/assets/images/transfer.jpg"
-                      alt="pago khipu"
+                      alt="pago con transferencia"
                       class="img-responsive"
                     >
                   </div>
@@ -549,5 +660,30 @@ a {
   text-transform: uppercase;
   font-size: 16px;
   background: #fff;
+}
+.paso2 span {
+  display: block;
+}
+.is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+.error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -1px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
+}
+
+.error-terms {
+  color: #d40000c9;
+  font-size: 10px;
+  position: relative;
+  top: -2px;
 }
 </style>

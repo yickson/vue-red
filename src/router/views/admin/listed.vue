@@ -89,17 +89,19 @@ export default {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="inversion in inversiones" :key="inversion.id">
+                        <tr 
+                          v-for="inversion in inversiones" 
+                          :key="inversion.id">
                           <td :key="inversion.id">{{ inversion.id }}</td>
                           <td>{{ inversion.proyecto.nombre }}</td>
-                          <td>{{inversion.cod}}</td>
-                          <td>{{inversion.proyecto.tir}} %</td>
+                          <td>{{ inversion.cod }}</td>
+                          <td>{{ inversion.proyecto.tir }} %</td>
                           <td>--</td>
+                          <td>{{ inversion.created_at }}</td>
+                          <td>{{ formatPrice(inversion.monto) }}</td>
+                          <td>{{ formatPrice(inversion.derechos) }}</td>
                           <td>--</td>
-                          <td>{{formatPrice(inversion.monto)}}</td>
-                          <td>{{formatPrice(inversion.derechos) }}</td>
-                          <td>--</td>
-                          <td>{{formatPrice(inversion.monto - inversion.derechos)}}</td>
+                          <td>{{ formatPrice(inversion.monto - inversion.derechos) }}</td>
                           <td>--</td>
                           <td v-if="inversion.proyecto.verificado == 1">Transferido</td>
                           <td v-else="inversion.proyecto.verificado == 0">Pendiente</td>

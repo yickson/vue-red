@@ -16,6 +16,21 @@ export default {
     comunas: [],
     usernoteditin: false,
     userInfo: [],
+    nickname: '',
+    nombre: '',
+    app_pat: '',
+    app_mat: '',
+    email: '',
+    rut: '',
+    genero: '',
+    fec_nac: '',
+    pais_id: '',
+    e_civil: '',
+    telefono: '',
+    direccion: '',
+    profesion: '',
+    region_id: '',
+    comuna_id: '',
   }),
   mounted() {
     this.getRegiones()
@@ -23,21 +38,6 @@ export default {
   beforeMount() {
     this.getPaises()
     this.getUserInfo()
-    this.nickname = this.currentUser.data.usuario.nickname
-    this.nombre = this.currentUser.data.usuario.nombre
-    this.app_pat = this.currentUser.data.usuario.app_pat
-    this.app_mat = this.currentUser.data.usuario.app_mat
-    this.email = this.currentUser.data.usuario.email
-    this.rut = this.currentUser.data.usuario.rut
-    this.genero = this.currentUser.data.usuario.genero
-    this.fec_nac = this.currentUser.data.usuario.fec_nac
-    this.pais_id = this.currentUser.data.usuario.pais_id
-    this.e_civil = this.currentUser.data.usuario.e_civil
-    this.telefono = this.currentUser.data.usuario.telefono
-    this.direccion = this.currentUser.data.usuario.direccion
-    this.profesion = this.currentUser.data.usuario.profesion
-    this.region_id = this.currentUser.data.usuario.region_id
-    this.comuna_id = this.currentUser.data.usuario.comuna_id
   },
 
   methods: {
@@ -45,18 +45,24 @@ export default {
       this.usernoteditin = true
     },
     success() {
-      this.$notify({
-        type: 'success',
-        title: 'Well done!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        '¡Bien!',
+        'Tus datos han sido actualizados exitosamente',
+        'success',
+        {
+          button: false,
+        }
+      )
     },
     warning() {
-      this.$notify({
-        type: 'warning',
-        title: 'Warning!',
-        content: this.responseMessage,
-      })
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con la actualización de tus datos.',
+        'error',
+        {
+          button: false,
+        }
+      )
     },
     getUserInfo() {
       var headers = {
@@ -70,8 +76,22 @@ export default {
           }
         )
         .then(response => {
-          console.log(response)
           this.userInfo = response.data.data
+          this.nickname = this.userInfo.nickname
+          this.nombre = this.userInfo.nombre
+          this.app_pat = this.userInfo.app_pat
+          this.app_mat = this.userInfo.app_mat
+          this.email = this.userInfo.email
+          this.rut = this.userInfo.rut
+          this.genero = this.userInfo.genero
+          this.fec_nac = this.userInfo.fec_nac
+          this.pais_id = this.userInfo.pais_id
+          this.e_civil = this.userInfo.e_civil
+          this.telefono = this.userInfo.telefono
+          this.direccion = this.userInfo.direccion
+          this.profesion = this.userInfo.profesion
+          this.region_id = this.userInfo.region_id
+          this.comuna_id = this.userInfo.comuna_id
         })
         .catch(error => {
           console.log(error)
@@ -121,43 +141,58 @@ export default {
         })
     },
     editUser() {
-      var headers = {
-        Authorization: `Bearer ${this.currentUser.data.token}`,
-      }
-      var dataUser = {
-        nickname: this.nickname,
-        nombre: this.nombre,
-        app_pat: this.app_pat,
-        app_mat: this.app_mat,
-        email: this.email,
-        rut: this.rut,
-        genero: this.genero,
-        fec_nac: this.fec_nac,
-        pais_id: this.pais_id,
-        e_civil: this.e_civil,
-        telefono: this.telefono,
-        direccion: this.direccion,
-        profesion: this.profesion,
-        region_id: this.region_id,
-        comuna_id: this.comuna_id,
-      }
-      axios
-        .put(
-          'http://52.67.70.146/api/usuario/' + this.currentUser.data.usuario.id,
-          dataUser,
-          { headers: headers }
-        )
-        .then(response => {
-          console.log(response)
-          this.responseMessage = 'Usuario editado exitosamente'
-          this.success()
-          this.getUserInfo()
-        })
-        .catch(error => {
-          console.log('error', error)
-          this.responseMessage = 'Hubo un error, porfavor vuelve a intentarlo.'
-          this.warning()
-        })
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          var headers = {
+            Authorization: `Bearer ${this.currentUser.data.token}`,
+          }
+          var dataUser = {
+            nickname: this.nickname,
+            nombre: this.nombre,
+            app_pat: this.app_pat,
+            app_mat: this.app_mat,
+            email: this.email,
+            rut: this.rut,
+            genero: this.genero,
+            fec_nac: this.fec_nac,
+            pais_id: this.pais_id,
+            e_civil: this.e_civil,
+            telefono: this.telefono,
+            direccion: this.direccion,
+            profesion: this.profesion,
+            region_id: this.region_id,
+            comuna_id: this.comuna_id,
+          }
+          axios
+            .put(
+              'http://52.67.70.146/api/usuario/' +
+                this.currentUser.data.usuario.id,
+              dataUser,
+              { headers: headers }
+            )
+            .then(response => {
+              console.log(response)
+              this.responseMessage = 'Usuario editado exitosamente'
+              this.success()
+              this.getUserInfo()
+            })
+            .catch(error => {
+              console.log('error', error)
+              this.responseMessage =
+                'Hubo un error, porfavor vuelve a intentarlo.'
+              this.warning()
+            })
+        } else {
+          this.$swal(
+            'Lo sentimos',
+            'Completa los campos requeridos e intenta nuevamente.',
+            'error',
+            {
+              button: false,
+            }
+          )
+        }
+      })
     },
   },
   computed: {
@@ -199,13 +234,13 @@ export default {
                     <!-- FORM -->
                     <label for>Nickname</label>
                     <p>{{ userInfo.nickname }}</p>
-                    <label for>Nombres (*)</label>
+                    <label for>Nombres</label>
                     <p>{{ userInfo.nombre }}</p>
                     <label for>Apellido Paterno</label>
                     <p>{{ userInfo.app_pat }}</p>
                     <label for>Apellido Materno</label>
                     <p>{{ userInfo.app_mat }}</p>
-                    <label for>RUT (*)</label>
+                    <label for>RUT</label>
                     <p>{{ userInfo.rut }}</p>
                     <label for>Género</label>
                     <p>{{ userInfo.genero }}</p>
@@ -224,15 +259,15 @@ export default {
                 <div class="card-body">
                   <div class="col-md-12">
                     <!-- FORM -->
-                    <label for>E-mail(*)</label>
+                    <label for>E-mail</label>
                     <p>{{ userInfo.email }}</p>
-                    <label for>Teléfono(*)</label>
+                    <label for>Teléfono</label>
                     <p>{{ userInfo.telefono }}</p>
-                    <label for>Dirección (*)</label>
+                    <label for>Dirección</label>
                     <p>{{ userInfo.direccion }}</p>
-                    <label for>Región(*)</label>
+                    <label for>Región</label>
                     <p>{{ userInfo.region_id }}</p>
-                    <label for>Comuna(*)</label>
+                    <label for>Comuna</label>
                     <p>{{ userInfo.comuna_id }}</p>
                     <label for>Estado civil</label>
                     <p>{{ userInfo.e_civil }}</p>
@@ -258,33 +293,55 @@ export default {
                   <div class="col-md-12">
                     <!-- FORM -->
                     <label for>Nickname</label>
-                    <BaseInput 
+                    <input 
                       v-model="nickname" 
-                      name="nickname"/>
-                    <label for>Nombres (*)</label>
-                    <BaseInput 
-                      v-model="nombre" 
-                      name="nombre"/>
+                      class="form-control" 
+                      name="nickname">
+                    <label for>Nombre</label>
+                    <input
+                      v-validate="'required'"
+                      v-model="nombre"
+                      :class="{'input': true, 'is-danger': errors.has('nombre') }"
+                      class="form-control"
+                      name="nombre"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('nombre') }}</span>
+                    
                     <label for>Apellido Paterno</label>
-                    <BaseInput 
-                      v-model="app_pat" 
-                      name="app_pat"/>
+                    <input
+                      v-validate="'required'"
+                      v-model="app_pat"
+                      :class="{'input': true, 'is-danger': errors.has('app_pat') }"
+                      class="form-control"
+                      name="app_pat"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('app_pat') }}</span>
                     <label for>Apellido Materno</label>
-                    <BaseInput 
-                      v-model="app_mat" 
-                      name="app_mat"/>
+                    <input
+                      v-validate="'required'"
+                      v-model="app_mat"
+                      :class="{'input': true, 'is-danger': errors.has('app_mat') }"
+                      class="form-control"
+                      name="app_mat"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('app_mat') }}</span>
+                    
                     <label for>RUT (*)</label>
-                    <BaseInput 
+                    <input 
                       v-model="rut" 
+                      class="form-control" 
                       name="rut" 
-                      disabled/>
+                      disabled>
                     <label for>Género</label>
                     <btn-group class="select-genero">
                       <btn
                         v-model="genero"
                         class="btn"
                         input-type="radio"
-                        input-value="1"
+                        input-value="f"
                         name="genero"
                       >
                         <p>FEMENINO</p>
@@ -293,17 +350,24 @@ export default {
                         v-model="genero"
                         class="btn"
                         input-type="radio"
-                        input-value="2"
+                        input-value="m"
                         name="genero"
                       >
                         <p>MASCULINO</p>
                       </btn>
                     </btn-group>
                     <label for>Fecha de Nacimiento</label>
-                    <BaseInput 
-                      v-model="fec_nac" 
-                      type="date" 
-                      name="fec_nac"/>
+                    <input
+                      v-validate="'required'"
+                      v-model="fec_nac"
+                      :class="{'input': true, 'is-danger': errors.has('newpassword') }"
+                      class="form-control"
+                      type="date"
+                      name="fec_nac"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('fec_nac') }}</span>
+                    
                     <label for>Nacionalidad</label>
                     <select 
                       v-model="pais_id" 
@@ -324,19 +388,40 @@ export default {
                 <div class="card-body">
                   <div class="col-md-12">
                     <!-- FORM -->
-                    <label for>E-mail(*)</label>
-                    <BaseInput 
-                      v-model="email" 
-                      name="email"/>
-                    <label for>Teléfono(*)</label>
-                    <BaseInput 
-                      v-model="telefono" 
-                      name="telefono"/>
-                    <label for>Dirección (*)</label>
-                    <BaseInput 
-                      v-model="direccion" 
-                      name="direccion"/>
-                    <label for>Región(*)</label>
+                    <label for>E-mail</label>
+                    <input
+                      v-validate="'required|email'"
+                      v-model="email"
+                      :class="{'input': true, 'is-danger': errors.has('email') }"
+                      class="form-control"
+                      name="email"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('email') }}</span>
+                    
+                    <label for>Teléfono</label>
+                    <input
+                      v-validate="'required'"
+                      v-model="telefono"
+                      :class="{'input': true, 'is-danger': errors.has('telefono') }"
+                      class="form-control"
+                      name="telefono"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('telefono') }}</span>
+                    
+                    <label for>Dirección</label>
+                    <input
+                      v-validate="'required'"
+                      v-model="direccion"
+                      :class="{'input': true, 'is-danger': errors.has('direccion') }"
+                      class="form-control"
+                      name="direccion"
+                      data-vv-validate-on="blur"
+                    >
+                    <span class="error">{{ errors.first('direccion') }}</span>
+                    
+                    <label for>Región</label>
                     <select
                       v-model="region_id"
                       class="form-control"
@@ -348,7 +433,7 @@ export default {
                         :value="region.id"
                       >{{ region.name }}</option>
                     </select>
-                    <label for>Comuna(*)</label>
+                    <label for>Comuna</label>
                     <select 
                       v-model="comuna_id" 
                       class="form-control" 
@@ -358,13 +443,15 @@ export default {
                         :value="comuna.id">{{ comuna.name }}</option>
                     </select>
                     <label for>Estado civil</label>
-                    <BaseInput 
+                    <input 
                       v-model="e_civil" 
-                      name="e_civil"/>
+                      class="form-control" 
+                      name="e_civil">
                     <label for>Profesión/Oficio</label>
-                    <BaseInput 
+                    <input 
                       v-model="profesion" 
-                      name="profesion"/>
+                      class="form-control" 
+                      name="profesion">
                     <BaseButton class="btn save-edit">GUARDAR CAMBIOS</BaseButton>
                     <!-- FORM -->
                   </div>
@@ -422,5 +509,27 @@ select {
   color: #ffffff;
   font-size: 12px;
   margin-top: 25px;
+}
+label {
+  margin-top: 13px;
+  display: block;
+}
+span {
+  display: block;
+}
+.is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+.error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -1px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
 }
 </style>

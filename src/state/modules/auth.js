@@ -198,7 +198,7 @@ export const actions = {
     console.log(!state.currentUser)
     var headers = { 'Content-type': 'application/json; charset=utf-8' }
     return axios
-      .get('http://52.67.70.146/api/logout', { headers: headers })
+      .get('http://52.67.70.146/api/login', { headers: headers })
       .then(response => {
         const user = response.data
         commit('SET_CURRENT_USER', user)

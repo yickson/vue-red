@@ -27,50 +27,61 @@ export default {
     this.getOptionstoDo()
   },
   methods: {
-    info() {
-      this.$notify({
-        type: 'info',
-        title: 'Heads up!',
-        content: this.apimessage,
-      })
-    },
     success() {
-      this.$notify({
-        type: 'success',
-        title: 'Well done!',
-        content: this.apimessage,
-      })
+      this.$swal(
+        '¡Bien!',
+        'Tu solicitud se ha procesado correctamente',
+        'success',
+        {
+          button: false,
+        }
+      )
+    },
+    warning() {
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con tu solicitud, porfavor verifica los datos e intenta nuevamente',
+        'error',
+        {
+          button: false,
+        }
+      )
     },
     submitRegister() {
-      axios
-        .post('http://52.67.70.146/api/register', {
-          nombre: this.nombre,
-          app_pat: this.app_pat,
-          email: this.email,
-          password: this.password,
-          c_password: this.c_password,
-          rut: this.rut,
-          valor: this.valor,
-          telefono: this.telefono,
-        })
-        .then(response => {
-          console.log(response)
-          if (response.status === 200) {
-            this.success()
-            this.apimessage = response.data.message
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          // eslint-disable-next-line
+          alert('Form Submitted!')
+          axios
+            .post('http://52.67.70.146/api/register', {
+              nombre: this.nombre,
+              app_pat: this.app_pat,
+              email: this.email,
+              password: this.password,
+              c_password: this.c_password,
+              rut: this.rut,
+              valor: this.valor,
+              telefono: this.telefono,
+            })
+            .then(response => {
+              console.log(response)
+              if (response.status === 200) {
+                this.success()
 
-            console.log(this.apimessage)
-          } else if (response.status === 401) {
-            this.info()
-            this.apimessage = response.data.message
-            console.log(this.apimessage)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-          this.info()
-          this.apimessage = error.message
-        })
+                console.log(this.apimessage)
+              } else if (response.status === 401) {
+                this.warning()
+              }
+            })
+            .catch(error => {
+              console.log(error)
+              this.warning()
+            })
+          return
+        }
+
+        alert('Correct them errors!')
+      })
     },
     getOptionstoDo() {
       axios
@@ -86,149 +97,120 @@ export default {
 
 <template>
   <Layout class="registrarse">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12">
-        <h2 class="text-center register-title">REGISTRATE</h2>
-      </div>
-    </div>
     <div class="container-form">
       <form @submit.prevent="submitRegister">
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12">
+          <div class="col-xs-12 col-sm-12">
+            <h2 class="text-center register-title">REGISTRATE</h2>
+          </div>
+        </div>
+        <div class="header"/>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 body">
             <!-- nombre-->
-            <div class="form-group">
-              <label for>Nombre</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-user"/>
-                </div>
-                <input
-                  v-model="nombre"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese su nombre"
-                >
-              </div>
-            </div>
+            <label for="nombre">Nombre</label>
+            <input
+              v-validate="'required'"
+              :class="{'input': true, 'is-danger': errors.has('nombre') }"
+              v-model="nombre"
+              data-vv-validate-on="blur"
+              type="text"
+              name="nombre"
+              class="form-control"
+              placeholder="Ingrese su nombre"
+            >
+            <span class="error">{{ errors.first('nombre') }}</span>
 
             <!-- apellido-->
-            <div class="form-group">
-              <label for>Apellido</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-user"/>
-                </div>
-                <input
-                  v-model="app_pat"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese su apellido"
-                >
-              </div>
-            </div>
+            <label for>Apellido</label>
+            <input
+              v-validate="'required'"
+              v-model="app_pat"
+              :class="{'input': true, 'is-danger': errors.has('apellido') }"
+              type="text"
+              name="apellido"
+              data-vv-validate-on="blur"
+              class="form-control"
+              placeholder="Ingrese su apellido"
+            >
+            <span class="error">{{ errors.first('apellido') }}</span>
 
             <!-- email-->
-            <div class="form-group">
-              <label for>E-mail</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-envelope fa"/>
-                </div>
-                <input
-                  v-model="email"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese su Email"
-                >
-              </div>
-            </div>
+            <label for>E-mail</label>
+            <input
+              v-validate="'required|email'"
+              :class="{'input': true, 'is-danger': errors.has('email') }"
+              v-model="email"
+              type="text"
+              data-vv-validate-on="blur"
+              name="email"
+              class="form-control"
+              placeholder="Ingrese su Email"
+            >
+            <span class="error">{{ errors.first('email') }}</span>
 
             <!-- contraseña -->
-            <div class="form-group">
-              <label for>RUT</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-users fa"/>
-                </div>
-                <input
-                  v-model="rut"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese su RUT sin puntos ni guión"
-                >
-              </div>
-            </div>
+            <label for>RUT</label>
+            <input
+              v-validate="'required'"
+              v-model="rut"
+              :class="{'input': true, 'is-danger': errors.has('rut') }"
+              type="text"
+              name="rut"
+              data-vv-validate-on="blur"
+              class="form-control"
+              placeholder="Ingrese su RUT sin puntos ni guión"
+            >
+            <span class="error">{{ errors.first('rut') }}</span>
 
             <!-- contraseña -->
-            <div class="form-group">
-              <label for>Contraseña</label>
-              <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-lock fa"/>
-                </div>
-                <input
-                  v-model="password"
-                  type="password"
-                  class="form-control"
-                  placeholder="Ingrese su contraseña"
-                >
-              </div>
-            </div>
+            <label for>Contraseña</label>
+            <input
+              v-validate="'required'"
+              ref="password"
+              v-model="password"
+              :class="{'input': true, 'is-danger': errors.has('password') }"
+              name="password"
+              type="password"
+              class="form-control"
+              placeholder="Ingrese su contraseña"
+            >
+            <span class="error">{{ errors.first('password') }}</span>
 
             <!-- contraseña nueva -->
-            <div class="form-group">
-              <label for>Repetir contraseña</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-lock fa"/>
-                </div>
-                <input
-                  v-model="c_password"
-                  type="password"
-                  class="form-control"
-                  placeholder="Repita su contraseña"
-                >
-              </div>
-            </div>
+            <label for>Repetir contraseña</label>
+            <input
+              v-validate="'required|confirmed:password'"
+              :class="{'is-danger': errors.has('password_confirmation')}"
+              v-model="c_password"
+              type="password"
+              name="rep_password"
+              data-vv-as="password"
+              data-vv-validate-on="blur"
+              class="form-control"
+              placeholder="Repita su contraseña"
+            >
+            <span class="error">{{ errors.first('rep_password') }}</span>
 
             <!-- contraseña nueva -->
-            <div class="form-group">
-              <label for>Telefono (Opcional)</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">+569</div>
-                <input
-                  v-model="telefono"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese su contraseña"
-                >
-              </div>
-            </div>
+            <label for>Telefono (Opcional)</label>
+            <input
+              v-model="telefono"
+              type="text"
+              class="form-control"
+              placeholder="Ingrese su contraseña"
+            >
 
             <!-- que desea hacer -->
-            <div class="form-group">
-              <label for>¿Que desea hacer en la plataforma?</label>
-              <label class="sr-only" for="exampleInputAmount"/>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fas fa-user fa"/>
-                </div>
-                <select v-model="valor" class="form-control">
-                  <option
-                    v-for="proposito in propositos"
-                    :value="proposito.id"
-                  >{{ proposito.valor }}</option>
-                </select>
-              </div>
-            </div>
-
+            <label for>¿Que desea hacer en la plataforma?</label>
+            <select 
+              v-model="valor" 
+              class="form-control">
+              <option 
+                v-for="proposito in propositos" 
+                :value="proposito.id">{{ proposito.valor }}</option>
+            </select>
+            
             <button class="btn">REGISTRARSE</button>
             <span class="terms-conditions">
               Al presionar registrar está aceptando nuestros
@@ -244,7 +226,7 @@ export default {
   </Layout>
 </template>
 
-<style>
+<style scoped>
 .registrarse {
   background-image: url(../../../src/assets/images/banner_bg.jpg);
   background-size: cover;
@@ -259,35 +241,61 @@ export default {
   font-weight: bold;
 }
 
+.container-form h2 {
+  color: #fc4a1a;
+  letter-spacing: 0.2em;
+}
+.container-form .header {
+  background: #fc4a1a;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#f78433),
+    to(#fc4a1a)
+  );
+  background: linear-gradient(to right, #f78433, #fc4a1a);
+  height: 2px;
+}
+.container-form .body {
+  padding: 20px 60px 20px 60px;
+}
 .container-form {
   display: block;
-  margin: 0px auto;
+  margin: 40px auto;
   background-color: #ffffff;
   max-width: 600px;
-  padding: 60px 60px 60px 60px;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   margin-bottom: 40px;
 }
+.container-form label {
+  margin-top: 13px;
+}
+.container-form label,
+span {
+  display: block;
+}
 
-.container-form .input-group-addon {
-  background: #ffffff;
-}
-.container-form .fas {
-  color: #f47828;
-}
 .registrarse .form-control {
   border: 1px solid #bac9d8;
   border-radius: 2px;
   box-shadow: none;
   height: 40px;
 }
-.registrarse .form-control .input-group-addon {
-  color: #f47828;
-}
+
 .container-form .btn {
-  background-color: #f47828;
+  /* background-color: #ea5b2b; */
+  background: #fc4a1a;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#f78433),
+    to(#fc4a1a)
+  );
+  background: linear-gradient(to right, #f78433, #fc4a1a);
   color: #ffffff;
   display: block;
   height: 40px;
@@ -310,5 +318,20 @@ export default {
   .container-form {
     padding: 30px;
   }
+}
+.is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+.error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -1px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 5px;
 }
 </style>

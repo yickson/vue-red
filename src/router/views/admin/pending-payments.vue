@@ -12,7 +12,6 @@ export default {
   data() {
     return {
       inversionespendientes: [],
-      //proyecto: proyectopendiente[i],
     }
   },
   mounted() {
@@ -100,12 +99,21 @@ export default {
                           <th scope="col">Transferir ahora</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody v-if="inversionespendientes.length > 0">
                         <tr v-for="inversion in inversionespendientes">
-                          <td>{{inversion.empresa_id}}</td>
-                          <td>{{inversion.nombre }}</td>
+                          <td>{{ inversion.empresa_id }}</td>
+                          <td>{{ inversion.nombre }}</td>
                           <td>27/12/2018</td>
                           <td>5.000</td>
+                          <td/>
+                        </tr>
+                      </tbody>
+                      <tbody v-if="inversionespendientes.length === 0">
+                        <tr>
+                          <td>No registras cuotas pendientes.</td>
+                          <td/>
+                          <td/>
+                          <td/>
                           <td/>
                         </tr>
                       </tbody>
