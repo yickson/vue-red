@@ -101,7 +101,9 @@ export default {
         <h2 class="credit-title">SOLICITA TU FINANCIAMIENTO</h2>
       </div>
     </div>
-    <form action @submit.prevent="enviarSolicitud">
+    <form 
+      action 
+      @submit.prevent="enviarSolicitud">
       <div class="container-credit">
         <div class="row">
           <!-- NOMBRE EMPRESA -->
@@ -175,7 +177,9 @@ export default {
               name="cuanto necesitas"
               data-vv-validate-on="blur"
             >
-              <option selected value>Selecciona</option>
+              <option 
+                selected 
+                value>Selecciona</option>
               <option
                 v-for="option in options.necesidad"
                 :value="option.id"
@@ -194,8 +198,12 @@ export default {
               name="a quienes vendes"
               data-vv-validate-on="blur"
             >
-              <option selected value>Selecciona</option>
-              <option v-for="option in options.objetivo" :value="option.id">{{ option.descripcion }}</option>
+              <option 
+                selected 
+                value>Selecciona</option>
+              <option 
+                v-for="option in options.objetivo" 
+                :value="option.id">{{ option.descripcion }}</option>
             </select>
             <span class="error">{{ errors.first('a quienes vendes') }}</span>
           </div>
@@ -212,8 +220,12 @@ export default {
               name="venta promedio"
               data-vv-validate-on="blur"
             >
-              <option selected value>Selecciona</option>
-              <option v-for="option in options.ventas" :value="option.id">{{ option.descripcion }}</option>
+              <option 
+                selected 
+                value>Selecciona</option>
+              <option 
+                v-for="option in options.ventas" 
+                :value="option.id">{{ option.descripcion }}</option>
             </select>
             <span class="error">{{ errors.first('venta promedio') }}</span>
           </div>
@@ -222,10 +234,10 @@ export default {
           <div class="col-xs-12 col-sm-12 col-md-6">
             <label for>Cuánta deuda tiene la empresa (En millones)</label>
             <input
+              v-validate="'required'"
               v-model="deuda"
               :class="{'input': true, 'is-danger': errors.has('deuda empresa') }"
               class="form-control"
-              v-validate="'required'"
               placeholder="$0"
               name="deuda empresa"
               data-vv-validate-on="blur"
@@ -239,15 +251,24 @@ export default {
             <label
               for
             >Si puedes dejar una propiedad en garantía, cuánto estímas que vale? (En millones)</label>
-            <input v-model="propiedad" type="text" class="form-control">
+            <input 
+              v-model="propiedad" 
+              type="text" 
+              class="form-control">
           </div>
 
           <!-- GARANTIA INMOBILIARIA PARA OPERACION -->
           <div class="col-xs-12 col-sm-12 col-md-6">
             <label for>Qué tipo de Garantías inmobiliarias ofreces para la operación?</label>
-            <select v-model="credito_garantia_id" class="form-control">
-              <option selected disabled>Choose</option>
-              <option v-for="option in options.garantia" :value="option.id">{{ option.descripcion }}</option>
+            <select 
+              v-model="credito_garantia_id" 
+              class="form-control">
+              <option 
+                selected 
+                disabled>Choose</option>
+              <option 
+                v-for="option in options.garantia" 
+                :value="option.id">{{ option.descripcion }}</option>
             </select>
           </div>
         </div>
@@ -255,7 +276,10 @@ export default {
           <!-- DEUDA PROPIEDAD  -->
           <div class="col-xs-12 col-sm-12 col-md-6">
             <label for>Cuánta deuda tiene la propiedad?(Millones)</label>
-            <input v-model="propiedad_deuda" type="text" class="form-control">
+            <input 
+              v-model="propiedad_deuda" 
+              type="text" 
+              class="form-control">
           </div>
           <div class="col-xs-12 col-sm-12 col-md-6">
             <label for/>

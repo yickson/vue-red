@@ -18,8 +18,8 @@ export default {
       password: '',
       c_password: '',
       rut: '',
-      valor: 0,
-      telefono: 0,
+      valor: '',
+      telefono: '',
       apimessage: '',
     }
   },
@@ -77,10 +77,17 @@ export default {
               console.log(error)
               this.warning()
             })
-          return
+          
+        } else {
+          this.$swal(
+            'Lo sentimos',
+            'Porfavor completa todos los campos requeridos (*)',
+            'error',
+            {
+              button: false,
+            }
+          )
         }
-
-        alert('Correct them errors!')
       })
     },
     getOptionstoDo() {
@@ -198,7 +205,7 @@ export default {
               v-model="telefono"
               type="text"
               class="form-control"
-              placeholder="Ingrese su contraseña"
+              placeholder="Ingrese su número telefonico"
             >
 
             <!-- que desea hacer -->
@@ -206,6 +213,9 @@ export default {
             <select 
               v-model="valor" 
               class="form-control">
+              <option 
+                selected 
+                value>Selecciona una opción</option>
               <option 
                 v-for="proposito in propositos" 
                 :value="proposito.id">{{ proposito.valor }}</option>
@@ -328,7 +338,7 @@ span {
   position: relative;
   top: -1px;
   color: #ffffff;
-  z-index: 99999;
+  z-index: 0;
   font-size: 13px;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;

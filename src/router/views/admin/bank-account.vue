@@ -16,12 +16,14 @@ export default {
     acountnumber: '',
     accounttype: '',
     bancoTipo: [],
+    userBanco: [],
   }),
   mounted() {
     this.getBancos()
   },
   beforeMount() {
     this.getTipoCuenta()
+    this.getUserBanco()
   },
   methods: {
     success() {
@@ -43,6 +45,21 @@ export default {
           button: false,
         }
       )
+    },
+    getUserBanco() {
+      axios
+        .get(
+          'http://52.67.70.146/api/usuario/banco/' +
+            this.currentUser.data.usuario.id
+        )
+        .then(
+          response => (
+            (this.userBanco = response.data.data.cuenta_bancaria),
+            (this.newBank = this.userBanco.banco.id),
+            (this.acountnumber = this.userBanco.numero),
+            (this.accounttype = this.userBanco.tipo_cuenta_id)
+          )
+        )
     },
     getBancos() {
       axios

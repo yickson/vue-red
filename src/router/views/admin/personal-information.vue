@@ -14,7 +14,7 @@ export default {
     paises: [],
     regiones: [],
     comunas: [],
-    usernoteditin: false,
+    usernoteditin: true,
     userInfo: [],
     nickname: '',
     nombre: '',
@@ -42,7 +42,7 @@ export default {
 
   methods: {
     editfields() {
-      this.usernoteditin = true
+      this.usernoteditin = false
     },
     success() {
       this.$swal(
@@ -287,7 +287,7 @@ export default {
           action 
           @submit.prevent="editUser">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="card">
                 <div class="card-body">
                   <div class="col-md-12">
@@ -335,55 +335,14 @@ export default {
                       class="form-control" 
                       name="rut" 
                       disabled>
-                    <label for>Género</label>
-                    <btn-group class="select-genero">
-                      <btn
-                        v-model="genero"
-                        class="btn"
-                        input-type="radio"
-                        input-value="f"
-                        name="genero"
-                      >
-                        <p>FEMENINO</p>
-                      </btn>
-                      <btn
-                        v-model="genero"
-                        class="btn"
-                        input-type="radio"
-                        input-value="m"
-                        name="genero"
-                      >
-                        <p>MASCULINO</p>
-                      </btn>
-                    </btn-group>
-                    <label for>Fecha de Nacimiento</label>
-                    <input
-                      v-validate="'required'"
-                      v-model="fec_nac"
-                      :class="{'input': true, 'is-danger': errors.has('newpassword') }"
-                      class="form-control"
-                      type="date"
-                      name="fec_nac"
-                      data-vv-validate-on="blur"
-                    >
-                    <span class="error">{{ errors.first('fec_nac') }}</span>
-                    
-                    <label for>Nacionalidad</label>
-                    <select 
-                      v-model="pais_id" 
-                      class="form-control" 
-                      name="pais_id">
-                      <option 
-                        v-for="(pais,index) in paises" 
-                        :value="pais.id">{{ pais.name }}</option>
-                    </select>
-                    <!-- FORM -->
+
+                      <!-- FORM -->
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="card">
                 <div class="card-body">
                   <div class="col-md-12">
@@ -442,19 +401,69 @@ export default {
                         v-for="(comuna,index) in comunas" 
                         :value="comuna.id">{{ comuna.name }}</option>
                     </select>
-                    <label for>Estado civil</label>
-                    <input 
-                      v-model="e_civil" 
-                      class="form-control" 
-                      name="e_civil">
-                    <label for>Profesión/Oficio</label>
-                    <input 
-                      v-model="profesion" 
-                      class="form-control" 
-                      name="profesion">
-                    <BaseButton class="btn save-edit">GUARDAR CAMBIOS</BaseButton>
+
                     <!-- FORM -->
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <label for>Estado civil</label>
+                  <input 
+                    v-model="e_civil" 
+                    class="form-control" 
+                    name="e_civil">
+                  <label for>Profesión/Oficio</label>
+                  <input 
+                    v-model="profesion" 
+                    class="form-control" 
+                    name="profesion">
+                  <label for>Fecha de Nacimiento</label>
+                  <input
+                    v-validate="'required'"
+                    v-model="fec_nac"
+                    :class="{'input': true, 'is-danger': errors.has('newpassword') }"
+                    class="form-control"
+                    type="date"
+                    name="fec_nac"
+                    data-vv-validate-on="blur"
+                  >
+                  <span class="error">{{ errors.first('fec_nac') }}</span>
+                  
+                  <label for>Nacionalidad</label>
+                  <select 
+                    v-model="pais_id" 
+                    class="form-control" 
+                    name="pais_id">
+                    <option 
+                      v-for="(pais,index) in paises" 
+                      :value="pais.id">{{ pais.name }}</option>
+                  </select>
+                  <label for>Género</label>
+                  <btn-group class="select-genero">
+                    <btn
+                      v-model="genero"
+                      class="btn"
+                      input-type="radio"
+                      input-value="f"
+                      name="genero"
+                    >
+                      <p>FEMENINO</p>
+                    </btn>
+                    <btn
+                      v-model="genero"
+                      class="btn"
+                      input-type="radio"
+                      input-value="m"
+                      name="genero"
+                    >
+                      <p>MASCULINO</p>
+                    </btn>
+                  </btn-group>
+                  <BaseButton class="btn save-edit">GUARDAR CAMBIOS</BaseButton>
                 </div>
               </div>
             </div>
@@ -469,9 +478,6 @@ export default {
 
 
 <style >
-select {
-  margin-bottom: 1.3rem;
-}
 .select-genero {
   margin-bottom: 52px;
   display: block;

@@ -24,18 +24,14 @@ export default {
   },
   methods: {
     info() {
-      this.$notify({
-        type: 'info',
-        title: 'Heads up!',
-        content: this.apimessage,
-      })
-    },
-    success() {
-      this.$notify({
-        type: 'success',
-        title: 'Well done!',
-        content: this.apimessage,
-      })
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con tu solicitud, porfavor verifica los datos e intenta nuevamente',
+        'error',
+        {
+          button: false,
+        }
+      )
     },
     ...authMethods,
     // Try to log the user in with the username
@@ -66,6 +62,14 @@ export default {
               this.info()
             })
         } else {
+          this.$swal(
+            'Lo sentimos',
+            'debes Completar los campos requeridos.',
+            'error',
+            {
+              button: false,
+            }
+          )
         }
       })
     },
@@ -76,17 +80,26 @@ export default {
       this.Password = false
     },
     nuevacontraseña() {
-      return Axios.post('http://52.67.70.146/api/password/create', {
-        email: this.emailRetrievePassword,
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          return Axios.post('http://52.67.70.146/api/password/create', {
+            email: this.emailRetrievePassword,
+          })
+            .then(response => {
+              this.apimessage = response.data.message
+              this.success()
+            })
+            .catch(error => {
+              this.apimessage = error.message
+              console.log(error)
+              this.info()
+            })
+        } else {
+          this.$swal('Lo sentimos', this.apimessage, 'error', {
+            button: false,
+          })
+        }
       })
-        .then(response => {
-          this.apimessage = response.data.message
-          this.success()
-        })
-        .catch(error => {
-          this.apimessage = error.response.data.message
-          this.info()
-        })
     },
   },
 }
@@ -97,10 +110,8 @@ export default {
     <div class="container">
       <div class="form-login">
         <!--FORM LOGIN -->
-        <form 
-          v-if="!Password" 
-          @submit.prevent="tryToLogIn">
-          <label for>RUT</label>
+        <form v-if="!Password" @submit.prevent="tryToLogIn">
+          <label for>RUC</label>
           <input
             v-validate="'required'"
             :class="{'input': true, 'is-danger': errors.has('email') }"
@@ -121,42 +132,31 @@ export default {
             class="form-control"
           >
           <span class="error">{{ errors.first('password') }}</span>
-          <button 
-            :disabled="tryingToLogIn" 
-            class="btn" 
-            type="submit">
-            <BaseIcon 
-              v-if="tryingToLogIn" 
-              name="sync" 
-              spin/>
+          <button :disabled="tryingToLogIn" class="btn" type="submit">
+            <BaseIcon v-if="tryingToLogIn" name="sync" spin/>
             <span v-else>Log in</span>
           </button>
         </form>
 
         <!-- FORM RECUPERAR CONTRASEÑA-->
-        <form 
-          v-else 
-          @submit.prevent="nuevacontraseña()">
+        <form v-else @submit.prevent="nuevacontraseña()">
           <label for>Email Usuario</label>
-          <BaseInput 
-            v-model="emailRetrievePassword" 
-            name="email-contraseña"/>
-
-          <button 
-            class="btn" 
-            type="submit">
+          <input
+            class="form-control"
+            :class="{'input': true, 'is-danger': errors.has('email_user') }"
+            v-model="emailRetrievePassword"
+            name="email_user"
+            v-validate="'required'"
+            data-vv-validate-on="blur"
+          >
+          <span class="error">{{ errors.first('email_user') }}</span>
+          <button class="btn" type="submit">
             <span>Recuperar</span>
           </button>
         </form>
 
-        <a 
-          v-if="Password" 
-          class="link-login" 
-          @click="LinkLogin()">Ingresar</a>
-        <a 
-          v-else 
-          class="link-login" 
-          @click="LinkRecuperar()">Recuperar contraseña</a> /
+        <a v-if="Password" class="link-login" @click="LinkLogin()">Ingresar</a>
+        <a v-else class="link-login" @click="LinkRecuperar()">Recuperar contraseña</a> /
         <a href="/register">Crear cuenta</a>
       </div>
     </div>
@@ -226,7 +226,7 @@ export default {
   position: relative;
   top: -13px;
   color: #ffffff;
-  z-index: 99999;
+  z-index: 1;
   font-size: 13px;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
