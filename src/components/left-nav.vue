@@ -85,19 +85,11 @@ export default {
 </script>
 
 <template>
-  <Slide 
-    id="left-panel" 
-    no-overlay>
+  <Slide id="left-panel" no-overlay>
     <div>
       <navbar-nav left>
-        <router-link 
-          slot="brand" 
-          :to="{ path: '/'}" 
-          class="navbar-brand" 
-          href="/">
-          <img 
-            src="../../src/assets/images/logomain.svg" 
-            class="img-brand">
+        <router-link slot="brand" :to="{ path: '/'}" class="navbar-brand" href="/">
+          <img src="../../src/assets/images/logomain.svg" class="img-brand">
         </router-link>
         <NavBarRoutes :routes="dashboardNav"/>
         <h3>Mis inversiones</h3>
@@ -184,7 +176,7 @@ export default {
   background: #141c3a; /* fallback for old browsers */
 
   /*overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 0px; /* Place content 60px from the top */
+  padding-top: 0px !important; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
 }
 
@@ -194,7 +186,7 @@ export default {
 .bm-item-list {
   color: whitesmoke;
   margin-left: 10%;
-  font-size: 14px;
+  font-size: 14px !important;
 }
 .bm-item-list > * {
   display: flex;
