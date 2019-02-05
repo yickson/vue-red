@@ -50,7 +50,7 @@ export default {
         console.log('ingresa monto a simular')
         this.dataEmpty = true
       } else {
-        if (this.amount > 100000 || this.proyecto.monto < 800000) {
+        if (this.amount > 100000 || this.proyecto.monto < 80000) {
           this.dataEmpty = false
           this.$router.push({
             name: 'simulate',
@@ -85,10 +85,7 @@ export default {
         <!-- header-->
         <div class="row">
           <div class="col-xs-12 col-sm-12">
-            <img 
-              :src="proyecto.foto_proyecto" 
-              alt 
-              class="img-responsive avatar">
+            <img :src="proyecto.foto_proyecto" alt class="img-responsive avatar">
           </div>
         </div>
       </div>
@@ -107,10 +104,7 @@ export default {
             class="Fullfinanced"
             type="success"
           />
-          <progress-bar-stack 
-            v-else 
-            v-model=" porcentajeFinanciado" 
-            type="warning"/>
+          <progress-bar-stack v-else v-model=" porcentajeFinanciado" type="warning"/>
         </progress-bar>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6">
@@ -120,50 +114,33 @@ export default {
             <p>ID</p>
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6">
-            <p>Factura</p>
-            <p class="card-value">{{ proyecto.desc_derechos }}</p>
+            <p>{{proyecto.credito_tipo.valor}}</p>
+            <p class="card-value">{{ proyecto.tasa}}% Anual</p>
             <p class="card-value">{{ proyecto.empresa_id }}</p>
             <p class="card-value">{{ proyecto.monto_a_financiar }}</p>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12 text-center">
-            <span 
-              v-tooltip="'Dias Restantes'" 
-              class="glyphicon glyphicon-calendar"/>
+            <span v-tooltip="'Dias Restantes'" class="glyphicon glyphicon-calendar"/>
             <span>0</span>
-            <span 
-              v-tooltip="'Cantidad de visitas'" 
-              class="glyphicon glyphicon-eye-open"/>
+            <span v-tooltip="'Cantidad de visitas'" class="glyphicon glyphicon-eye-open"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
-            <span 
-              v-tooltip="'Cantidad de Inversionistas'" 
-              class="glyphicon glyphicon-user"/>
+            <span v-tooltip="'Cantidad de Inversionistas'" class="glyphicon glyphicon-user"/>
             <span>{{ proyecto.get_cant_inversionista[0].inversionistas }}</span>
           </div>
         </div>
       </div>
       <div class="row card-footer">
-        <div 
-          v-show="!btnSimulateCliked" 
-          class="col-xs-12 col-sm-12">
-          <button 
-            v-if="porcentajeFinanciado == 100" 
-            class="btn card-button Fullfinanced">
+        <div v-show="!btnSimulateCliked" class="col-xs-12 col-sm-12">
+          <button v-if="porcentajeFinanciado == 100" class="btn card-button Fullfinanced">
             financiado
             <i class="fas fa-check-circle"/>
           </button>
-          <button 
-            v-else 
-            class="btn card-button" 
-            @click="simulate()">Simular</button>
+          <button v-else class="btn card-button notFinanced" @click="simulate()">Simular</button>
         </div>
-        <div 
-          v-show="btnSimulateCliked" 
-          class="col-xs-12 col-sm-12 text-center">
-          <form 
-            class="form-inline footer-input" 
-            @submit.prevent="submitAmount">
+        <div v-show="btnSimulateCliked" class="col-xs-12 col-sm-12 text-center">
+          <form class="form-inline footer-input" @submit.prevent="submitAmount">
             <div class="form-group">
               <div class="input-group">
                 <input
@@ -214,7 +191,23 @@ export default {
   -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
-
+.Fullfinanced {
+  background-color: green !important;
+}
+.notFinanced {
+  /*background-color: #ea5b2b;*/
+  background: #fc4a1a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 .btn-submit-simulate {
   width: 40px;
   height: 40px;
@@ -255,24 +248,10 @@ export default {
   box-shadow: none;
   border-right: none;
 }
-.card-proyect .btn > .Fullfinanced {
-  background-color: green !important;
-}
+
 .card-proyect .card-button {
   width: 100%;
   color: #fff;
-  /*background-color: #ea5b2b;*/
-  background: #fc4a1a; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #f78433,
-    #fc4a1a
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #f78433,
-    #fc4a1a
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   border: none;
   border-radius: 2px;

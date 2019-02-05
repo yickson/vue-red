@@ -29,6 +29,7 @@ export default {
         exact-active-class={$style.active}
       >
         <a>{getRouteTitle(route)}</a>
+        <i class="material-icons arrow-panel">keyboard_arrow_right</i>
       </BaseLink>
     ))
   },
@@ -37,10 +38,11 @@ export default {
 </script>
 
 
-<style lang="scss" module>
+<style lang="scss" module scoped>
 @import '@design';
 .active a {
   text-decoration: none;
   cursor: default;
+  display: inline-block;
 }
 </style>

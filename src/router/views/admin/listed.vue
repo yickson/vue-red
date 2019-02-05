@@ -12,6 +12,8 @@ export default {
   data() {
     return {
       inversiones: [],
+      modal_comentario: false,
+      inversion_comentarios: [],
     }
   },
   mounted() {
@@ -39,6 +41,11 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(0).replace('.', '.')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    itemClicked: function(item) {
+      this.inversion_comentarios = item.proyecto.proyecto_comentarios
+      console.log(item.proyecto.proyecto_comentarios)
+      this.modal_comentario = true
     },
   },
   computed: {
@@ -86,12 +93,11 @@ export default {
                           <th>Monto a recibir</th>
                           <th>Cuota por pagar</th>
                           <th>Estado</th>
+                          <th>Comentarios</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr 
-                          v-for="inversion in inversiones" 
-                          :key="inversion.id">
+                        <tr v-for="inversion in inversiones" :key="inversion.id">
                           <td :key="inversion.id">{{ inversion.id }}</td>
                           <td>{{ inversion.proyecto.nombre }}</td>
                           <td>{{ inversion.cod }}</td>
@@ -105,6 +111,9 @@ export default {
                           <td>--</td>
                           <td v-if="inversion.proyecto.verificado == 1">Transferido</td>
                           <td v-else="inversion.proyecto.verificado == 0">Pendiente</td>
+                          <td class="text-center">
+                            <i class="far fa-comment-alt" @click="itemClicked(inversion)"></i>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -116,6 +125,20 @@ export default {
         </div>
       </div>
     </div>
+    <modal
+      v-model="modal_comentario"
+      title="Comentarios del Administrador"
+      :backdrop="true"
+      :footer="false"
+      class="animated fadeInDown"
+    >
+      <div v-for="inversion_comentario in inversion_comentarios">
+        <p>
+          <b>{{inversion_comentario.asunto}}</b>
+        </p>
+        <p>{{inversion_comentario.comentario}}</p>
+      </div>
+    </modal>
   </Layout>
 </template>
 
@@ -156,5 +179,14 @@ export default {
 }
 .btn-block {
   margin-bottom: 5px;
+}
+.modal-content {
+  top: 140px;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  left: 8px;
+  position: absolute;
 }
 </style>

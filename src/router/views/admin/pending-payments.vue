@@ -56,6 +56,10 @@ export default {
           console.log(error)
         })
     },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(0).replace('.', '.')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
   },
   computed: {
     ...authComputed,
@@ -94,8 +98,7 @@ export default {
                           <th scope="col">Proyecto</th>
                           <th scope="col">Fecha Inv.</th>
                           <th scope="col">Derechos</th>
-                          <th scope="col">Préstamos</th>
-                          <th scope="col">Inversión</th>
+                          <th scope="col">Saldo pendiente</th>
                           <th scope="col">Transferir ahora</th>
                         </tr>
                       </thead>
@@ -104,13 +107,14 @@ export default {
                           <td>{{ inversion.empresa_id }}</td>
                           <td>{{ inversion.nombre }}</td>
                           <td>27/12/2018</td>
-                          <td>5.000</td>
-                          <td/>
+                          <td>$ {{formatPrice(inversion.inversionista_proyectos[0].derechos)}}</td>
+                          <td>$ {{formatPrice(inversion.inversionista_proyectos[0].saldo_pendiente)}}</td>
+                          <td>Transferir</td>
                         </tr>
                       </tbody>
                       <tbody v-if="inversionespendientes.length === 0">
                         <tr>
-                          <td>No registras cuotas pendientes.</td>
+                          <td>Solo aparecen transferencias pendientes de proyectos que aún esten abiertos</td>
                           <td/>
                           <td/>
                           <td/>

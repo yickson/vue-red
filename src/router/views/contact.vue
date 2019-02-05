@@ -1,6 +1,7 @@
 <script>
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
+import axios from 'axios'
 
 export default {
   page: {
@@ -10,23 +11,48 @@ export default {
   components: { Layout },
   data() {
     return {
-      data: {
-        nombre: '',
-        mail: '',
-        mensaje: '',
-      },
+      nombre: '',
+      mail: '',
+      mensaje: '',
     }
   },
   methods: {
+    success() {
+      this.$swal(
+        '¡Bien!',
+        'Tu mensaje ha sido correctamente enviado.',
+        'success',
+        {
+          button: false,
+        }
+      )
+    },
+    warning() {
+      this.$swal(
+        'Lo sentimos',
+        'Hubo un error con tu solicitud, porfavor verifica los datos e intenta nuevamente',
+        'error',
+        {
+          button: false,
+        }
+      )
+    },
     handleSubmit() {
-      fetch('http://127.0.0.1:8000/api/contacto', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.data),
-      }).then(res => console.log(res))
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          axios
+            .post('http://52.67.70.146/api/contacto', {
+              nombre: this.nombre,
+              mail: this.mail,
+              mensaje: this.mensaje,
+            })
+            .then(response => {
+              this.success()
+            })
+        } else {
+          this.warning()
+        }
+      })
     },
   },
 }
@@ -35,7 +61,7 @@ export default {
 <template>
   <Layout class="contact">
     <div class="row">
-      <div class="col-xs-12 col-md-12  col-md-12">
+      <div class="col-xs-12 col-md-12 col-md-12">
         <h2 class="text-center title-contact">CONTACTO</h2>
       </div>
     </div>
@@ -43,27 +69,44 @@ export default {
       <form @submit.prevent="handleSubmit">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12">
-            <label for="">Nombre</label>
+            <label for>Nombre</label>
             <input
-              v-model="data.nombre"
+              v-model="nombre"
               type="text"
               class="form-control"
-              placeholder="Ingrese su nombre">
-            <label for="">Email</label>
+              name="nombre"
+              placeholder="Ingrese su nombre"
+              v-validate="'required'"
+              :class="{'input': true, 'is-danger': errors.has('nombre') }"
+              data-vv-validate-on="blur"
+            >
+            <span class="error">{{ errors.first('nombre') }}</span>
+            <label for>Email</label>
             <input
-              v-model="data.mail"
+              v-model="mail"
               type="text"
               class="form-control"
-              placeholder="Ingrese su Email">
-            <label for="">Mensaje</label>
+              name="email"
+              placeholder="Ingrese su Email"
+              v-validate="'required'"
+              :class="{'input': true, 'is-danger': errors.has('email') }"
+              data-vv-validate-on="blur"
+            >
+            <span class="error">{{ errors.first('email') }}</span>
+            <label for>Mensaje</label>
             <textarea
-              v-model="data.mensaje"
+              v-validate="'required'"
+              :class="{'input': true, 'is-danger': errors.has('mensaje') }"
+              v-model="mensaje"
               type="text"
+              name="mensaje"
               class="form-control txtarea"
               placeholder="Mensaje.."
               maxlength="140"
               rows="7"
-              required=""/>
+              data-vv-validate-on="blur"
+            />
+            <span class="error">{{ errors.first('mensaje') }}</span>
             <button class="btn">ENVIAR MENSAJE</button>
           </div>
         </div>
@@ -112,5 +155,24 @@ export default {
 }
 .container-contact .txtarea {
   height: 160px;
+}
+.error {
+  display: block;
+}
+.is-danger {
+  border: 1px solid #d4000069 !important;
+  background-color: #f798982b;
+}
+.error {
+  background-color: #d40000c9;
+  position: relative;
+  top: -16px;
+  color: #ffffff;
+  z-index: 99999;
+  font-size: 13px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-left: 2px;
+  z-index: 0;
 }
 </style>

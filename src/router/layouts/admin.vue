@@ -97,7 +97,7 @@ select.form-control:not([size]):not([multiple]) {
   display: none;
 }
 .fade:not(.show) {
-  opacity: 1;
+  opacity: 0.5;
 }
 
 #right-panel .table .thead-light th {

@@ -78,33 +78,19 @@ export default {
 </script>
 
 <template>
-  <navbar 
-    :fluid="false" 
-    class="main-navbar">
-    <router-link 
-      slot="brand" 
-      :to="{ path: '/'}" 
-      class="navbar-brand" 
-      href="/">
+  <navbar :fluid="false" class="main-navbar">
+    <router-link slot="brand" :to="{ path: '/'}" class="navbar-brand" href="/">
       <img src="../../src/assets/images/logomain.svg">
     </router-link>
     <template slot="collapse">
       <navbar-nav right>
-        <NavBarRoutes 
-          v-if="loggedIn" 
-          :routes="loggedInNavRoutes"/>
-        <NavBarRoutes 
-          v-else 
-          :routes="loggedOutNavRoutes"/>
+        <NavBarRoutes v-if="loggedIn" :routes="loggedInNavRoutes"/>
+        <NavBarRoutes v-else :routes="loggedOutNavRoutes"/>
       </navbar-nav>
-      <navbar-nav 
-        right 
-        class="first-nav">
+      <navbar-nav right class="first-nav">
         <NavBarRoutes :routes="navsfirst"/>
       </navbar-nav>
-      <navbar-nav 
-        right 
-        class="second-nav">
+      <navbar-nav right class="second-nav">
         <NavBarRoutes :routes="persistentNavRoutes"/>
       </navbar-nav>
     </template>
@@ -141,7 +127,21 @@ export default {
   display: block;
   min-height: 100px;
   color: #fff;
-  background-color: #ea5b2b;
+  background: #fc4a1a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f78433,
+    #fc4a1a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.1s ease, transform 0.1s ease,
+    -webkit-box-shadow 0.1s ease, -webkit-transform 0.1s ease;
 }
 
 .main-navbar ul li {

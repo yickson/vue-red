@@ -15,19 +15,28 @@ export default {
     type: Array,
     required: false,
   },
+
   data() {
     return {
       proyectos: [],
+      filtros: [],
     }
   },
   mounted() {
     this.getProyects()
+    this.getfiltros()
   },
   methods: {
     getProyects() {
       axios
         .get('http://52.67.70.146/api/filtro')
         .then(response => (this.proyectos = response.data.data.data))
+    },
+    getfiltros() {
+      this.$root.$on('filterSearch', filtros => {
+        // here you need to use the arrow function
+        this.proyectos = filtros
+      })
     },
   },
 }
@@ -40,51 +49,14 @@ export default {
         <Filters/>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-10">
-        <div
-          v-for="(proyecto, index) in proyectos"
-          :key="proyecto.id"
-          class="col-xs-12 col-md-3">
-          <HomeCard
-            :key="proyecto.id"
-            :index="index"
-            :proyecto="proyecto"
-          />
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 text-center">
-            <nav aria-label="Page navigation">
-              <ul class="pagination invest-pagination " >
-                <li>
-                  <a
-                    href="#"
-                    aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                  <a
-                    href="#"
-                    aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+        <div v-for="(proyecto, index) in proyectos" :key="proyecto.id" class="col-xs-12 col-md-3">
+          <HomeCard :key="proyecto.id" :index="index" :proyecto="proyecto"/>
         </div>
       </div>
     </div>
     <div class="row sponsors-cont">
       <div class="col-xs-12 col-sm-12 col-md-12">
-        <img
-          src="../../../src/assets/images/sponsors.png"
-          alt=""
-          class="img-esponsors img-responsive">
+        <img src="../../../src/assets/images/sponsors.png" alt class="img-esponsors img-responsive">
       </div>
     </div>
   </Layout>

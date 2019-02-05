@@ -28,21 +28,6 @@ export default {
         .get('http://52.67.70.146/api/filtro')
         .then(response => (this.proyectos = response.data.data.data))
     },
-    /* getSecretProyects() {
-      var headers = {
-        Authorization: `Bearer ${this.currentUser.data.token}`,
-      }
-      axios
-        .get('http://52.67.70.146/api/secretos/1', {
-          headers: headers,
-        })
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }, */
   },
   computed: {
     ...authComputed,
@@ -84,31 +69,27 @@ export default {
     </div>
 
     <!-- CARROUSEL -->
-    <div id="carrousel">
+    <div id="carrousel" v-if="loggedIn">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
           <h2>Proyectos para invertir</h2>
-          <button class="btn home_vertodo_btn">ver todos</button>
+          <button class="btn home_vertodo_btn">
+            ver todos
+            <i class="fas fa-arrow-alt-circle-right"></i>
+          </button>
         </div>
-        <carousel
-          v-if="loggedIn"
-          :per-page-custom="[[768, 3], [1024, 4], [540, 1]]"
-          :navigation-enabled="true"
-          navigation-next-label="<i class='fas fa-arrow-circle-right'></i>"
-          navigation-prev-label="<i class='fas fa-arrow-circle-left'></i>"
-        >
-          <slide 
-            v-for="(proyecto, index) in proyectos" 
-            :key="proyecto.id">
-            <HomeCard 
-              :key="proyecto.id" 
-              :index="index" 
-              :proyecto="proyecto"/>
-          </slide>
-        </carousel>
-        <div v-else>
-          <h2>Si QUIERES CONOCER TODAS LAS OPORTUNIDADES DE INVERSIÓN </BR>
-            REGISTRATE EN NUESTRA PLATAFORMA</h2>
+        <div class="container">
+          <carousel
+            :per-page-custom="[[768, 3], [1024, 4], [540, 1], [320,1]]"
+            :navigation-enabled="true"
+            navigation-next-label="<i class='fas fa-angle-right'></i>"
+            navigation-prev-label="<i class='fas fa-angle-left'></i>"
+            :paginationEnabled="false"
+          >
+            <slide v-for="(proyecto, index) in proyectos" :key="proyecto.id">
+              <HomeCard :key="proyecto.id" :index="index" :proyecto="proyecto"/>
+            </slide>
+          </carousel>
         </div>
       </div>
     </div>
@@ -131,13 +112,8 @@ export default {
           <Chart/>
           <div class="col-xs-12 col-sm-12 col-md-6">
             <p class="entrevista-txt">Entrevista Redcapital CNN</p>
-            <video 
-              class="home_video" 
-              controls 
-              controlslist="nodownload">
-              <source 
-                src="assets/video/RedcaCNN.mp4" 
-                type="video/mp4">
+            <video class="home_video" controls controlslist="nodownload">
+              <source src="assets/video/RedcaCNN.mp4" type="video/mp4">
             </video>
           </div>
         </div>
@@ -145,16 +121,11 @@ export default {
     </div>
 
     <!-- GRAFICO -->
-    <div 
-      id="grafico" 
-      class="container">
+    <div id="grafico" class="container">
       <div class="row">
         <h3 class="text-center">Comparación Rentabilidad Nominal vs Real</h3>
         <div class="col-xs-12 col-sm-12 col-md-6">
-          <img 
-            src="../../../src/assets/images/grafico_rc.png" 
-            alt 
-            class="img-responsive">
+          <img src="../../../src/assets/images/grafico_rc.png" alt class="img-responsive">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
           <p>
@@ -169,19 +140,14 @@ export default {
     </div>
 
     <!-- PLATAFORMA -->
-    <div 
-      id="plataforma" 
-      class="row">
+    <div id="plataforma" class="row">
       <div class="col-xs-12 col-sm-12 col-md-12">
         <h3 class="text-center">¿POR QUÉ SOMOS LA FORMA ATRACTIVA DE INVERTIR?</h3>
         <div class="container center-block">
           <!-- row 1 -->
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img 
-                src="../../../src/assets/images/ico_home1.png" 
-                alt 
-                class="home_icon">
+              <img src="../../../src/assets/images/ico_home1.png" alt class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
               <p>
@@ -191,10 +157,7 @@ export default {
               </p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img 
-                src="../../../src/assets/images/ico_home2.png" 
-                alt 
-                class="home_icon">
+              <img src="../../../src/assets/images/ico_home2.png" alt class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
               <p>
@@ -207,10 +170,7 @@ export default {
           <!-- row 2 -->
           <div class="row second-row">
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img 
-                src="../../../src/assets/images/ico_home3.png" 
-                alt 
-                class="home_icon">
+              <img src="../../../src/assets/images/ico_home3.png" alt class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
               <p>
@@ -220,10 +180,7 @@ export default {
               </p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-2">
-              <img 
-                src="../../../src/assets/images/ico_home4.png" 
-                alt 
-                class="home_icon">
+              <img src="../../../src/assets/images/ico_home4.png" alt class="home_icon">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
               <p>
@@ -238,9 +195,7 @@ export default {
     </div>
 
     <!-- COMO INVERTIR -->
-    <div 
-      id="comoInvertir" 
-      class="row">
+    <div id="comoInvertir" class="row">
       <div class="background">
         <div class="container">
           <h4 class="home-title-section">¿Como Invertir?</h4>
@@ -254,18 +209,12 @@ export default {
             <p>Revisa las oportunidades de inversión y elige el proyecto que más te convenga.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img 
-              src="../../../src/assets/images/icon-registrate.svg" 
-              alt 
-              class="icon-comoinvertir">
+            <img src="../../../src/assets/images/icon-registrate.svg" alt class="icon-comoinvertir">
             <p class="title-comoinvertir">Regístrate</p>
             <p>Crea una cuenta ingresando tus datos en nuestro formulario, es fácil y rápido.</p>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-4">
-            <img 
-              src="../../../src/assets/images/icon-invierte.svg" 
-              alt 
-              class="icon-comoinvertir">
+            <img src="../../../src/assets/images/icon-invierte.svg" alt class="icon-comoinvertir">
             <p class="title-comoinvertir">Invierte</p>
             <p>Transfiere el monto a invertir y estará 100% garantizado por una SGR (fondos Corfo) o por una factura. Revisa Garantías y Riesgos</p>
           </div>
@@ -274,9 +223,7 @@ export default {
     </div>
 
     <!-- OPINIONES -->
-    <div 
-      id="testimonios" 
-      class="row">
+    <div id="testimonios" class="row">
       <div class="container">
         <h4 class="text-center">TESTIMONIOS</h4>
         <div class="col-xs-12 col-sm-12 col-md-2">
@@ -308,23 +255,15 @@ export default {
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12">
-          <img 
-            src="../../../src/assets/images/sponsors.png" 
-            alt 
-            class="img-responsive sponsors">
+          <img src="../../../src/assets/images/sponsors.png" alt class="img-responsive sponsors">
         </div>
       </div>
     </div>
 
-    <div 
-      id="dfinanciero" 
-      class="row">
+    <div id="dfinanciero" class="row">
       <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-3">
-          <img 
-            src="../../../src/assets/images/df_logo.gif" 
-            alt 
-            class="img-responsive">
+          <img src="../../../src/assets/images/df_logo.gif" alt class="img-responsive">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9">
           <p>
@@ -339,7 +278,7 @@ export default {
   </Layout>
 </template>
 
-<style>
+<style scoped>
 .main_home_banner {
   height: 490px;
   background: url(../../../src/assets/images/banner_bg3.png);
@@ -400,8 +339,8 @@ export default {
   background: #ffffff;
 }
 
-.VueCarousel-navigation-button .fa-arrow-circle-right,
-.fa-arrow-circle-left {
+.VueCarousel-navigation-button .fa-angle-left,
+.fa-angle-right {
   font-size: 30px;
 }
 
@@ -412,9 +351,10 @@ export default {
 }
 #carrousel .home_vertodo_btn {
   display: block;
-  min-width: 130px;
+  min-width: 180px;
   margin: 0 auto;
   margin-bottom: 40px;
+  height: 40px;
   color: #fff;
   background: #f47828;
   border: none;

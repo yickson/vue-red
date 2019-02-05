@@ -24,14 +24,9 @@ export default {
   },
   methods: {
     info() {
-      this.$swal(
-        'Lo sentimos',
-        'Hubo un error con tu solicitud, porfavor verifica los datos e intenta nuevamente',
-        'error',
-        {
-          button: false,
-        }
-      )
+      this.$swal('Lo sentimos', 'Credenciales incorrectas.', 'error', {
+        button: false,
+      })
     },
     ...authMethods,
     // Try to log the user in with the username
@@ -108,19 +103,19 @@ export default {
 <template>
   <Layout id="container-login">
     <div class="container">
-      <div class="form-login">
+      <div class="form-login animated fadeIn">
         <!--FORM LOGIN -->
         <form v-if="!Password" @submit.prevent="tryToLogIn">
           <label for>RUC</label>
           <input
             v-validate="'required'"
-            :class="{'input': true, 'is-danger': errors.has('email') }"
+            :class="{'input': true, 'is-danger': errors.has('ruc') }"
             v-model="email"
             data-vv-validate-on="blur"
-            name="email"
+            name="ruc"
             class="form-control"
           >
-          <span class="error">{{ errors.first('email') }}</span>
+          <span class="error">{{ errors.first('ruc') }}</span>
           <label for>Contraseña</label>
           <input
             v-validate="'required'"

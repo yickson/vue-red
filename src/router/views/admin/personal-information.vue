@@ -282,9 +282,9 @@ export default {
         </div>
         <!-- DATOS -->
         <!-- FORM -->
-        <form 
-          v-else 
-          action 
+        <form
+          v-else
+          action
           @submit.prevent="editUser">
           <div class="row">
             <div class="col-md-4">
@@ -293,9 +293,9 @@ export default {
                   <div class="col-md-12">
                     <!-- FORM -->
                     <label for>Nickname</label>
-                    <input 
-                      v-model="nickname" 
-                      class="form-control" 
+                    <input
+                      v-model="nickname"
+                      class="form-control"
                       name="nickname">
                     <label for>Nombre</label>
                     <input
@@ -307,7 +307,7 @@ export default {
                       data-vv-validate-on="blur"
                     >
                     <span class="error">{{ errors.first('nombre') }}</span>
-                    
+
                     <label for>Apellido Paterno</label>
                     <input
                       v-validate="'required'"
@@ -328,12 +328,12 @@ export default {
                       data-vv-validate-on="blur"
                     >
                     <span class="error">{{ errors.first('app_mat') }}</span>
-                    
+
                     <label for>RUT (*)</label>
-                    <input 
-                      v-model="rut" 
-                      class="form-control" 
-                      name="rut" 
+                    <input
+                      v-model="rut"
+                      class="form-control"
+                      name="rut"
                       disabled>
 
                       <!-- FORM -->
@@ -357,7 +357,7 @@ export default {
                       data-vv-validate-on="blur"
                     >
                     <span class="error">{{ errors.first('email') }}</span>
-                    
+
                     <label for>Teléfono</label>
                     <input
                       v-validate="'required'"
@@ -368,7 +368,7 @@ export default {
                       data-vv-validate-on="blur"
                     >
                     <span class="error">{{ errors.first('telefono') }}</span>
-                    
+
                     <label for>Dirección</label>
                     <input
                       v-validate="'required'"
@@ -379,7 +379,7 @@ export default {
                       data-vv-validate-on="blur"
                     >
                     <span class="error">{{ errors.first('direccion') }}</span>
-                    
+
                     <label for>Región</label>
                     <select
                       v-model="region_id"
@@ -393,12 +393,12 @@ export default {
                       >{{ region.name }}</option>
                     </select>
                     <label for>Comuna</label>
-                    <select 
-                      v-model="comuna_id" 
-                      class="form-control" 
+                    <select
+                      v-model="comuna_id"
+                      class="form-control"
                       name="comunas_id">
-                      <option 
-                        v-for="(comuna,index) in comunas" 
+                      <option
+                        v-for="(comuna,index) in comunas"
                         :value="comuna.id">{{ comuna.name }}</option>
                     </select>
 
@@ -412,16 +412,17 @@ export default {
               <div class="card">
                 <div class="card-body">
                   <label for>Estado civil</label>
-                  <input 
-                    v-model="e_civil" 
-                    class="form-control" 
+                  <input
+                    v-model="e_civil"
+                    class="form-control"
                     name="e_civil">
                   <label for>Profesión/Oficio</label>
-                  <input 
-                    v-model="profesion" 
-                    class="form-control" 
+                  <input
+                    v-model="profesion"
+                    class="form-control"
                     name="profesion">
                   <label for>Fecha de Nacimiento</label>
+                  <date-picker
                   <input
                     v-validate="'required'"
                     v-model="fec_nac"
@@ -432,14 +433,14 @@ export default {
                     data-vv-validate-on="blur"
                   >
                   <span class="error">{{ errors.first('fec_nac') }}</span>
-                  
+
                   <label for>Nacionalidad</label>
-                  <select 
-                    v-model="pais_id" 
-                    class="form-control" 
+                  <select
+                    v-model="pais_id"
+                    class="form-control"
                     name="pais_id">
-                    <option 
-                      v-for="(pais,index) in paises" 
+                    <option
+                      v-for="(pais,index) in paises"
                       :value="pais.id">{{ pais.name }}</option>
                   </select>
                   <label for>Género</label>
@@ -477,7 +478,7 @@ export default {
 </template>
 
 
-<style >
+<style>
 .select-genero {
   margin-bottom: 52px;
   display: block;

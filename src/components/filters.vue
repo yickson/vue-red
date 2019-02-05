@@ -1,5 +1,6 @@
 <script>
 import RangeSlider from 'vue-range-slider'
+import axios from 'axios'
 
 export default {
   components: { RangeSlider },
@@ -8,65 +9,81 @@ export default {
       min: 8,
       max: 24,
       step: 1,
-      proyectos: '',
-      facturas: '',
-      creditos: '',
+      proyectos: 0,
+      facturas: 0,
+      creditos: 0,
       rentabilidad: 10,
       plazo: 10,
+      filtros: [],
     }
+  },
+  mounted() {
+    this.filterSearch()
   },
   methods: {
     filterSearch() {
-      console.log('asd0')
+      axios
+        .post('http://52.67.70.146/api/filtrado', {
+          factura: 1,
+          credito: 1,
+          tasa: 8,
+          cuota: 2,
+        })
+        .then(response => (this.filtros = response.data))
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    filtrar() {
+      this.$root.$emit('filterSearch', this.filtros)
+      console.log(this.filtros)
     },
   },
 }
 </script>
 
 <template>
-  <div
-    id="filter-container"
-    class="row">
+  <div id="filter-container" class="row">
     <div class="col-xs-12 col-sm-12">
       <label>
         <div class="active-projects">
           <input
             v-model="proyectos"
-            type="checkbox">Proyectos activos
+            value="1"
+            v-bind:true-value="1"
+            v-bind:false-value="0"
+            type="checkbox"
+          >Proyectos activos
         </div>
       </label>
       <label>
         <input
           v-model="facturas"
-          type="checkbox"> Facturas
+          value="1"
+          v-bind:true-value="1"
+          v-bind:false-value="0"
+          type="checkbox"
+        > Facturas
       </label>
       <label>
         <input
           v-model="creditos"
-          type="checkbox"> Créditos (Pagaré)
+          value="1"
+          v-bind:true-value="1"
+          v-bind:false-value="0"
+          type="checkbox"
+        > Créditos (Pagaré)
       </label>
       <!-- range -->
       <p class="label-range">Rentabilidad mínima</p>
-      <range-slider
-        v-model="rentabilidad"
-        :min="min"
-        :max="max"
-        :step="step"
-        class="slider"/>
+      <range-slider v-model="rentabilidad" :min="min" :max="max" :step="step" class="slider"/>
       <p class="chip-value-filter">{{ rentabilidad }}</p>
 
       <p class="label-range">Plazo máximo en meses</p>
-      <range-slider
-        v-model="plazo"
-        :min="min"
-        :max="max"
-        :step="step"
-        class="slider"/>
+      <range-slider v-model="plazo" :min="min" :max="max" :step="step" class="slider"/>
       <p class="chip-value-filter">{{ plazo }}</p>
       <!-- range -->
-      <button 
-        class="btn" 
-        @click="filterSearch">Aplicar filtros</button>
+      <button class="btn" @click="filtrar">Aplicar filtros</button>
       <div class="box-details">
         <span class="glyphicon glyphicon-flag"/>
         <p>Revisa los riesgos y garantías Aquí</p>
